@@ -1,4 +1,4 @@
-export function Ayay() {
+global.Ayay = function Ayay() {
     if (arguments.length === 1 && typeof arguments[0] === 'number'){
         this.length = arguments[0]
     } else {

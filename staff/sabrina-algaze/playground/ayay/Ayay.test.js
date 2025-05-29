@@ -1,4 +1,4 @@
-import { Ayay } from './Ayay.js'
+import './Ayay.js'
 
 console.info('TEST Ayay (constructor)')
 

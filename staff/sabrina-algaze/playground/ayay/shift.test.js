@@ -1,21 +1,24 @@
+import './shift.js'
+
 console.info('TEST shift')
 
-console.info('CASE deletes first element from array')
+console.info('CASE deletes first element from ayay')
 
 {
-    const nums = [10, 20, 30]
+    const nums = new Ayay(10, 20, 30)
 
     const deleted = nums.shift()
 
     console.assert(deleted === 10, 'deleted is 10')
     console.assert(nums.length === 2, 'nums length is 2')
     console.assert(nums[0] === 20, 'nums at index 0 is 20')
+    console.assert(nums[1] === 30, 'nums at index 0 is 20')
 }
 
-console.info('CASE deletes first element from an empty array')
+console.info('CASE deletes first element from an empty ayay')
 
 {
-    const nums = []
+    const nums = new Ayay()
 
     const deleted = nums.shift()
 
