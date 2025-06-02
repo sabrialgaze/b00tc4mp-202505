@@ -12,7 +12,7 @@ console.info('CASE deletes first element from ayay')
     console.assert(deleted === 10, 'deleted is 10')
     console.assert(nums.length === 2, 'nums length is 2')
     console.assert(nums[0] === 20, 'nums at index 0 is 20')
-    console.assert(nums[1] === 30, 'nums at index 0 is 20')
+    console.assert(nums[1] === 30, 'nums at index 0 is 30')
 }
 
 console.info('CASE deletes first element from an empty ayay')
