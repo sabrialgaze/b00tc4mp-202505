@@ -1,5 +1,3 @@
-const users = []
-
 // const body = document.querySelector('body')
 const body = document.body
 
@@ -56,30 +54,6 @@ const register = document.createElement('div')
     register.appendChild(title)
 
     const form = document.createElement('form')
-
-    form.addEventListener('submit', event => {
-         event.preventDefault()
-
-         const name = nameInput.value
-         const email = emailInput.value
-         const username = usernameInput.value
-         const password = passwordInput.value
-
-         const user = { name, email, username, password }
-
-         // TODO check if user exists (by email and/or username), in case it does, then show error 'user already exists', otherwise continue
-         for (let i = 0; i < users.length; i++) {
-            if (users[i].email === email || users[i].username === username) {
-                throw new Error('Email or username already exist')
-            }
-         }
-
-         users.push(user)
-
-         //TODO navigate to Login
-         body.removeChild(register)
-         body.appendChild(login)
-    })
     
     const nameField = document.createElement('div')
     nameField.classList.add('flex', 'flex-col', 'm-y-10')
@@ -165,7 +139,7 @@ const register = document.createElement('div')
 
     const submitButton = document.createElement('button')
     submitButton.type = 'submit'
-    const submitButtonText = document.createTextNode('Register')
+    const submitButtonText = document.createTextNode('Submit')
     submitButton.appendChild(submitButtonText)
 
     buttons.appendChild(submitButton)
@@ -198,22 +172,6 @@ const login = document.createElement('div')
     login.appendChild(title)
 
     const form = document.createElement('form')
-
-    form.addEventListener('submit', event => {
-         event.preventDefault()
-
-         const username = usernameInput.value
-         const password = passwordInput.value
-
-         for (let i = 0; i < users.length; i++) {
-            if (users[i].username === username && users[i].password === password) {
-                body.removeChild(login)
-                body.appendChild(home)
-            } else {
-                throw new Error('username or password are not correct')
-            }
-         }    
-    })
 
     const usernameField = document.createElement('div')
     usernameField.classList.add('flex', 'flex-col', 'm-y-10')
@@ -262,7 +220,7 @@ const login = document.createElement('div')
 
     const submitButton = document.createElement('button')
     submitButton.type = 'submit'
-    const submitButtonText = document.createTextNode('Login')
+    const submitButtonText = document.createTextNode('Submit')
     submitButton.appendChild(submitButtonText)
 
     buttons.appendChild(submitButton)
@@ -303,5 +261,5 @@ const home = document.createElement('div')
     
     home.appendChild(welcome)
 
-    // body.appendChild(home)
+    body.appendChild(home)
 }
