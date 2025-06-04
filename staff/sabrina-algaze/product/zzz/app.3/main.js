@@ -1,3 +1,11 @@
+const users = [{
+    name: 'Peter Pan',
+    email: 'peter@pan.com',
+    username: 'peterpan',
+    password: '123123123'
+}]
+
+// const body = document.querySelector('body')
 const body = document.body
 
 const landing = document.createElement('div')
@@ -63,10 +71,25 @@ const register = document.createElement('div')
             const username = usernameInput.value
             const password = passwordInput.value
 
-            registerUser(name, email, username, password)
+            // TODO check if user exists (by email and/or username), in case it does, then show error 'user already exists', otherwise continue
+
+            let user = users.find(user => user.email === email || user.username === username)
+
+            if (user) throw new Error('user already exists')
+
+            user = { name, email, username, password }
+
+            // for (let i = 0; i < users.length; i++) {
+            //     if (users[i].email === email || users[i].username === username) {
+            //         throw new Error('Email or username already exist')
+            //     }
+            // } 
+
+            users.push(user)
 
             form.reset()
 
+            //TODO navigate to Login
             body.removeChild(register)
             body.appendChild(login)
         } catch (error) {
@@ -202,7 +225,19 @@ const login = document.createElement('div')
             const username = usernameInput.value
             const password = passwordInput.value
 
-            loginUser(username, password)
+            // for (let i = 0; i < users.length; i++) {
+            //     if (users[i].username === username && users[i].password === password) {
+            //         body.removeChild(login)
+            //         body.appendChild(home)
+            //     } else {
+            //         throw new Error('username or password are not correct')
+            //     }
+            // }
+            const user = users.find(user => user.username === username)
+
+            if (!user) throw new Error('user not found')
+
+            if (user.password !== password) throw new Error('wrong password')
 
             form.reset()
 
