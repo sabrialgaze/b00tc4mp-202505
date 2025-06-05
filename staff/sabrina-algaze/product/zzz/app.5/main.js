@@ -1,11 +1,3 @@
-let userLoggedIn = false
-
-try {
-    userLoggedIn = logic.isUserLoggedIn()
-} catch (error) {
-    alert(error.message)
-}
-
 const body = document.body
 
 const landing = document.createElement('div')
@@ -48,8 +40,7 @@ const landing = document.createElement('div')
 
     landing.appendChild(navigations)
 
-    if (!userLoggedIn)
-        body.appendChild(landing)
+    body.appendChild(landing)
 }
 
 const register = document.createElement('div')
@@ -216,15 +207,9 @@ const login = document.createElement('div')
 
             form.reset()
 
-            const user = logic.getUserInfo()
-
-            const salutation = home.querySelector('p')
-            salutation.childNodes[0].remove()
-            const salutationText = document.createTextNode(`Hello, ${user.name}!`)
-            salutation.appendChild(salutationText)
-
             body.removeChild(login)
             body.appendChild(home)
+
         } catch (error) {
             alert(error.message)
         }
@@ -314,12 +299,12 @@ const home = document.createElement('div')
 
     home.appendChild(title)
 
-    const salutation = document.createElement('p')
-    salutation.classList.add('text-center')
-    const salutationText = document.createTextNode('Hola, Mundo!')
-    salutation.appendChild(salutationText)
+    const welcome = document.createElement('p')
+    welcome.classList.add('text-center')
+    const welcomeText = document.createTextNode('Hola, Mundo!')
+    welcome.appendChild(welcomeText)
 
-    home.appendChild(salutation)
+    home.appendChild(welcome)
 
     const logoutButton = document.createElement('button')
     logoutButton.type = 'button'
@@ -330,26 +315,11 @@ const home = document.createElement('div')
 
     logoutButton.addEventListener('click', event => {
         event.preventDefault()
-        try {
-            logic.logoutUser()
 
-            body.removeChild(home)
-            body.appendChild(login)
-        } catch (error) {
-            alert(error.message)
-        }
+        body.removeChild(home)
+        body.appendChild(login)
     })
 
-    if (userLoggedIn)
-        try {
-            const user = logic.getUserInfo()
 
-            salutation.childNodes[0].remove()
-            const salutationText = document.createTextNode(`Hello, ${user.name}!`)
-            salutation.appendChild(salutationText)
-
-            body.appendChild(home)
-        } catch (error) {
-            alert(error.message)
-        }
+    // body.appendChild(home)
 }

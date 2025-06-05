@@ -12,17 +12,7 @@ const getUsers = () => {
     return users
 }
 
-const setUserId = userId => sessionStorage.userId = userId
-
-const getUserId = () => sessionStorage.userId
-
-const removeUserId = () => delete sessionStorage.userId
-
 const data = {
     setUsers,
-    getUsers,
-
-    setUserId,
-    getUserId,
-    removeUserId
+    getUsers
 }
