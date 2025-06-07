@@ -132,7 +132,6 @@ const register = document.createElement('div')
     const usernameInput = document.createElement('input')
     usernameInput.id = 'username'
     usernameInput.type = 'text'
-    usernameInput.pattern = '^[a-zA-Z0-9_]{4,16}$'
     usernameField.appendChild(usernameInput)
 
     form.appendChild(usernameField)
@@ -151,7 +150,6 @@ const register = document.createElement('div')
     const passwordInput = document.createElement('input')
     passwordInput.id = 'password'
     passwordInput.type = 'password'
-    passwordInput.pattern = '^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{6,}$'
 
     passwordField.appendChild(passwordInput)
 

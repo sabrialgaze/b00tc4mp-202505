@@ -1,28 +1,51 @@
-const setUsers = users => {
-    const json = JSON.stringify(users)
+let data
 
-    localStorage.users = json
-}
+{
+    const setUsers = users => {
+        const json = JSON.stringify(users)
 
-const getUsers = () => {
-    const json = localStorage.users
+        localStorage.users = json
+    }
 
-    const users = JSON.parse(json || '[]')
+    const getUsers = () => {
+        const json = localStorage.users
 
-    return users
-}
+        const users = JSON.parse(json || '[]')
 
-const setUserId = userId => sessionStorage.userId = userId
+        return users
+    }
 
-const getUserId = () => sessionStorage.userId
+    const setUserId = userId => sessionStorage.userId = userId
 
-const removeUserId = () => delete sessionStorage.userId
+    const getUserId = () => sessionStorage.userId
 
-const data = {
-    setUsers,
-    getUsers,
+    const removeUserId = () => delete sessionStorage.userId
 
-    setUserId,
-    getUserId,
-    removeUserId
+
+    const setPosts = posts => {
+        const json = JSON.stringify(posts)
+
+        localStorage.posts = json
+    }
+
+    const getPosts = () => {
+        const json = localStorage.posts
+
+        const posts = JSON.parse(json || '[]')
+
+        return posts
+    }
+
+
+    data = {
+        setUsers,
+        getUsers,
+
+        setUserId,
+        getUserId,
+        removeUserId,
+
+        setPosts,
+        getPosts
+    }
 }
