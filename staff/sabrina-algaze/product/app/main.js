@@ -330,6 +330,126 @@ const home = document.createElement('div')
 
     home.appendChild(logoutButton)
 
+    const newPostButton = document.createElement('button')
+    newPostButton.type = 'button'
+    newPostButtonText = document.createTextNode('+')
+    newPostButton.appendChild(newPostButtonText)
+
+    home.appendChild(newPostButton)
+
+
+    newPostButton.addEventListener('click', event => {
+        event.preventDefault()
+
+        const posts = document.querySelector('.posts')
+
+        if (posts) posts.remove()
+
+        if (!document.querySelector('form')) {
+            const newPostForm = document.createElement('form')
+
+            const newPostTitle = document.createElement('h2')
+            const newPostTitleText = document.createTextNode('New Post')
+            newPostTitle.appendChild(newPostTitleText)
+
+            newPostForm.appendChild(newPostTitle)
+
+            const imageField = document.createElement('div')
+            imageField.classList.add('flex', 'flex-col', 'm-y-10')
+
+            const imageLabel = document.createElement('label')
+            imageLabel.htmlFor = 'image'
+            const imageLabelText = document.createTextNode('Image')
+            imageLabel.appendChild(imageLabelText)
+            imageField.appendChild(imageLabel)
+
+            newPostForm.appendChild(imageField)
+
+            home.appendChild(newPostForm)
+
+            const imageInput = document.createElement('input')
+            imageInput.id = 'image'
+            imageInput.type = 'text'
+            imageField.appendChild(imageInput)
+
+            const textField = document.createElement('div')
+            textField.classList.add('flex', 'flex-col', 'm-y-10')
+
+            const textLabel = document.createElement('label')
+            textLabel.htmlFor = 'text'
+            const textLabelText = document.createTextNode('Text')
+            textLabel.appendChild(textLabelText)
+            textField.appendChild(textLabel)
+
+            newPostForm.appendChild(textField)
+
+            const textInput = document.createElement('input')
+            textInput.id = 'text'
+            textInput.type = 'text'
+            textField.appendChild(textInput)
+
+            const buttons = document.createElement('div')
+            buttons.classList.add('flex', 'justify-end')
+
+            const cancelButton = document.createElement('button')
+            cancelButton.type = 'reset'
+            const cancelButtonText = document.createTextNode('Cancel')
+            cancelButton.appendChild(cancelButtonText)
+            buttons.appendChild(cancelButton)
+
+            const createButton = document.createElement('button')
+            createButton.type = 'submit'
+            const createButtonText = document.createTextNode('Create')
+            createButton.appendChild(createButtonText)
+            buttons.appendChild(createButton)
+
+            newPostForm.appendChild(buttons)
+
+            cancelButton.addEventListener('click', event => {
+                event.preventDefault()
+
+                home.removeChild(newPostForm)
+            })
+
+            newPostForm.addEventListener('submit', event => {
+                event.preventDefault()
+
+                const image = imageInput.value
+                const text = textInput.value
+
+                logic.createPost(image, text)
+
+                newPostForm.reset()
+
+                home.removeChild(newPostForm)
+
+                const user = logic.getUserInfo()
+
+                const post = document.createElement('div')
+                post.classList.add = 'posts'
+                const username = document.createElement('h2')
+                const usernameText = document.createTextNode(`${user.username}`)
+                username.appendChild(usernameText)
+                post.appendChild(username)
+                const imagePosted = document.createElement('img')
+                imagePosted.src = `${image}`
+                post.appendChild(imagePosted)
+                const caption = document.createElement('p')
+                const captionText = document.createTextNode(`${text}`)
+                caption.appendChild(captionText)
+                post.appendChild(caption)
+                const date = document.createElement('p')
+                const dateText = document.createTextNode(`${new Date().toISOString()}`)
+                date.appendChild(dateText)
+                post.appendChild(date)
+
+                home.appendChild(post)
+            })
+        }
+
+    })
+
+
     logoutButton.addEventListener('click', event => {
         event.preventDefault()
         try {
@@ -341,6 +461,7 @@ const home = document.createElement('div')
             alert(error.message)
         }
     })
+
 
     if (userLoggedIn)
         try {

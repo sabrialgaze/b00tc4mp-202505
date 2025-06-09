@@ -85,7 +85,30 @@ let logic
 
     const createPost = (image, text) => {
         // TODO store in data
+        const userId = data.getUserId()
 
+        const users = data.getUsers()
+
+        const user = users.find(user => user.id === userId)
+
+        if (!user) throw Error('user not found')
+
+
+        const id = parseInt((Date.now() + Math.random()).toString().replace('.', '')).toString(36)
+
+        const post = {
+            id,
+            author: userId,
+            image,
+            text,
+            date: new Date().toISOString()
+        }
+
+        const posts = data.getPosts()
+
+        posts.push(post)
+
+        data.setPosts(posts)
         /*
         const userId = data.getUserId()
 
