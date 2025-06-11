@@ -330,126 +330,6 @@ const home = document.createElement('div')
 
     home.appendChild(logoutButton)
 
-    const newPostButton = document.createElement('button')
-    newPostButton.type = 'button'
-    newPostButtonText = document.createTextNode('+')
-    newPostButton.appendChild(newPostButtonText)
-
-    home.appendChild(newPostButton)
-
-
-    newPostButton.addEventListener('click', event => {
-        event.preventDefault()
-
-        const posts = document.querySelector('.posts')
-
-        if (posts) posts.remove()
-
-        if (!document.querySelector('form')) {
-            const newPostForm = document.createElement('form')
-
-            const newPostTitle = document.createElement('h2')
-            const newPostTitleText = document.createTextNode('New Post')
-            newPostTitle.appendChild(newPostTitleText)
-
-            newPostForm.appendChild(newPostTitle)
-
-            const imageField = document.createElement('div')
-            imageField.classList.add('flex', 'flex-col', 'm-y-10')
-
-            const imageLabel = document.createElement('label')
-            imageLabel.htmlFor = 'image'
-            const imageLabelText = document.createTextNode('Image')
-            imageLabel.appendChild(imageLabelText)
-            imageField.appendChild(imageLabel)
-
-            newPostForm.appendChild(imageField)
-
-            home.appendChild(newPostForm)
-
-            const imageInput = document.createElement('input')
-            imageInput.id = 'image'
-            imageInput.type = 'text'
-            imageField.appendChild(imageInput)
-
-            const textField = document.createElement('div')
-            textField.classList.add('flex', 'flex-col', 'm-y-10')
-
-            const textLabel = document.createElement('label')
-            textLabel.htmlFor = 'text'
-            const textLabelText = document.createTextNode('Text')
-            textLabel.appendChild(textLabelText)
-            textField.appendChild(textLabel)
-
-            newPostForm.appendChild(textField)
-
-            const textInput = document.createElement('input')
-            textInput.id = 'text'
-            textInput.type = 'text'
-            textField.appendChild(textInput)
-
-            const buttons = document.createElement('div')
-            buttons.classList.add('flex', 'justify-end')
-
-            const cancelButton = document.createElement('button')
-            cancelButton.type = 'reset'
-            const cancelButtonText = document.createTextNode('Cancel')
-            cancelButton.appendChild(cancelButtonText)
-            buttons.appendChild(cancelButton)
-
-            const createButton = document.createElement('button')
-            createButton.type = 'submit'
-            const createButtonText = document.createTextNode('Create')
-            createButton.appendChild(createButtonText)
-            buttons.appendChild(createButton)
-
-            newPostForm.appendChild(buttons)
-
-            cancelButton.addEventListener('click', event => {
-                event.preventDefault()
-
-                home.removeChild(newPostForm)
-            })
-
-            newPostForm.addEventListener('submit', event => {
-                event.preventDefault()
-
-                const image = imageInput.value
-                const text = textInput.value
-
-                logic.createPost(image, text)
-
-                newPostForm.reset()
-
-                home.removeChild(newPostForm)
-
-                const user = logic.getUserInfo()
-
-                const post = document.createElement('div')
-                post.classList.add = 'posts'
-                const username = document.createElement('h2')
-                const usernameText = document.createTextNode(`${user.username}`)
-                username.appendChild(usernameText)
-                post.appendChild(username)
-                const imagePosted = document.createElement('img')
-                imagePosted.src = `${image}`
-                post.appendChild(imagePosted)
-                const caption = document.createElement('p')
-                const captionText = document.createTextNode(`${text}`)
-                caption.appendChild(captionText)
-                post.appendChild(caption)
-                const date = document.createElement('p')
-                const dateText = document.createTextNode(`${new Date().toISOString()}`)
-                date.appendChild(dateText)
-                post.appendChild(date)
-
-                home.appendChild(post)
-            })
-        }
-
-    })
-
-
     logoutButton.addEventListener('click', event => {
         event.preventDefault()
         try {
@@ -462,6 +342,20 @@ const home = document.createElement('div')
         }
     })
 
+    const newPostButton = document.createElement('button')
+    newPostButton.type = 'button'
+    newPostButtonText = document.createTextNode('+')
+    newPostButton.appendChild(newPostButtonText)
+
+    home.appendChild(newPostButton)
+
+    newPostButton.addEventListener('click', event => {
+        event.preventDefault()
+
+        home.removeChild(posts)
+
+        home.appendChild(createPost)
+    })
 
     if (userLoggedIn)
         try {
@@ -475,4 +369,170 @@ const home = document.createElement('div')
         } catch (error) {
             alert(error.message)
         }
+
+}
+
+const createPost = document.createElement('div')
+
+{
+    const title = document.createElement('h2')
+    const titleText = document.createTextNode('New post')
+    title.appendChild(titleText)
+
+    createPost.appendChild(title)
+
+    const form = document.createElement('form')
+
+    form.addEventListener('submit', event => {
+        event.preventDefault()
+
+        try {
+            const image = imageInput.value
+            const text = textInput.value
+
+            logic.createPost(image, text)
+
+            form.reset()
+
+            const postsList = posts.querySelector('ul')
+            for (let i = 0; i < postsList.childNodes.length; i++) {
+                postsList.childNodes[i].remove()
+                // postsList.removeChild(postsList.childNodes[i])
+            }
+            const allPosts = logic.getPosts()
+
+            for (i = 0; i < allPosts.length; i++) {
+                const post = allPosts[i]
+
+                const li = document.createElement('li')
+
+                const image = document.createElement('img')
+                image.src = `${post.image}`
+                li.appendChild(image)
+
+                const caption = document.createElement('p')
+                const captionText = document.createTextNode(`${post.text}`)
+                caption.appendChild(captionText)
+                li.appendChild(caption)
+
+                const date = document.createElement('p')
+                const dateText = document.createTextNode(`${post.date}`)
+                date.appendChild(dateText)
+                li.appendChild(date)
+
+                postsList.appendChild(li)
+            }
+
+            home.removeChild(createPost)
+
+            home.appendChild(posts)
+        } catch (error) {
+            alert(error.message)
+        }
+    })
+
+    const imageField = document.createElement('div')
+    imageField.classList.add('flex', 'flex-col', 'm-y-10')
+
+    const imageLabel = document.createElement('label')
+    imageLabel.htmlFor = 'image'
+    const imageLabelText = document.createTextNode('Image')
+    imageLabel.appendChild(imageLabelText)
+    imageField.appendChild(imageLabel)
+
+    const imageInput = document.createElement('input')
+    imageInput.id = 'image'
+    imageInput.type = 'url'
+    imageField.appendChild(imageInput)
+
+    form.appendChild(imageField)
+
+    const textField = document.createElement('div')
+    textField.classList.add('flex', 'flex-col', 'm-y-10')
+
+    const textLabel = document.createElement('label')
+    textLabel.htmlFor = 'text'
+    const textLabelText = document.createTextNode('Text')
+    textLabel.appendChild(textLabelText)
+    textField.appendChild(textLabel)
+
+    const textInput = document.createElement('input')
+    textInput.id = 'text'
+    textInput.type = 'text'
+    textField.appendChild(textInput)
+
+    form.appendChild(textField)
+
+    const buttons = document.createElement('div')
+    buttons.classList.add('flex', 'justify-end')
+
+    const cancelButton = document.createElement('button')
+    cancelButton.type = 'button'
+    const cancelButtonText = document.createTextNode('Cancel')
+    cancelButton.appendChild(cancelButtonText)
+
+    cancelButton.addEventListener('click', event => {
+        form.reset()
+
+        home.removeChild(createPost)
+        home.appendChild(posts)
+    })
+
+    buttons.appendChild(cancelButton)
+
+    const submitButton = document.createElement('button')
+    submitButton.type = 'submit'
+    const submitButtonText = document.createTextNode('Create')
+    submitButton.appendChild(submitButtonText)
+
+    buttons.appendChild(submitButton)
+
+    form.appendChild(buttons)
+
+    createPost.appendChild(form)
+
+    // home.appendChild(createPost)
+}
+
+const posts = document.createElement('div')
+
+{
+    //TODO add ul with lis to list all posts
+    const postsList = document.createElement('ul')
+    posts.appendChild(postsList)
+
+    home.appendChild(posts)
+
+    try {
+        const allPosts = logic.getPosts()
+
+        for (i = 0; i < allPosts.length; i++) {
+            const post = allPosts[i]
+
+            const li = document.createElement('li')
+
+            const author = document.createElement('h3')
+            const authorText = document.createTextNode(post.author)
+            author.appendChild(authorText)
+            li.appendChild(author)
+
+            const image = document.createElement('img')
+            image.src = post.image
+            li.appendChild(image)
+
+            const caption = document.createElement('p')
+            const captionText = document.createTextNode(post.text)
+            caption.appendChild(captionText)
+            li.appendChild(caption)
+
+            const date = document.createElement('time')
+            const dateText = document.createTextNode(post.date)
+            date.appendChild(dateText)
+            li.appendChild(date)
+
+            postsList.appendChild(li)
+        }
+    } catch (error) {
+        alert(error.message)
+    }
 }
