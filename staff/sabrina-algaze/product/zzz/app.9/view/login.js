@@ -35,13 +35,12 @@ const login = document.createElement('div')
                 const li = document.createElement('li')
 
                 const author = document.createElement('h3')
-                const authorText = document.createTextNode(post.author.username)
+                const authorText = document.createTextNode(post.author)
                 author.appendChild(authorText)
                 li.appendChild(author)
 
                 const image = document.createElement('img')
-                image.classList.add('w-full')
-                image.src = post.image = post.image
+                image.src = post.image
                 li.appendChild(image)
 
                 const caption = document.createElement('p')
@@ -53,27 +52,6 @@ const login = document.createElement('div')
                 const dateText = document.createTextNode(post.date)
                 date.appendChild(dateText)
                 li.appendChild(date)
-
-                if (post.own) {
-                    const removeButton = document.createElement('button')
-                    removeButton.type = 'button'
-                    const removeButtonText = document.createTextNode('🗑')
-                    removeButton.appendChild(removeButtonText)
-                    li.appendChild(removeButton)
-
-                    removeButton.addEventListener('click', event => {
-                        if (confirm('Delete post?'))
-                            try {
-                                logic.removePost(post.id)
-
-                                // refreshPosts()
-                            } catch (error) {
-                                console.error(error)
-
-                                alert(error.message)
-                            }
-                    })
-                }
 
                 postsList.appendChild(li)
             })

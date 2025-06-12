@@ -6,6 +6,5 @@ const logic = {
     logoutUser,
 
     createPost,
-    getPosts,
-    removePost
+    getPosts
 }
