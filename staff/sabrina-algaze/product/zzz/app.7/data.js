@@ -33,6 +33,8 @@ let data
 
         const posts = JSON.parse(json || '[]')
 
+        posts.reverse()
+
         return posts
     }
 

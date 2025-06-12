@@ -119,6 +119,14 @@ let logic
     }
 
     const getPosts = () => {
+        const userId = data.getUserId()
+
+        const users = data.getUsers()
+
+        const user = users.find(user => user.id === userId)
+
+        if (!user) throw Error('user not found')
+
         const posts = data.getPosts()
 
         return posts
