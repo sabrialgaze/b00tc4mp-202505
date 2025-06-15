@@ -1,7 +1,7 @@
 const home = document.createElement('div')
 
 {
-    const title = util.createTitle(1, 'App')
+    const title = utils.createTitle(1, 'App')
 
     home.appendChild(title)
 
@@ -12,7 +12,10 @@ const home = document.createElement('div')
 
     home.appendChild(salutation)
 
-    const logoutButton = util.createButton('button', 'Logout')
+    const logoutButton = document.createElement('button')
+    logoutButton.type = 'button'
+    logoutButtonText = document.createTextNode('Logout')
+    logoutButton.appendChild(logoutButtonText)
 
     home.appendChild(logoutButton)
 
@@ -30,7 +33,10 @@ const home = document.createElement('div')
         }
     })
 
-    const newPostButton = util.createButton('button', '+')
+    const newPostButton = document.createElement('button')
+    newPostButton.type = 'button'
+    newPostButtonText = document.createTextNode('+')
+    newPostButton.appendChild(newPostButtonText)
 
     home.appendChild(newPostButton)
 

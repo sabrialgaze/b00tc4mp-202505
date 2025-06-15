@@ -1,7 +1,7 @@
 const newPost = document.createElement('div')
 
 {
-    const title = util.createTitle(2, 'New post')
+    const title = utils.createTitle(2, 'New post')
 
     newPost.appendChild(title)
 
@@ -32,18 +32,32 @@ const newPost = document.createElement('div')
 
     const imageField = document.createElement('div')
     imageField.classList.add('flex', 'flex-col', 'm-y-10')
-    const imageLabel = util.createLabel('image', 'Image')
+
+    const imageLabel = document.createElement('label')
+    imageLabel.htmlFor = 'image'
+    const imageLabelText = document.createTextNode('Image')
+    imageLabel.appendChild(imageLabelText)
     imageField.appendChild(imageLabel)
-    const imageInput = util.createInput('image', 'url')
+
+    const imageInput = document.createElement('input')
+    imageInput.id = 'image'
+    imageInput.type = 'url'
     imageField.appendChild(imageInput)
+
     form.appendChild(imageField)
 
     const textField = document.createElement('div')
     textField.classList.add('flex', 'flex-col', 'm-y-10')
 
-    const textLabel = util.createLabel('text', 'Text')
+    const textLabel = document.createElement('label')
+    textLabel.htmlFor = 'text'
+    const textLabelText = document.createTextNode('Text')
+    textLabel.appendChild(textLabelText)
     textField.appendChild(textLabel)
-    const textInput = util.createInput('text', 'text')
+
+    const textInput = document.createElement('input')
+    textInput.id = 'text'
+    textInput.type = 'text'
     textField.appendChild(textInput)
 
     form.appendChild(textField)
@@ -51,8 +65,10 @@ const newPost = document.createElement('div')
     const buttons = document.createElement('div')
     buttons.classList.add('flex', 'justify-end')
 
-    const cancelButton = util.createButton('button', 'Cancel')
-    buttons.appendChild(cancelButton)
+    const cancelButton = document.createElement('button')
+    cancelButton.type = 'button'
+    const cancelButtonText = document.createTextNode('Cancel')
+    cancelButton.appendChild(cancelButtonText)
 
     cancelButton.addEventListener('click', event => {
         form.reset()
@@ -61,7 +77,13 @@ const newPost = document.createElement('div')
         home.appendChild(posts)
     })
 
-    const submitButton = util.createButton('submit', 'Create')
+    buttons.appendChild(cancelButton)
+
+    const submitButton = document.createElement('button')
+    submitButton.type = 'submit'
+    const submitButtonText = document.createTextNode('Create')
+    submitButton.appendChild(submitButtonText)
+
     buttons.appendChild(submitButton)
 
     form.appendChild(buttons)

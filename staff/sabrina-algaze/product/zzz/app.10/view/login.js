@@ -1,7 +1,7 @@
 const login = document.createElement('div')
 
 {
-    const title = util.createTitle(1, 'Login')
+    const title = utils.createTitle(1, 'Login')
 
     login.appendChild(title)
 
@@ -38,36 +38,64 @@ const login = document.createElement('div')
 
     const usernameField = document.createElement('div')
     usernameField.classList.add('flex', 'flex-col', 'm-y-10')
-    const usernameLabel = util.createLabel('username', 'Username')
+
+    const usernameLabel = document.createElement('label')
+    usernameLabel.htmlFor = 'username'
+    usernameLabelText = document.createTextNode('Username')
+    usernameLabel.appendChild(usernameLabelText)
     usernameField.appendChild(usernameLabel)
-    const usernameInput = util.createInput('username', 'text')
-    usernameInput.pattern = '^[a-zA-Z0-9_]{4,16}$'
+
+    const usernameInput = document.createElement('input')
+    usernameInput.id = 'username'
+    usernameInput.type = 'text'
     usernameField.appendChild(usernameInput)
+
     form.appendChild(usernameField)
+
 
     const passwordField = document.createElement('div')
     passwordField.classList.add('flex', 'flex-col', 'm-y-10')
-    const passwordLabel = util.createLabel('password', 'Password')
+
+    const passwordLabel = document.createElement('label')
+    passwordLabel.htmlFor = 'password'
+    const passwordLabelText = document.createTextNode('Password')
+    passwordLabel.appendChild(passwordLabelText)
+
     passwordField.appendChild(passwordLabel)
-    const passwordInput = util.createInput('password', 'password')
-    passwordInput.pattern = '^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{6,}$'
+
+    const passwordInput = document.createElement('input')
+    passwordInput.id = 'password'
+    passwordInput.type = 'password'
+
     passwordField.appendChild(passwordInput)
+
     form.appendChild(passwordField)
 
     const buttons = document.createElement('div')
     buttons.classList.add('flex', 'justify-end')
 
-    const resetButton = util.createButton('reset', 'Clear')
+    const resetButton = document.createElement('button')
+    resetButton.type = 'reset'
+    const resetButtonText = document.createTextNode('Clear')
+    resetButton.appendChild(resetButtonText)
+
     buttons.appendChild(resetButton)
 
-    const submitButton = util.createButton('submit', 'Login')
+    const submitButton = document.createElement('button')
+    submitButton.type = 'submit'
+    const submitButtonText = document.createTextNode('Login')
+    submitButton.appendChild(submitButtonText)
+
     buttons.appendChild(submitButton)
 
     form.appendChild(buttons)
 
     login.appendChild(form)
 
-    const registerLink = util.createAnchor('', 'Register')
+    const registerLink = document.createElement('a')
+    registerLink.href = ""
+    const registerLinkText = document.createTextNode('Register')
+    registerLink.appendChild(registerLinkText)
 
     registerLink.addEventListener('click', event => {
         event.preventDefault()

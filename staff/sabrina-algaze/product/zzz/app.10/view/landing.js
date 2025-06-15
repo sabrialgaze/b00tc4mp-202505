@@ -1,14 +1,17 @@
 const landing = document.createElement('div')
 
 {
-    const title = util.createTitle(1, 'App')
+    const title = utils.createTitle(1, 'App')
 
     landing.appendChild(title)
 
     const navigations = document.createElement('p')
     navigations.classList.add('text-center')
 
-    const registerLink = util.createAnchor('', 'Register')
+    const registerLink = document.createElement('a')
+    registerLink.href = ""
+    const registerLinkText = document.createTextNode('Register')
+    registerLink.appendChild(registerLinkText)
     navigations.appendChild(registerLink)
 
     registerLink.addEventListener('click', event => {
@@ -20,7 +23,10 @@ const landing = document.createElement('div')
     const orText = document.createTextNode(' or ')
     navigations.appendChild(orText)
 
-    const loginLink = util.createAnchor('', 'Login')
+    const loginLink = document.createElement('a')
+    loginLink.href = ""
+    const loginLinkText = document.createTextNode('Login')
+    loginLink.appendChild(loginLinkText)
     navigations.appendChild(loginLink)
 
     loginLink.addEventListener('click', event => {

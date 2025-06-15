@@ -19,7 +19,9 @@ const renderPosts = () => {
         allPosts.forEach(post => {
             const li = document.createElement('li')
 
-            const author = util.createTitle('3', post.author.username)
+            const author = document.createElement('h3')
+            const authorText = document.createTextNode(post.author.username)
+            author.appendChild(authorText)
             li.appendChild(author)
 
             const image = document.createElement('img')
@@ -38,7 +40,10 @@ const renderPosts = () => {
             li.appendChild(date)
 
             if (post.own) {
-                const removeButton = util.createButton('button', '🗑')
+                const removeButton = document.createElement('button')
+                removeButton.type = 'button'
+                const removeButtonText = document.createTextNode('🗑')
+                removeButton.appendChild(removeButtonText)
                 li.appendChild(removeButton)
 
                 removeButton.addEventListener('click', event => {
