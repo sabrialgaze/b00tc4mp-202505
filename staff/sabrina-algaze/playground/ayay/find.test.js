@@ -1,20 +1,22 @@
+import './find.js'
+
 console.info('TEST find')
 
-console.info('CASE returns first element from array that satisfies the testing callback')
+console.info('CASE returns first element from ayay that satisfies the testing callback')
 
 {
-    const nums = [10, 20, 30]
+    const nums = new Ayay(10, 20, 30)
 
     let iterations = 0
     const elements = []
     const indexes = []
     const selfies = []
 
-    const found = nums.find((num, index, array) => {
+    const found = nums.find((num, index, ayay) => {
         iterations++
         elements.push(num)
         indexes.push(index)
-        selfies.push(array)
+        selfies.push(ayay)
 
         return num > 15
     })
@@ -29,21 +31,21 @@ console.info('CASE returns first element from array that satisfies the testing c
     console.assert(selfies[1] === nums, 'selfies at 1 is nums')
 }
 
-console.info('CASE cant find the element from array that satisfies the testing callback')
+console.info('CASE cant find the element from ayay that satisfies the testing callback')
 
 {
-    const nums = [10, 20, 30]
+    const nums = new Ayay(10, 20, 30)
 
     let iterations = 0
     const elements = []
     const indexes = []
     const selfies = []
 
-    const found = nums.find((num, index, array) => {
+    const found = nums.find((num, index, ayay) => {
         iterations++
         elements.push(num)
         indexes.push(index)
-        selfies.push(array)
+        selfies.push(ayay)
 
         return num < 10
     })
@@ -61,10 +63,10 @@ console.info('CASE cant find the element from array that satisfies the testing c
     console.assert(selfies[2] === nums, 'selfies at 2 is nums')
 }
 
-console.info('CASE the array is empty')
+console.info('CASE the ayay is empty')
 
 {
-    const nums = []
+    const nums = new Ayay()
 
     const found = nums.find(num => num < 10)
 
@@ -78,7 +80,7 @@ console.info('CASE testing callback is not provided')
     let expectedError = null
 
     try {
-        const nums = [10, 20, 30]
+        const nums = new Ayay(10, 20, 30)
 
         nums.find()
     } catch (error) {
