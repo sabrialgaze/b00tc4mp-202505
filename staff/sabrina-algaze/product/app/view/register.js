@@ -1,27 +1,25 @@
-const register = document.createElement('div')
+const register = new Division()
 
 {
-    const title = util.createTitle(1, 'Register')
+    const title = new Title(1, 'Register')
 
-    register.appendChild(title)
+    register.add(title)
 
-    const form = document.createElement('form')
+    const form = new Form()
 
-    form.addEventListener('submit', event => {
-        event.preventDefault()
-
+    form.addSubmitBehavior(() => {
         try {
-            const name = nameInput.value
-            const email = emailInput.value
-            const username = usernameInput.value
-            const password = passwordInput.value
+            const name = nameInput.getValue()
+            const email = emailInput.getValue()
+            const username = usernameInput.getValue()
+            const password = passwordInput.getValue()
 
             logic.registerUser(name, email, username, password)
 
-            form.reset()
+            form.clear()
 
-            body.removeChild(register)
-            body.appendChild(login)
+            body.remove(register)
+            body.add(login)
         } catch (error) {
             console.error(error)
 
@@ -29,66 +27,61 @@ const register = document.createElement('div')
         }
     })
 
-    const nameField = document.createElement('div')
-    nameField.classList.add('flex', 'flex-col', 'm-y-10')
-    const nameLabel = util.createLabel('name', 'Name')
-    nameField.appendChild(nameLabel)
-    const nameInput = util.createInput('name', 'text')
-    nameInput.pattern = '^[A-Za-z\\s]+$'
-    nameField.appendChild(nameInput)
-    form.appendChild(nameField)
+    const nameField = new Division()
+    nameField.addClass('flex', 'flex-col', 'm-y-10')
+    const nameLabel = new Label('name', 'Name')
+    nameField.add(nameLabel)
+    const nameInput = new Input('name', 'text', '^[A-Za-z\\s]+$')
+    nameField.add(nameInput)
+    form.add(nameField)
 
-    const emailField = document.createElement('div')
-    emailField.classList.add('flex', 'flex-col', 'm-y-10')
-    const emailLabel = util.createLabel('email', 'E-mail')
-    emailField.appendChild(emailLabel)
-    const emailInput = util.createInput('email', 'email')
-    emailField.appendChild(emailInput)
-    form.appendChild(emailField)
+    const emailField = new Division()
+    emailField.addClass('flex', 'flex-col', 'm-y-10')
+    const emailLabel = new Label('email', 'E-mail')
+    emailField.add(emailLabel)
+    const emailInput = new Input('email', 'email')
+    emailField.add(emailInput)
+    form.add(emailField)
 
-    const usernameField = document.createElement('div')
-    usernameField.classList.add('flex', 'flex-col', 'm-y-10')
-    const usernameLabel = util.createLabel('username', 'Username')
-    usernameField.appendChild(usernameLabel)
-    const usernameInput = util.createInput('username', 'text')
-    usernameInput.pattern = '^[a-zA-Z0-9_]{4,16}$'
-    usernameField.appendChild(usernameInput)
-    form.appendChild(usernameField)
+    const usernameField = new Division()
+    usernameField.addClass('flex', 'flex-col', 'm-y-10')
+    const usernameLabel = new Label('username', 'Username')
+    usernameField.add(usernameLabel)
+    const usernameInput = new Input('username', 'text', '^[a-zA-Z0-9_]{4,16}$')
+    usernameField.add(usernameInput)
+    form.add(usernameField)
 
-    const passwordField = document.createElement('div')
-    passwordField.classList.add('flex', 'flex-col', 'm-y-10')
-    const passwordLabel = util.createLabel('password', 'Password')
-    passwordField.appendChild(passwordLabel)
-    const passwordInput = util.createInput('password', 'password')
-    passwordInput.pattern = '^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{6,}$'
-    passwordField.appendChild(passwordInput)
-    form.appendChild(passwordField)
+    const passwordField = new Division()
+    passwordField.addClass('flex', 'flex-col', 'm-y-10')
+    const passwordLabel = new Label('password', 'Password')
+    passwordField.add(passwordLabel)
+    const passwordInput = new Input('password', 'password', '^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{6,}$')
+    passwordField.add(passwordInput)
+    form.add(passwordField)
 
-    const buttons = document.createElement('div')
-    buttons.classList.add('flex', 'justify-end')
+    const buttons = new Division()
+    buttons.addClass('flex', 'justify-end')
 
-    const resetButton = util.createButton('reset', 'Clear')
-    buttons.appendChild(resetButton)
+    const resetButton = new Button('reset', 'Clear')
+    buttons.add(resetButton)
 
-    const submitButton = util.createButton('submit', 'Register')
-    buttons.appendChild(submitButton)
+    const submitButton = new Button('submit', 'Register')
+    buttons.add(submitButton)
 
-    form.appendChild(buttons)
+    form.add(buttons)
 
-    register.appendChild(form)
+    register.add(form)
 
-    const loginLink = util.createAnchor('', 'Login')
+    const loginLink = new Link('', 'Login')
 
-    loginLink.addEventListener('click', event => {
-        event.preventDefault()
+    loginLink.addBehavior('click', () => {
+        form.clear()
 
-        form.reset()
-
-        body.removeChild(register)
-        body.appendChild(login)
+        body.remove(register)
+        body.add(login)
     })
 
-    register.appendChild(loginLink)
+    register.add(loginLink)
 
-    // body.appendChild(register)
+    // body.add(register)
 }

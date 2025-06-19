@@ -1,47 +1,46 @@
-const posts = document.createElement('div')
+const posts = new Division()
 
 {
-    const postsList = document.createElement('ul')
-    postsList.classList.add('list-style-none', 'p-0')
+    const postsList = new List()
+    postsList.addClass('list-style-none', 'p-0')
 
-    posts.appendChild(postsList)
+    posts.add(postsList)
 
-    home.appendChild(posts)
+    home.add(posts)
 }
 
 const renderPosts = () => {
     try {
         const allPosts = logic.getPosts()
 
-        const postsList = posts.querySelector('ul')
-        postsList.innerHTML = ''
+        const postsList = new Component(posts.container.querySelector('ul'))
+        postsList.container.innerHTML = ''
 
         allPosts.forEach(post => {
-            const li = document.createElement('li')
+            const li = new ListItem()
 
-            const author = util.createTitle(3, post.author.username)
-            li.appendChild(author)
+            const author = new Title(3, post.author.username)
+            li.add(author)
 
-            const image = document.createElement('img')
-            image.classList.add('w-full')
-            image.src = post.image = post.image
-            li.appendChild(image)
+            const image = new Image(post.image)
+            image.addClass('w-full')
+            li.add(image)
 
-            const caption = document.createElement('p')
-            const captionText = document.createTextNode(post.text)
-            caption.appendChild(captionText)
-            li.appendChild(caption)
+            const caption = new Paragraph()
+            const captionText = new Text(post.text)
+            caption.add(captionText)
+            li.add(caption)
 
-            const date = document.createElement('time')
-            const dateText = document.createTextNode(post.date)
-            date.appendChild(dateText)
-            li.appendChild(date)
+            const date = new Time()
+            const dateText = new Text(post.date)
+            date.add(dateText)
+            li.add(date)
 
             if (post.own) {
-                const removeButton = util.createButton('button', '🗑')
-                li.appendChild(removeButton)
+                const removeButton = new Button('button', '🗑')
+                li.add(removeButton)
 
-                removeButton.addEventListener('click', event => {
+                removeButton.addBehavior('click', () => {
                     if (confirm('Delete post?'))
                         try {
                             logic.removePost(post.id)
@@ -55,7 +54,7 @@ const renderPosts = () => {
                 })
             }
 
-            postsList.appendChild(li)
+            postsList.add(li)
         })
     } catch (error) {
         console.error(error)

@@ -1,28 +1,26 @@
-const newPost = document.createElement('div')
+const newPost = new Division()
 
 {
-    const title = util.createTitle(2, 'New post')
+    const title = new Title(2, 'New post')
 
-    newPost.appendChild(title)
+    newPost.add(title)
 
-    const form = document.createElement('form')
+    const form = new Form()
 
-    form.addEventListener('submit', event => {
-        event.preventDefault()
-
+    form.addSubmitBehavior(() => {
         try {
-            const image = imageInput.value
-            const text = textInput.value
+            const image = imageInput.getValue()
+            const text = textInput.getValue()
 
             logic.createPost(image, text)
 
-            form.reset()
+            form.clear()
 
             renderPosts()
 
-            home.removeChild(newPost)
+            home.remove(newPost)
 
-            home.appendChild(posts)
+            home.add(posts)
         } catch (error) {
             console.error(error)
 
@@ -30,43 +28,43 @@ const newPost = document.createElement('div')
         }
     })
 
-    const imageField = document.createElement('div')
-    imageField.classList.add('flex', 'flex-col', 'm-y-10')
-    const imageLabel = util.createLabel('image', 'Image')
-    imageField.appendChild(imageLabel)
-    const imageInput = util.createInput('image', 'url')
-    imageField.appendChild(imageInput)
-    form.appendChild(imageField)
+    const imageField = new Division()
+    imageField.addClass('flex', 'flex-col', 'm-y-10')
+    const imageLabel = new Label('image', 'Image')
+    imageField.add(imageLabel)
+    const imageInput = new Input('image', 'url')
+    imageField.add(imageInput)
+    form.add(imageField)
 
-    const textField = document.createElement('div')
-    textField.classList.add('flex', 'flex-col', 'm-y-10')
+    const textField = new Division()
+    textField.addClass('flex', 'flex-col', 'm-y-10')
 
-    const textLabel = util.createLabel('text', 'Text')
-    textField.appendChild(textLabel)
-    const textInput = util.createInput('text', 'text')
-    textField.appendChild(textInput)
+    const textLabel = new Label('text', 'Text')
+    textField.add(textLabel)
+    const textInput = new Input('text', 'text')
+    textField.add(textInput)
 
-    form.appendChild(textField)
+    form.add(textField)
 
-    const buttons = document.createElement('div')
-    buttons.classList.add('flex', 'justify-end')
+    const buttons = new Division()
+    buttons.addClass('flex', 'justify-end')
 
-    const cancelButton = util.createButton('button', 'Cancel')
-    buttons.appendChild(cancelButton)
+    const cancelButton = new Button('button', 'Cancel')
+    buttons.add(cancelButton)
 
-    cancelButton.addEventListener('click', event => {
-        form.reset()
+    cancelButton.addBehavior('click', () => {
+        form.clear()
 
-        home.removeChild(newPost)
-        home.appendChild(posts)
+        home.remove(newPost)
+        home.add(posts)
     })
 
-    const submitButton = util.createButton('submit', 'Create')
-    buttons.appendChild(submitButton)
+    const submitButton = new Button('submit', 'Create')
+    buttons.add(submitButton)
 
-    form.appendChild(buttons)
+    form.add(buttons)
 
-    newPost.appendChild(form)
+    newPost.add(form)
 
-    // home.appendChild(newPost)
+    // home.add(newPost)
 }

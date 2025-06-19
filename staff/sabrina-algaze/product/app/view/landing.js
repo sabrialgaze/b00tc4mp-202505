@@ -1,36 +1,34 @@
-const landing = document.createElement('div')
+const landing = new Division()
 
 {
-    const title = util.createTitle(1, 'App')
+    const title = new Title(1, 'App')
 
-    landing.appendChild(title)
+    landing.add(title)
 
-    const navigations = document.createElement('p')
-    navigations.classList.add('text-center')
+    const navigations = new Paragraph()
+    navigations.addClass('text-center')
 
-    const registerLink = util.createAnchor('', 'Register')
-    navigations.appendChild(registerLink)
+    const registerLink = new Link('', 'Register')
+    navigations.add(registerLink)
 
-    registerLink.addEventListener('click', event => {
-        event.preventDefault()
-        body.removeChild(landing)
-        body.appendChild(register)
+    registerLink.addBehavior('click', event => {
+        body.remove(landing)
+        body.add(register)
     })
 
-    const orText = document.createTextNode(' or ')
-    navigations.appendChild(orText)
+    const orText = new Text(' or ')
+    navigations.add(orText)
 
-    const loginLink = util.createAnchor('', 'Login')
-    navigations.appendChild(loginLink)
+    const loginLink = new Link('', 'Login')
+    navigations.add(loginLink)
 
-    loginLink.addEventListener('click', event => {
-        event.preventDefault()
-        body.removeChild(landing)
-        body.appendChild(login)
+    loginLink.addBehavior('click', event => {
+        body.remove(landing)
+        body.add(login)
     })
 
-    landing.appendChild(navigations)
+    landing.add(navigations)
 
     if (!userLoggedIn)
-        body.appendChild(landing)
+        body.add(landing)
 }

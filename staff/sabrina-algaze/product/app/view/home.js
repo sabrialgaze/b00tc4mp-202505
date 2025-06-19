@@ -1,28 +1,27 @@
-const home = document.createElement('div')
+const home = new Division()
 
 {
-    const title = util.createTitle(1, 'App')
+    const title = new Title(1, 'App')
 
-    home.appendChild(title)
+    home.add(title)
 
-    const salutation = document.createElement('p')
-    salutation.classList.add('text-center')
-    const salutationText = document.createTextNode('Hola, Mundo!')
-    salutation.appendChild(salutationText)
+    const salutation = new Paragraph()
+    salutation.addClass('text-center')
+    let salutationText = new Text('Hola, Mundo!')
+    salutation.add(salutationText)
 
-    home.appendChild(salutation)
+    home.add(salutation)
 
-    const logoutButton = util.createButton('button', 'Logout')
+    const logoutButton = new Button('button', 'Logout')
 
-    home.appendChild(logoutButton)
+    home.add(logoutButton)
 
-    logoutButton.addEventListener('click', event => {
-        event.preventDefault()
+    logoutButton.addBehavior('click', () => {
         try {
             logic.logoutUser()
 
-            body.removeChild(home)
-            body.appendChild(login)
+            body.remove(home)
+            body.add(login)
         } catch (error) {
             console.error(error)
 
@@ -30,27 +29,25 @@ const home = document.createElement('div')
         }
     })
 
-    const newPostButton = util.createButton('button', '+')
+    const newPostButton = new Button('button', '+')
 
-    home.appendChild(newPostButton)
+    home.add(newPostButton)
 
-    newPostButton.addEventListener('click', event => {
-        event.preventDefault()
+    newPostButton.addBehavior('click', () => {
+        home.remove(posts)
 
-        home.removeChild(posts)
-
-        home.appendChild(newPost)
+        home.add(newPost)
     })
 
     if (userLoggedIn)
         try {
             const user = logic.getUserInfo()
 
-            salutation.childNodes[0].remove()
-            const salutationText = document.createTextNode(`Hello, ${user.name}!`)
-            salutation.appendChild(salutationText)
+            salutation.remove(salutationText)
+            salutationText = new Text(`Hello, ${user.name}!`)
+            salutation.add(salutationText)
 
-            body.appendChild(home)
+            body.add(home)
         } catch (error) {
             console.error(error)
 

@@ -1,34 +1,32 @@
-const login = document.createElement('div')
+const login = new Division()
 
 {
-    const title = util.createTitle(1, 'Login')
+    const title = new Title(1, 'Login')
 
-    login.appendChild(title)
+    login.add(title)
 
-    const form = document.createElement('form')
+    const form = new Form('form')
 
-    form.addEventListener('submit', event => {
-        event.preventDefault()
-
+    form.addSubmitBehavior(() => {
         try {
-            const username = usernameInput.value
-            const password = passwordInput.value
+            const username = usernameInput.getValue()
+            const password = passwordInput.getValue()
 
             logic.loginUser(username, password)
 
-            form.reset()
+            form.clear()
 
             const user = logic.getUserInfo()
 
-            const salutation = home.querySelector('p')
-            salutation.childNodes[0].remove()
-            const salutationText = document.createTextNode(`Hello, ${user.name}!`)
-            salutation.appendChild(salutationText)
+            const salutation = new Component(home.container.querySelector('p'))
+            salutation.container.childNodes[0].remove()
+            const salutationText = new Text(`Hello, ${user.name}!`)
+            salutation.add(salutationText)
 
             renderPosts()
 
-            body.removeChild(login)
-            body.appendChild(home)
+            body.remove(login)
+            body.add(home)
         } catch (error) {
             console.error(error)
 
@@ -36,49 +34,45 @@ const login = document.createElement('div')
         }
     })
 
-    const usernameField = document.createElement('div')
-    usernameField.classList.add('flex', 'flex-col', 'm-y-10')
-    const usernameLabel = util.createLabel('username', 'Username')
-    usernameField.appendChild(usernameLabel)
-    const usernameInput = util.createInput('username', 'text')
-    usernameInput.pattern = '^[a-zA-Z0-9_]{4,16}$'
-    usernameField.appendChild(usernameInput)
-    form.appendChild(usernameField)
+    const usernameField = new Division()
+    usernameField.addClass('flex', 'flex-col', 'm-y-10')
+    const usernameLabel = new Label('username', 'Username')
+    usernameField.add(usernameLabel)
+    const usernameInput = new Input('username', 'text', '^[a-zA-Z0-9_]{4,16}$')
+    usernameField.add(usernameInput)
+    form.add(usernameField)
 
-    const passwordField = document.createElement('div')
-    passwordField.classList.add('flex', 'flex-col', 'm-y-10')
-    const passwordLabel = util.createLabel('password', 'Password')
-    passwordField.appendChild(passwordLabel)
-    const passwordInput = util.createInput('password', 'password')
-    passwordInput.pattern = '^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{6,}$'
-    passwordField.appendChild(passwordInput)
-    form.appendChild(passwordField)
+    const passwordField = new Division()
+    passwordField.addClass('flex', 'flex-col', 'm-y-10')
+    const passwordLabel = new Label('password', 'Password')
+    passwordField.add(passwordLabel)
+    const passwordInput = new Input('password', 'password', '^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{6,}$')
+    passwordField.add(passwordInput)
+    form.add(passwordField)
 
-    const buttons = document.createElement('div')
-    buttons.classList.add('flex', 'justify-end')
+    const buttons = new Division()
+    buttons.addClass('flex', 'justify-end')
 
-    const resetButton = util.createButton('reset', 'Clear')
-    buttons.appendChild(resetButton)
+    const resetButton = new Button('reset', 'Clear')
+    buttons.add(resetButton)
 
-    const submitButton = util.createButton('submit', 'Login')
-    buttons.appendChild(submitButton)
+    const submitButton = new Button('submit', 'Login')
+    buttons.add(submitButton)
 
-    form.appendChild(buttons)
+    form.add(buttons)
 
-    login.appendChild(form)
+    login.add(form)
 
-    const registerLink = util.createAnchor('', 'Register')
+    const registerLink = new Link('', 'Register')
 
-    registerLink.addEventListener('click', event => {
-        event.preventDefault()
+    registerLink.addBehavior('click', () => {
+        form.clear()
 
-        form.reset()
-
-        body.removeChild(login)
-        body.appendChild(register)
+        body.remove(login)
+        body.add(register)
     })
 
-    login.appendChild(registerLink)
+    login.add(registerLink)
 
-    // body.appendChild(login)
+    // body.add(login)
 }
