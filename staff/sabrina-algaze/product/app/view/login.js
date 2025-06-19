@@ -18,8 +18,8 @@ const login = new Division()
 
             const user = logic.getUserInfo()
 
-            const salutation = new Component(home.container.querySelector('p'))
-            salutation.container.childNodes[0].remove()
+            const salutation = home.children[1]
+            salutation.removeAll()
             const salutationText = new Text(`Hello, ${user.name}!`)
             salutation.add(salutationText)
 

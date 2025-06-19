@@ -13,8 +13,9 @@ const renderPosts = () => {
     try {
         const allPosts = logic.getPosts()
 
-        const postsList = new Component(posts.container.querySelector('ul'))
-        postsList.container.innerHTML = ''
+        // const postsList = new Component(posts.container.querySelector('ul'))
+        const postsList = posts.children[0]
+        postsList.removeAll()
 
         allPosts.forEach(post => {
             const li = new ListItem()

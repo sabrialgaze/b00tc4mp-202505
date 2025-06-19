@@ -23,6 +23,12 @@ Component.prototype.remove = function (child) {
     this.container.removeChild(child.container)
 }
 
+Component.prototype.removeAll = function () {
+    this.children.length = 0
+
+    this.container.innerHTML = ''
+}
+
 Component.prototype.addClass = function () {
     Array.prototype.forEach.call(arguments, className =>
         this.container.classList.add(className))
