@@ -1,6 +1,6 @@
 console.info('TEST find')
 
-console.info('CASE returns first element from array that satisfies the testing callback')
+console.info('CASE returns the index of the first element from array that satisfies the provided testing callback')
 
 {
     const nums = [10, 20, 30]
@@ -10,16 +10,16 @@ console.info('CASE returns first element from array that satisfies the testing c
     const indexes = []
     const selfies = []
 
-    const found = nums.find((num, index, array) => {
+    const foundIndex = nums.findIndex((element, index, array) => {
         iterations++
-        elements.push(num)
+        elements.push(element)
         indexes.push(index)
         selfies.push(array)
 
-        return num > 15
+        return element > 15
     })
 
-    console.assert(found === 20, 'found is 20')
+    console.assert(foundIndex === 1, 'foundIndex is 1')
     console.assert(iterations === 2, 'iterations is 2')
     console.assert(elements[0] === 10, 'elements at 0 is 10')
     console.assert(elements[1] === 20, 'elements at 1 is 20')
@@ -39,16 +39,16 @@ console.info('CASE cant find the element from array that satisfies the testing c
     const indexes = []
     const selfies = []
 
-    const found = nums.find((num, index, array) => {
+    const foundIndex = nums.findIndex((element, index, array) => {
         iterations++
-        elements.push(num)
+        elements.push(element)
         indexes.push(index)
         selfies.push(array)
 
-        return num < 10
+        return element < 10
     })
 
-    console.assert(found === undefined, 'found is undefined')
+    console.assert(foundIndex === -1, 'foundIndex is -1')
     console.assert(iterations === 3, 'iterations is 3')
     console.assert(elements[0] === 10, 'elements at 0 is 10')
     console.assert(elements[1] === 20, 'elements at 1 is 20')
@@ -66,9 +66,9 @@ console.info('CASE the array is empty')
 {
     const nums = []
 
-    const found = nums.find(num => num < 10)
+    const foundIndex = nums.findIndex(num => num < 10)
 
-    console.assert(found === undefined, 'found is undefined')
+    console.assert(foundIndex === -1, 'foundIndex is -1')
 }
 
 console.info('CASE testing callback is not provided')
@@ -79,7 +79,41 @@ console.info('CASE testing callback is not provided')
     try {
         const nums = [10, 20, 30]
 
-        nums.find()
+        nums.findIndex()
+    } catch (error) {
+        expectedError = error
+    }
+
+    console.assert(expectedError instanceof TypeError, 'expectedError is instance of TypeError constructor')
+    console.assert(expectedError.message === 'undefined is not a function')
+}
+
+console.info('CASE testing callback is a number')
+
+{
+    let expectedError = null
+
+    try {
+        const nums = [10, 20, 30]
+
+        nums.findIndex(1)
+    } catch (error) {
+        expectedError = error
+    }
+
+    console.assert(expectedError instanceof TypeError, 'expectedError is instance of TypeError constructor')
+    console.assert(expectedError.message === 'number 1 is not a function', 'expectedError message is "number 1 is not a function"')
+}
+
+console.info('CASE testing callback is provided with undefined')
+
+{
+    let expectedError = null
+
+    try {
+        const nums = [10, 20, 30]
+
+        nums.findIndex(undefined)
     } catch (error) {
         expectedError = error
     }
