@@ -1,6 +1,6 @@
 console.info('TEST indexOf')
 
-console.info('CASE finds index of element that exists in the array')
+console.info('CASE finds the index of an element that exists in the array')
 
 {
     const nums = [10, 20, 30]
@@ -8,7 +8,7 @@ console.info('CASE finds index of element that exists in the array')
     const index = nums.indexOf(30)
 
     console.assert(index === 2, 'index is 2')
-    console.assert(nums[2] === 30)
+    console.assert(nums[2] === 30, 'nums at index 2 is 30')
 }
 
 console.info('CASE element does not exist in the array')
@@ -21,7 +21,7 @@ console.info('CASE element does not exist in the array')
     console.assert(index === -1, 'index is -1')
 }
 
-console.info('CASE finds index of element starting from another index')
+console.info('CASE finds the index of an element starting from another index')
 
 {
     const nums = [10, 20, 30, 30]
@@ -33,7 +33,7 @@ console.info('CASE finds index of element starting from another index')
 
 }
 
-console.info('CASE finds index of element counting back from the end of array')
+console.info('CASE finds the index of an element by counting backward from the end of the array')
 
 {
     const nums = [10, 20, 30, 20]
@@ -44,7 +44,7 @@ console.info('CASE finds index of element counting back from the end of array')
     console.assert(nums[3] === 20, 'nums at index 3 is 20')
 }
 
-console.info('CASE element is not founded counting back from the end of array')
+console.info('CASE element not found when searching backward through the array')
 
 {
     const nums = [10, 20, 30]
