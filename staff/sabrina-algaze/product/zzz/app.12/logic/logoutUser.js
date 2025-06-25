@@ -1,0 +1,1 @@
+const logoutUser = () => data.removeUserId()
