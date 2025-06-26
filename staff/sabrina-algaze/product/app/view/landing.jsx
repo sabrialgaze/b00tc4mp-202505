@@ -1,18 +1,27 @@
-const title = <h1>App</h1>
-const registerLink = <a href="" onClick={function (event) {
-    event.preventDefault()
+// const Landing = props => {
+// const onRegisterClicked = props.onRegisterClicked
+// const onLoginClicked = props.onLoginClicked
 
-    alert('go to register')
+// const { onRegisterClicked, onLoginClicked } = props
+
+const Landing = ({ onRegisterClicked, onLoginClicked }) => {
+    const handleRegisterClick = event => {
+        event.preventDefault()
+
+        onRegisterClicked()
+    }
+
+    const handleLoginClick = event => {
+        event.preventDefault()
+
+        onLoginClicked()
+    }
+
+    return <div>
+        <h1>App</h1>
+
+        <p className="text-center">
+            <a href="" onClick={handleRegisterClick}>Register</a> or <a href="" onClick={handleLoginClick}>Login</a>
+        </p>
+    </div>
 }
-}>Register</a>
-
-const loginLink = <a href="" onClick={function (event) {
-    event.preventDefault()
-
-    alert('go to login')
-}
-}>Login</a>
-
-const navigations = <p className="text-center">{[registerLink, ' or ', loginLink]}</p>
-
-const landing = <div>{[title, navigations]}</div>

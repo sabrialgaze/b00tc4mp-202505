@@ -7,8 +7,9 @@ try {
 }
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
-root.render(<App />)
-
+// root.render(register)
+root.render(login)
+// root.render(landing)
 
 
 
