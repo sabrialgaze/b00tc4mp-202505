@@ -7,5 +7,6 @@ const logic = {
 
     createPost,
     getPosts,
-    removePost
+    removePost,
+    likePost
 }

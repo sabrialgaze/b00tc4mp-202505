@@ -20,7 +20,8 @@ const createPost = (image, text) => {
         author: userId,
         image,
         text,
-        date: new Date().toISOString()
+        date: new Date().toISOString(),
+        likes: ['4s856q959wo', '4s84is55wow']
     }
 
     const posts = data.loadPosts()

@@ -15,6 +15,16 @@ const Post = ({ post, onPostRemoved }) => {
         }
     }
 
+    const handleLikePostClick = () => {
+        try {
+            logic.likePost(post.id)
+        } catch (error) {
+            console.error(error)
+
+            alert(error.message)
+        }
+    }
+
     console.debug('Post -> render')
 
     return <li>
@@ -25,6 +35,7 @@ const Post = ({ post, onPostRemoved }) => {
         />
         <p>{post.text}</p>
         <time>{post.date}</time>
-        {post.own && <button type="button" onDeletePostClick={handleDeletePostClick}>🗑</button>}
+        {post.own && <button type="button" onClick={handleDeletePostClick}>🗑</button>}
+        <button type="button" onClick={handleLikePostClick}>👍</button>
     </li>
 }
