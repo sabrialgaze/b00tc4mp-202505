@@ -31,35 +31,11 @@ export const Posts = () => {
         }
     }
 
-    const handlePostLikeToggled = () => {
-        try {
-            const posts = logic.getPosts()
-
-            setPosts(posts)
-        } catch (error) {
-            console.error(error)
-
-            alert(error.message)
-        }
-    }
-
-    const handlePostSaveToggled = () => {
-        try {
-            const posts = logic.getPosts()
-
-            setPosts(posts)
-        } catch (error) {
-            console.error(error)
-
-            alert(error.message)
-        }
-    }
-
     console.debug('Posts -> render')
 
     return <div>
         <ul className="list-style-none p-0">
-            {posts.map(post => <Post post={post} onPostRemoved={handlePostRemoved} onPostLikeToggled={handlePostLikeToggled} onPostSaveToggled={handlePostSaveToggled} />)}
+            {posts.map(post => <Post post={post} onPostRemoved={handlePostRemoved} />)}
         </ul>
     </div>
 }

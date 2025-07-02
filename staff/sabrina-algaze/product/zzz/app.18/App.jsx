@@ -1,26 +1,12 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 
 import { Landing } from './view/landing'
 import { Register } from './view/register'
 import { Login } from './view/login'
 import { Home } from './view/Home'
 
-import { logic } from './logic'
-
 export const App = () => {
     const [view, setView] = useState('landing')
-
-    useEffect(() => {
-        try {
-            const loggedIn = logic.isUserLoggedIn()
-
-            if (loggedIn) setView('home')
-        } catch (error) {
-            console.error(error)
-
-            alert(error.message)
-        }
-    })
 
     const handleRegisterClicked = () => setView('register')
 

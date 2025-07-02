@@ -13,6 +13,7 @@ export const getPosts = () => {
 
     posts.reverse()
 
+    // TODO add author username on each post (mutation)
     posts.forEach(post => {
         const user = users.find(user => user.id === post.author)
 
@@ -24,14 +25,6 @@ export const getPosts = () => {
         post.author = { id, username }
 
         post.own = post.author.id === userId
-
-        post.liked = post.likes.includes(userId)
-
-        post.likesCount = post.likes.length
-
-        delete post.likes
-
-        post.saved = user.saved.includes(post.id)
     })
 
     return posts
