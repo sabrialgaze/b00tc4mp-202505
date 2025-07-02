@@ -1,4 +1,10 @@
-export const Landing = ({ onRegisterClicked, onLoginClicked }) => {
+// const Landing = props => {
+// const onRegisterClicked = props.onRegisterClicked
+// const onLoginClicked = props.onLoginClicked
+
+// const { onRegisterClicked, onLoginClicked } = props
+
+const Landing = ({ onRegisterClicked, onLoginClicked }) => {
     const handleRegisterClick = event => {
         event.preventDefault()
 

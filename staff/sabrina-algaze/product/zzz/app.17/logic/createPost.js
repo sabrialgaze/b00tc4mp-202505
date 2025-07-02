@@ -1,6 +1,4 @@
-import { data } from '../data'
-
-export const createPost = (image, text) => {
+const createPost = (image, text) => {
     if (typeof image !== 'string') throw new TypeError('invalid image type')
     if (!image.length) throw new Error('No image was provided')
     if (typeof text !== 'string') throw new TypeError('invalid text type')

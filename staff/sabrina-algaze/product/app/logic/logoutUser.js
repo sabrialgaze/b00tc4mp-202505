@@ -1,1 +1,3 @@
-const logoutUser = () => data.removeUserId()
+import { data } from '../data'
+
+export const logoutUser = () => data.removeUserId()

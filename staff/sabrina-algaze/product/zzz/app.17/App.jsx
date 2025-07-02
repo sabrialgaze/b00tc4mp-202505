@@ -1,11 +1,10 @@
-import { useState } from 'react'
+const { useState } = React
 
-import { Landing } from './view/landing'
-import { Register } from './view/register'
-import { Login } from './view/login'
-import { Home } from './view/Home'
-
-export const App = () => {
+const App = () => {
+    // const viewState = useState('landing')
+    // const view = viewState[0]
+    // const setView = viewState[1]
+    // const [view, setView] = viewState
     const [view, setView] = useState('landing')
 
     const handleRegisterClicked = () => setView('register')
@@ -16,9 +15,12 @@ export const App = () => {
 
     const handleUserLoggedIn = () => setView('home')
 
-    const handleUserLoggedOut = () => setView('login')
-
     console.log('App -> render')
+
+    // if (view === 'landing')
+    //     return <Landing />
+    // else if (view === 'register')
+    //     return <Register />
 
     return <>
         {view === 'landing' && <Landing onRegisterClicked={handleRegisterClicked} onLoginClicked={handleLoginClicked} />}
@@ -27,6 +29,6 @@ export const App = () => {
 
         {view === 'login' && <Login onRegisterClicked={handleRegisterClicked} onUserLoggedIn={handleUserLoggedIn} />}
 
-        {view === 'home' && <Home onUserLoggedOut={handleUserLoggedOut} />}
+        {view === 'home' && <Home />}
     </>
 }

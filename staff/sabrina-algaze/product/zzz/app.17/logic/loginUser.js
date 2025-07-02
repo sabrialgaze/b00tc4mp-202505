@@ -1,6 +1,4 @@
-import { data } from '../data'
-
-export const loginUser = (username, password) => {
+const loginUser = (username, password) => {
     if (typeof username !== 'string') throw new TypeError('invalid username')
     if (!username.length) throw new RangeError('invalid username length')
 

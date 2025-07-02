@@ -1,10 +1,6 @@
-import { useState, useEffect } from 'react'
+const { useState, useEffect } = React
 
-import { Posts } from './Posts'
-
-import { logic } from '../logic'
-
-export const Home = ({ onUserLoggedOut }) => {
+const Home = () => {
     const [name, setName] = useState('')
 
     const [view, setView] = useState('posts')
@@ -46,24 +42,12 @@ export const Home = ({ onUserLoggedOut }) => {
         }
     }
 
-    const handleLogoutClick = () => {
-        try {
-            logic.logoutUser()
-
-            onUserLoggedOut()
-        } catch (error) {
-            console.error(error)
-
-            alert(error.message)
-        }
-    }
-
     console.debug('Home -> render')
 
     return <div>
         <h1>App</h1>
         <p className="text-center">Hello, {name}!</p>
-        <button type="button" onClick={handleLogoutClick}>Logout</button>
+        <button type="button">Logout</button>
         <button type="button" onClick={handleNewPostClick}>+</button>
         {view === 'posts' && <Posts />}
         {view === 'new-post' && <div>

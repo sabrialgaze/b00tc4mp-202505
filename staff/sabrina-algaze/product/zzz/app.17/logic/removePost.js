@@ -1,6 +1,4 @@
-import { data } from '../data'
-
-export const removePost = postId => {
+const removePost = postId => {
     const userId = data.loadUserId()
 
     const users = data.loadUsers()

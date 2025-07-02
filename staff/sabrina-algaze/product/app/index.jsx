@@ -1,3 +1,9 @@
+import { createRoot } from 'react-dom/client'
+
+import { App } from './App'
+
+import { logic } from './logic'
+
 let userLoggedIn = false
 
 try {
@@ -6,7 +12,7 @@ try {
     alert(error.message)
 }
 
-const root = ReactDOM.createRoot(document.getElementById('root'))
+const root = createRoot(document.getElementById('root'))
 root.render(<App />)
 
 

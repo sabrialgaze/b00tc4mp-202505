@@ -1,6 +1,6 @@
-import { logic } from '../logic'
+const { useState } = React
 
-export const Post = ({ post, onPostRemoved }) => {
+const Post = ({ post, onPostRemoved }) => {
     const handleDeletePostClick = () => {
         if (confirm('Delete post?')) {
             try {

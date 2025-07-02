@@ -1,6 +1,4 @@
-import { data } from '../data'
-
-export const getPosts = () => {
+const getPosts = () => {
     const userId = data.loadUserId()
 
     const users = data.loadUsers()

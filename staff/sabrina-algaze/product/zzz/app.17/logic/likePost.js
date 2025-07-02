@@ -1,6 +1,4 @@
-import { data } from '../data'
-
-export const likePost = (postId) => {
+const likePost = (postId) => {
     const userId = data.loadUserId()
 
     const users = data.loadUsers()

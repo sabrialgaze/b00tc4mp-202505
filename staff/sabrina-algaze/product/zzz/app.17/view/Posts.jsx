@@ -1,10 +1,6 @@
-import { useState, useEffect } from 'react'
+const { useState, useEffect } = React
 
-import { Post } from './Post'
-
-import { logic } from '../logic'
-
-export const Posts = () => {
+const Posts = () => {
     const [posts, setPosts] = useState([])
 
     useEffect(() => {

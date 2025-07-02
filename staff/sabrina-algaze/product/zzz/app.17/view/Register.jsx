@@ -1,6 +1,4 @@
-import { logic } from '../logic'
-
-export const Register = ({ onLoginClicked, onUserRegistered }) => {
+const Register = ({ onLoginClicked, onUserRegistered }) => {
     const handleLoginClick = event => {
         event.preventDefault()
 
@@ -12,6 +10,8 @@ export const Register = ({ onLoginClicked, onUserRegistered }) => {
 
         const form = event.target
 
+        // const nameInput = form.querySelector('#name')
+        // const nameInput = form.name
         const name = form.name.value
         const email = form.email.value
         const username = form.username.value
