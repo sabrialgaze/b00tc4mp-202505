@@ -73,10 +73,16 @@ export const Home = ({ onUserLoggedOut }) => {
         setView('archived-posts')
     }
 
+    const handleAppClick = event => {
+        event.preventDefault()
+
+        setView('posts')
+    }
+
     console.debug('Home -> render')
 
     return <div>
-        <h1>App</h1>
+        <h1><a href="" onClick={handleAppClick}>App</a></h1>
         <p className="text-center">Hello, {name}!</p>
         <button type="button" onClick={handleLogoutClick}>Logout</button>
         <button type="button" onClick={handleNewPostClick}>+</button>

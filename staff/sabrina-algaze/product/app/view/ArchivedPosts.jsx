@@ -9,8 +9,9 @@ export const ArchivedPosts = () => {
 
     useEffect(() => {
         try {
-            // TODO const posts = logic.getArchivedPosts()
+            const posts = logic.getArchivedPosts()
 
+            setPosts(posts)
         } catch (error) {
             console.error(error)
 
@@ -20,7 +21,7 @@ export const ArchivedPosts = () => {
 
     const handlePostRemoved = () => {
         try {
-            const posts = logic.getSavedPosts()
+            const posts = logic.getArchivedPosts()
 
             setPosts(posts)
         } catch (error) {
@@ -32,7 +33,7 @@ export const ArchivedPosts = () => {
 
     const handlePostLikeToggled = () => {
         try {
-            const posts = logic.getSavedPosts()
+            const posts = logic.getArchivedPosts()
 
             setPosts(posts)
         } catch (error) {
@@ -44,7 +45,19 @@ export const ArchivedPosts = () => {
 
     const handlePostSaveToggled = () => {
         try {
-            const posts = logic.getSavedPosts()
+            const posts = logic.getArchivedPosts()
+
+            setPosts(posts)
+        } catch (error) {
+            console.error(error)
+
+            alert(error.message)
+        }
+    }
+
+    const handlePostArchiveToggled = () => {
+        try {
+            const posts = logic.getArchivedPosts()
 
             setPosts(posts)
         } catch (error) {
@@ -58,7 +71,7 @@ export const ArchivedPosts = () => {
 
     return <div>
         <ul className="list-style-none p-0">
-            {posts.map(post => <Post post={post} onPostRemoved={handlePostRemoved} onPostLikeToggled={handlePostLikeToggled} onPostSaveToggled={handlePostSaveToggled} />)}
+            {posts.map(post => <Post post={post} onPostRemoved={handlePostRemoved} onPostLikeToggled={handlePostLikeToggled} onPostSaveToggled={handlePostSaveToggled} onPostArchiveToggled={handlePostArchiveToggled} />)}
         </ul>
     </div>
 }

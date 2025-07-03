@@ -9,11 +9,11 @@ export const getSavedPosts = () => {
 
     if (!user) throw Error('user not found')
 
-    const posts = data.loadPosts()
+    let posts = data.loadPosts()
 
-    const savedPosts = posts.filter(post => user.saved.includes(post.id))
+    posts = posts.filter(post => user.saved.includes(post.id) && !post.archived)
 
-    savedPosts.forEach(post => {
+    posts.forEach(post => {
         const author = users.find(user => user.id === post.author)
 
         if (!author) throw Error('author not found')
@@ -34,5 +34,5 @@ export const getSavedPosts = () => {
         post.saved = true
     })
 
-    return savedPosts
+    return posts
 }

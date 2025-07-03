@@ -9,7 +9,9 @@ export const getPosts = () => {
 
     if (!user) throw Error('user not found')
 
-    const posts = data.loadPosts()
+    let posts = data.loadPosts()
+
+    posts = posts.filter(post => !post.archived)
 
     posts.reverse()
 

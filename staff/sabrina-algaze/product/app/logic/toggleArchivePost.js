@@ -15,13 +15,7 @@ export const toggleArchivePost = postId => {
 
     if (!post) throw Error('post not found')
 
-    const { archived } = user
+    post.archived = !post.archived
 
-    const index = archived.findIndex(archivedPostId => archivedPostId === postId)
-
-    if (index < 0) archived.push(postId)
-
-    else archived.splice(index, 1)
-
-    data.saveUsers(users)
+    data.savePosts(posts)
 }

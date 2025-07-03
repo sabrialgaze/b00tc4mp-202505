@@ -40,7 +40,7 @@ export const Post = ({ post, onPostRemoved, onPostLikeToggled, onPostSaveToggled
     }
 
     const handleToggleArchivePostClick = () => {
-        if (confirm('Archive post?')) {
+        if (confirm(`${post.archived ? 'Unarchive' : 'Archive'} post?`)) {
             try {
                 logic.toggleArchivePost(post.id)
 
@@ -52,7 +52,6 @@ export const Post = ({ post, onPostRemoved, onPostLikeToggled, onPostSaveToggled
             }
         }
     }
-
 
     console.debug('Post -> render')
 
@@ -66,7 +65,7 @@ export const Post = ({ post, onPostRemoved, onPostLikeToggled, onPostSaveToggled
         <time>{post.date}</time>
         <button type="button" onClick={handleToggleLikePostClick}>{post.liked ? '❤️' : '🤍'} ({post.likesCount})</button>
         <button type="button" onClick={handleToggleSavePostClick}>{post.saved ? '🇺🇳' : '🏳️'}</button>
-        {post.own && <button type="button" onClick={handleToggleArchivePostClick}>📁</button>}
+        {post.own && <button type="button" onClick={handleToggleArchivePostClick}>{post.archived ? '🗄' : '📁'}</button>}
         {post.own && <button type="button" onClick={handleDeletePostClick}>🗑</button>}
     </li>
 }

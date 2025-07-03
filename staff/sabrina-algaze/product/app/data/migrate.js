@@ -18,8 +18,24 @@ import { data } from '.';
 
 // Add archived property to users
 
-const users = data.loadUsers()
+// const users = data.loadUsers()
 
-users.forEach(user => user.archived = [])
+// users.forEach(user => user.archived = [])
 
-data.saveUsers(users)
+// data.saveUsers(users)
+
+// Remove archived property to users
+
+// const users = data.loadUsers()
+
+// users.forEach(user => delete user.archived)
+
+// data.saveUsers(users)
+
+// Add archived property to posts
+
+const posts = data.loadPosts()
+
+posts.forEach(post => post.archived = false)
+
+data.savePosts(posts)

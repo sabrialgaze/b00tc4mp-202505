@@ -56,9 +56,9 @@ export const Posts = () => {
     }
     const handlePostArchiveToggled = () => {
         try {
-            // const posts = logic.getPosts()
+            const posts = logic.getPosts()
 
-            // setPosts(posts)
+            setPosts(posts)
         } catch (error) {
             console.error(error)
 
