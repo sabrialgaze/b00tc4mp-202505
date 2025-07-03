@@ -1,6 +1,6 @@
 import { data } from '../data'
 
-export const getPosts = () => {
+export const getSavedPosts = () => {
     const userId = data.loadUserId()
 
     const users = data.loadUsers()
@@ -11,9 +11,9 @@ export const getPosts = () => {
 
     const posts = data.loadPosts()
 
-    posts.reverse()
+    const savedPosts = posts.filter(post => user.saved.includes(post.id))
 
-    posts.forEach(post => {
+    savedPosts.forEach(post => {
         const author = users.find(user => user.id === post.author)
 
         if (!author) throw Error('author not found')
@@ -31,8 +31,8 @@ export const getPosts = () => {
 
         delete post.likes
 
-        post.saved = user.saved.includes(post.id)
+        post.saved = true
     })
 
-    return posts
+    return savedPosts
 }

@@ -4,14 +4,13 @@ import { Post } from './Post'
 
 import { logic } from '../logic'
 
-export const Posts = () => {
+export const ArchivedPosts = () => {
     const [posts, setPosts] = useState([])
 
     useEffect(() => {
         try {
-            const posts = logic.getPosts()
+            // TODO const posts = logic.getArchivedPosts()
 
-            setPosts(posts)
         } catch (error) {
             console.error(error)
 
@@ -21,7 +20,7 @@ export const Posts = () => {
 
     const handlePostRemoved = () => {
         try {
-            const posts = logic.getPosts()
+            const posts = logic.getSavedPosts()
 
             setPosts(posts)
         } catch (error) {
@@ -33,7 +32,7 @@ export const Posts = () => {
 
     const handlePostLikeToggled = () => {
         try {
-            const posts = logic.getPosts()
+            const posts = logic.getSavedPosts()
 
             setPosts(posts)
         } catch (error) {
@@ -45,7 +44,7 @@ export const Posts = () => {
 
     const handlePostSaveToggled = () => {
         try {
-            const posts = logic.getPosts()
+            const posts = logic.getSavedPosts()
 
             setPosts(posts)
         } catch (error) {
@@ -54,23 +53,13 @@ export const Posts = () => {
             alert(error.message)
         }
     }
-    const handlePostArchiveToggled = () => {
-        try {
-            // const posts = logic.getPosts()
 
-            // setPosts(posts)
-        } catch (error) {
-            console.error(error)
-
-            alert(error.message)
-        }
-    }
-
-    console.debug('Posts -> render')
+    console.debug('ArchivedPosts -> render')
 
     return <div>
         <ul className="list-style-none p-0">
-            {posts.map(post => <Post post={post} onPostRemoved={handlePostRemoved} onPostLikeToggled={handlePostLikeToggled} onPostSaveToggled={handlePostSaveToggled} onPostArchiveToggled={handlePostArchiveToggled} />)}
+            {posts.map(post => <Post post={post} onPostRemoved={handlePostRemoved} onPostLikeToggled={handlePostLikeToggled} onPostSaveToggled={handlePostSaveToggled} />)}
         </ul>
     </div>
 }
+

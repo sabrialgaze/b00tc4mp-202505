@@ -1,6 +1,6 @@
 import { data } from '../data'
 
-export const toggleSavePost = postId => {
+export const toggleArchivePost = postId => {
     const userId = data.loadUserId()
 
     const users = data.loadUsers()
@@ -15,13 +15,13 @@ export const toggleSavePost = postId => {
 
     if (!post) throw Error('post not found')
 
-    const { saved } = user
+    const { archived } = user
 
-    const index = saved.findIndex(savedPostId => savedPostId === postId)
+    const index = archived.findIndex(archivedPostId => archivedPostId === postId)
 
-    if (index < 0) saved.push(postId)
+    if (index < 0) archived.push(postId)
 
-    else saved.splice(index, 1)
+    else archived.splice(index, 1)
 
     data.saveUsers(users)
 }

@@ -2,7 +2,10 @@ import { useState, useEffect } from 'react'
 
 import { Posts } from './Posts'
 
+import { SavedPosts } from './SavedPosts'
+
 import { logic } from '../logic'
+import { ArchivedPosts } from './ArchivedPosts'
 
 export const Home = ({ onUserLoggedOut }) => {
     const [name, setName] = useState('')
@@ -58,6 +61,18 @@ export const Home = ({ onUserLoggedOut }) => {
         }
     }
 
+    const handleSavedPostsClick = event => {
+        event.preventDefault()
+
+        setView('saved-posts')
+    }
+
+    const handleArchivedPostsClick = event => {
+        event.preventDefault()
+
+        setView('archived-posts')
+    }
+
     console.debug('Home -> render')
 
     return <div>
@@ -65,6 +80,8 @@ export const Home = ({ onUserLoggedOut }) => {
         <p className="text-center">Hello, {name}!</p>
         <button type="button" onClick={handleLogoutClick}>Logout</button>
         <button type="button" onClick={handleNewPostClick}>+</button>
+        <a href="" onClick={handleSavedPostsClick}>Saved </a>
+        <a href="" onClick={handleArchivedPostsClick}> Archived</a>
         {view === 'posts' && <Posts />}
         {view === 'new-post' && <div>
             <h2>New post</h2>
@@ -83,6 +100,7 @@ export const Home = ({ onUserLoggedOut }) => {
                 </div>
             </form>
         </div>}
-
+        {view === 'saved-posts' && <SavedPosts />}
+        {view === 'archived-posts' && <ArchivedPosts />}
     </div>
 }
