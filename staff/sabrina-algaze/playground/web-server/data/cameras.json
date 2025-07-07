@@ -1,0 +1,72 @@
+[
+    {
+        "brand": "Canon",
+        "model": "AE-1",
+        "type": "SLR",
+        "film_format": "35mm",
+        "year": 1976
+    },
+    {
+        "brand": "Nikon",
+        "model": "FM2",
+        "type": "SLR",
+        "film_format": "35mm",
+        "year": 1982
+    },
+    {
+        "brand": "Pentax",
+        "model": "K1000",
+        "type": "SLR",
+        "film_format": "35mm",
+        "year": 1976
+    },
+    {
+        "brand": "Olympus",
+        "model": "OM-1",
+        "type": "SLR",
+        "film_format": "35mm",
+        "year": 1972
+    },
+    {
+        "brand": "Leica",
+        "model": "M3",
+        "type": "Rangefinder",
+        "film_format": "35mm",
+        "year": 1954
+    },
+    {
+        "brand": "Minolta",
+        "model": "X-700",
+        "type": "SLR",
+        "film_format": "35mm",
+        "year": 1981
+    },
+    {
+        "brand": "Yashica",
+        "model": "Electro 35",
+        "type": "Rangefinder",
+        "film_format": "35mm",
+        "year": 1966
+    },
+    {
+        "brand": "Rolleiflex",
+        "model": "2.8F",
+        "type": "TLR",
+        "film_format": "120",
+        "year": 1960
+    },
+    {
+        "brand": "Hasselblad",
+        "model": "500C/M",
+        "type": "SLR",
+        "film_format": "120",
+        "year": 1970
+    },
+    {
+        "brand": "Mamiya",
+        "model": "RB67",
+        "type": "SLR",
+        "film_format": "120",
+        "year": 1969
+    }
+]
