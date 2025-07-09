@@ -14,6 +14,13 @@
         "year": 1982
     },
     {
+        "brand": "Nikon",
+        "model": "F2",
+        "type": "SLR",
+        "film_format": "35mm",
+        "year": 1971
+    },
+    {
         "brand": "Pentax",
         "model": "K1000",
         "type": "SLR",
