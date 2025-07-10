@@ -1,79 +1,1099 @@
 [
     {
+        "id": "001",
         "brand": "Canon",
         "model": "AE-1",
         "type": "SLR",
-        "film_format": "35mm",
-        "year": 1976
+        "filmFormat": "35mm",
+        "price": 200,
+        "year": 1976,
+        "country": "Japan",
+        "description": "The Canon AE-1, introduced in 1976, is one of the most iconic 35mm SLR cameras, known for making advanced photography accessible to amateurs. It was a game-changer with its microprocessor-controlled auto-exposure, a first for Canon SLRs, and its affordability spurred a boom in film photography. Its durable build and compatibility with Canon’s FD lenses made it a favorite among enthusiasts.",
+        "functionalities": [
+            "Shutter-priority auto-exposure",
+            "Manual exposure control",
+            "Interchangeable FD lenses",
+            "Built-in light meter",
+            "Self-timer"
+        ],
+        "commonUse": "Widely used for general photography, including street, portrait, and landscape. Popular among hobbyists and students for its ease of use and versatility in learning manual photography techniques.",
+        "tags": [
+            "SLR",
+            "35mm",
+            "Canon",
+            "vintage",
+            "film photography",
+            "beginner-friendly"
+        ],
+        "salesStatsByCountry": {
+            "United States": "Over 1 million units sold by 1980",
+            "Japan": "Significant market share in the 1970s",
+            "Europe": "Popular among photography clubs, exact figures unavailable"
+        },
+        "images": [
+            "https://www.istockphoto.com/photo/canon-ae-1-camera-gm1313874967-402284123",
+            "https://images.unsplash.com/photo-1593501375287-1c7288e4063f"
+        ]
     },
     {
+        "id": "002",
+        "brand": "Canon",
+        "model": "FTb",
+        "type": "SLR",
+        "filmFormat": "35mm",
+        "price": 180,
+        "year": 1971,
+        "country": "Japan",
+        "description": "Launched in 1971, the Canon FTb was a robust, manual-focus SLR designed for enthusiasts and semi-professionals. It was part of Canon’s F-series, known for durability and compatibility with FD lenses. The FTb offered a reliable light meter and was a precursor to the more automated AE-1.",
+        "functionalities": [
+            "Manual exposure control",
+            "Built-in CdS light meter",
+            "Interchangeable FD lenses",
+            "Depth-of-field preview"
+        ],
+        "commonUse": "Used for portrait, landscape, and documentary photography, particularly by photographers who preferred full manual control.",
+        "tags": [
+            "SLR",
+            "35mm",
+            "Canon",
+            "manual",
+            "vintage"
+        ],
+        "salesStatsByCountry": {
+            "United States": "Moderate sales, overshadowed by later AE-1",
+            "Japan": "Strong domestic sales in early 1970s",
+            "Europe": "Limited but steady sales among enthusiasts"
+        },
+        "images": [
+            "https://www.istockphoto.com/photo/canon-ftb-camera-gm1208394685-349297863"
+        ]
+    },
+    {
+        "id": "003",
+        "brand": "Canon",
+        "model": "F-1",
+        "type": "SLR",
+        "filmFormat": "35mm",
+        "price": 300,
+        "year": 1971,
+        "country": "Japan",
+        "description": "The Canon F-1, released in 1971, was Canon’s flagship professional SLR, designed to compete with Nikon’s F-series. Built for durability, it was favored by photojournalists and professionals for its modular system and rugged construction. It remained a benchmark for Canon’s SLR designs.",
+        "functionalities": [
+            "Manual exposure",
+            "Interchangeable viewfinders and focusing screens",
+            "FD lens compatibility",
+            "High-speed motor drive option"
+        ],
+        "commonUse": "Professional photojournalism, sports, and studio photography due to its robust build and lens versatility.",
+        "tags": [
+            "SLR",
+            "35mm",
+            "Canon",
+            "professional",
+            "vintage"
+        ],
+        "salesStatsByCountry": {
+            "United States": "Popular among professionals, ~100,000 units sold by 1980",
+            "Japan": "Strong professional market",
+            "Europe": "Favored in photojournalism, limited data"
+        },
+        "images": [
+            "https://www.istockphoto.com/photo/canon-f1-camera-gm1254967324-367083456"
+        ]
+    },
+    {
+        "id": "004",
         "brand": "Nikon",
         "model": "FM2",
         "type": "SLR",
-        "film_format": "35mm",
-        "year": 1982
+        "filmFormat": "35mm",
+        "price": 250,
+        "year": 1982,
+        "country": "Japan",
+        "description": "The Nikon FM2, introduced in 1982, is a compact, fully manual SLR known for its durability and fast shutter speeds (up to 1/4000s). Popular among photographers who valued reliability in harsh conditions, it became a cult favorite for its mechanical precision.",
+        "functionalities": [
+            "Manual exposure",
+            "Interchangeable F-mount lenses",
+            "High-speed shutter (1/4000s)",
+            "Built-in light meter"
+        ],
+        "commonUse": "Street, travel, and documentary photography, especially in challenging environments due to its mechanical reliability.",
+        "tags": [
+            "SLR",
+            "35mm",
+            "Nikon",
+            "manual",
+            "vintage",
+            "rugged"
+        ],
+        "salesStatsByCountry": {
+            "United States": "Strong sales among enthusiasts, ~500,000 units by 1990",
+            "Japan": "Dominant in the 1980s amateur market",
+            "Europe": "Popular in travel photography circles"
+        },
+        "images": [
+            "https://images.unsplash.com/photo-1600585154340-be6161a56a0c",
+            "https://www.istockphoto.com/photo/nikon-fm2-camera-gm1158496932-316468789"
+        ]
     },
     {
+        "id": "005",
         "brand": "Nikon",
-        "model": "F2",
+        "model": "F3",
         "type": "SLR",
-        "film_format": "35mm",
-        "year": 1971
+        "filmFormat": "35mm",
+        "price": 350,
+        "year": 1980,
+        "country": "Japan | Thailand",
+        "description": "The Nikon F3, launched in 1980, was Nikon’s professional SLR, succeeding the F2. It introduced electronic shutter control and was renowned for its reliability and versatility. Used by NASA in space missions, it was a favorite among pros for its robust design.",
+        "functionalities": [
+            "Aperture-priority auto-exposure",
+            "Interchangeable F-mount lenses",
+            "LCD shutter speed display",
+            "Motor drive compatibility"
+        ],
+        "commonUse": "Professional photography, including photojournalism, fashion, and scientific applications due to its precision and durability.",
+        "tags": [
+            "SLR",
+            "35mm",
+            "Nikon",
+            "professional",
+            "vintage"
+        ],
+        "salesStatsByCountry": {
+            "United States": "Over 750,000 units sold globally by 2000",
+            "Japan": "Strong professional and enthusiast adoption",
+            "Europe": "Widely used in editorial photography"
+        },
+        "images": [
+            "https://www.istockphoto.com/photo/nikon-f3-camera-gm1273894562-375678234"
+        ]
     },
     {
+        "id": "006",
+        "brand": "Nikon",
+        "model": "FE",
+        "type": "SLR",
+        "filmFormat": "35mm",
+        "price": 220,
+        "year": 1978,
+        "country": "Japan",
+        "description": "The Nikon FE, released in 1978, was a semi-professional SLR with aperture-priority auto-exposure. It bridged the gap between amateur and professional models, offering a compact design and compatibility with Nikon’s F-mount lenses.",
+        "functionalities": [
+            "Aperture-priority auto-exposure",
+            "Manual exposure",
+            "F-mount lens compatibility",
+            "Built-in light meter"
+        ],
+        "commonUse": "Portrait, street, and travel photography, popular among enthusiasts transitioning to advanced techniques.",
+        "tags": [
+            "SLR",
+            "35mm",
+            "Nikon",
+            "semi-professional",
+            "vintage"
+        ],
+        "salesStatsByCountry": {
+            "United States": "Moderate sales, ~200,000 units by 1985",
+            "Japan": "Popular among hobbyists",
+            "Europe": "Steady sales in amateur markets"
+        },
+        "images": [
+            "https://www.istockphoto.com/photo/nikon-fe-camera-gm1183923745-332967456"
+        ]
+    },
+    {
+        "id": "007",
         "brand": "Pentax",
         "model": "K1000",
         "type": "SLR",
-        "film_format": "35mm",
-        "year": 1976
+        "filmFormat": "35mm",
+        "price": 150,
+        "year": 1976,
+        "country": "Japan",
+        "description": "The Pentax K1000, introduced in 1976, is a legendary student camera known for its simplicity and reliability. Fully manual, it was a staple in photography schools due to its affordability and K-mount lens system, teaching generations the basics of film photography.",
+        "functionalities": [
+            "Manual exposure",
+            "K-mount lens compatibility",
+            "Built-in light meter",
+            "Simple mechanical design"
+        ],
+        "commonUse": "Educational use, street, and portrait photography, ideal for beginners learning manual exposure.",
+        "tags": [
+            "SLR",
+            "35mm",
+            "Pentax",
+            "beginner",
+            "vintage",
+            "educational"
+        ],
+        "salesStatsByCountry": {
+            "United States": "Over 2.5 million units sold globally by 1997",
+            "Japan": "Strong academic and amateur market",
+            "Europe": "Widely used in photography courses"
+        },
+        "images": [
+            "https://images.unsplash.com/photo-1593501375287-1c7288e4063f"
+        ]
     },
     {
+        "id": "008",
+        "brand": "Pentax",
+        "model": "MX",
+        "type": "SLR",
+        "filmFormat": "35mm",
+        "price": 170,
+        "year": 1976,
+        "country": "Japan",
+        "description": "The Pentax MX, launched in 1976, was a compact, fully manual SLR aimed at enthusiasts. It featured a cloth focal-plane shutter and a bright viewfinder, making it a favorite for its portability and K-mount lens compatibility.",
+        "functionalities": [
+            "Manual exposure",
+            "K-mount lenses",
+            "Built-in light meter",
+            "Compact design"
+        ],
+        "commonUse": "Travel and street photography, favored for its small size and reliability.",
+        "tags": [
+            "SLR",
+            "35mm",
+            "Pentax",
+            "compact",
+            "vintage"
+        ],
+        "salesStatsByCountry": {
+            "United States": "Moderate sales, ~100,000 units by 1980",
+            "Japan": "Popular among compact SLR users",
+            "Europe": "Niche but steady sales"
+        },
+        "images": [
+            "https://www.istockphoto.com/photo/pentax-mx-camera-gm1293745623-388123456"
+        ]
+    },
+    {
+        "id": "009",
+        "brand": "Pentax",
+        "model": "Spotmatic",
+        "type": "SLR",
+        "filmFormat": "35mm",
+        "price": 140,
+        "year": 1964,
+        "country": "Japan",
+        "description": "The Pentax Spotmatic, released in 1964, was one of the first SLRs with through-the-lens (TTL) metering, revolutionizing exposure accuracy. It was a benchmark for Pentax’s K-mount system and widely used by enthusiasts and professionals.",
+        "functionalities": [
+            "TTL metering",
+            "Manual exposure",
+            "K-mount lenses",
+            "Robust build"
+        ],
+        "commonUse": "General photography, including portrait and documentary, valued for its accurate metering.",
+        "tags": [
+            "SLR",
+            "35mm",
+            "Pentax",
+            "TTL",
+            "vintage"
+        ],
+        "salesStatsByCountry": {
+            "United States": "Over 1 million units sold by 1970",
+            "Japan": "Dominant in the 1960s market",
+            "Europe": "Popular among early SLR adopters"
+        },
+        "images": [
+            "https://www.istockphoto.com/photo/pentax-spotmatic-camera-gm1143923745-307456789"
+        ]
+    },
+    {
+        "id": "010",
         "brand": "Olympus",
         "model": "OM-1",
         "type": "SLR",
-        "film_format": "35mm",
-        "year": 1972
+        "filmFormat": "35mm",
+        "price": 220,
+        "year": 1972,
+        "country": "Japan",
+        "description": "The Olympus OM-1, launched in 1972, was a groundbreaking compact SLR designed by Yoshihisa Maitani. Its lightweight design and bright viewfinder made it a favorite among travel and street photographers, setting the stage for the OM series.",
+        "functionalities": [
+            "Manual exposure",
+            "OM lens compatibility",
+            "Built-in light meter",
+            "Compact and lightweight"
+        ],
+        "commonUse": "Travel, street, and documentary photography due to its portability and precision.",
+        "tags": [
+            "SLR",
+            "35mm",
+            "Olympus",
+            "compact",
+            "vintage"
+        ],
+        "salesStatsByCountry": {
+            "United States": "Strong sales, ~500,000 units by 1980",
+            "Japan": "Popular among enthusiasts",
+            "Europe": "Favored for travel photography"
+        },
+        "images": [
+            "https://images.unsplash.com/photo-1589829545856-d10d557cf95f"
+        ]
     },
     {
+        "id": "011",
+        "brand": "Olympus",
+        "model": "OM-2",
+        "type": "SLR",
+        "filmFormat": "35mm",
+        "price": 250,
+        "year": 1975,
+        "country": "Japan",
+        "description": "The Olympus OM-2, introduced in 1975, built on the OM-1 with automatic exposure (aperture-priority) and off-the-film (OTF) metering, a pioneering feature for flash photography. Its compact design made it popular among enthusiasts.",
+        "functionalities": [
+            "Aperture-priority auto-exposure",
+            "OTF metering",
+            "OM lens compatibility",
+            "Self-timer"
+        ],
+        "commonUse": "Street, portrait, and flash photography, especially for those seeking automation with compact design.",
+        "tags": [
+            "SLR",
+            "35mm",
+            "Olympus",
+            "auto-exposure",
+            "vintage"
+        ],
+        "salesStatsByCountry": {
+            "United States": "Moderate sales, ~300,000 units by 1985",
+            "Japan": "Strong enthusiast market",
+            "Europe": "Popular in creative photography circles"
+        },
+        "images": [
+            "https://www.istockphoto.com/photo/olympus-om2-camera-gm1323745623-409876543"
+        ]
+    },
+    {
+        "id": "012",
+        "brand": "Olympus",
+        "model": "Trip 35",
+        "type": "Compact",
+        "filmFormat": "35mm",
+        "price": 100,
+        "year": 1967,
+        "country": "Japan",
+        "description": "The Olympus Trip 35, released in 1967, was a popular point-and-shoot camera known for its simplicity and sharp Zuiko lens. With automatic exposure and a fixed lens, it was a favorite for casual photographers and remains a cult classic.",
+        "functionalities": [
+            "Automatic exposure",
+            "Fixed 40mm f/2.8 lens",
+            "Zone focusing",
+            "Built-in light meter"
+        ],
+        "commonUse": "Casual and travel photography, ideal for snapshots and beginners.",
+        "tags": [
+            "Compact",
+            "35mm",
+            "Olympus",
+            "point-and-shoot",
+            "vintage"
+        ],
+        "salesStatsByCountry": {
+            "United States": "Over 10 million units sold globally by 1984",
+            "Japan": "Mass-market success",
+            "Europe": "Hugely popular for casual use"
+        },
+        "images": [
+            "https://images.unsplash.com/photo-1600585154340-be6161a56a0c"
+        ]
+    },
+    {
+        "id": "013",
+        "brand": "Leica",
+        "model": "M6",
+        "type": "Rangefinder",
+        "filmFormat": "35mm",
+        "price": 2000,
+        "year": 1984,
+        "country": "Germany",
+        "description": "The Leica M6, launched in 1984, is a legendary rangefinder camera known for its precision engineering and quiet operation. Part of Leica’s M-series, it introduced a modern TTL meter while retaining the classic rangefinder design, beloved by street photographers.",
+        "functionalities": [
+            "TTL metering",
+            "Manual exposure",
+            "M-mount lenses",
+            "Quiet shutter"
+        ],
+        "commonUse": "Street, documentary, and fine art photography, favored for its discreet operation and sharp lenses.",
+        "tags": [
+            "Rangefinder",
+            "35mm",
+            "Leica",
+            "premium",
+            "vintage"
+        ],
+        "salesStatsByCountry": {
+            "United States": "Niche but strong sales, ~100,000 units by 2002",
+            "Germany": "Iconic in domestic market",
+            "Japan": "Cult following among collectors"
+        },
+        "images": [
+            "https://www.istockphoto.com/photo/leica-m6-camera-gm1353745623-428987654"
+        ]
+    },
+    {
+        "id": "014",
         "brand": "Leica",
         "model": "M3",
         "type": "Rangefinder",
-        "film_format": "35mm",
-        "year": 1954
+        "filmFormat": "35mm",
+        "price": 1800,
+        "year": 1954,
+        "country": "Germany",
+        "description": "The Leica M3, introduced in 1954, revolutionized rangefinder cameras with its bright viewfinder and bayonet M-mount. It set the standard for Leica’s M-series, prized for its craftsmanship and optical quality, and remains a collector’s favorite.",
+        "functionalities": [
+            "Manual exposure",
+            "M-mount lenses",
+            "Bright viewfinder/rangefinder",
+            "Durable build"
+        ],
+        "commonUse": "Street, portrait, and documentary photography, valued for its precision and compact design.",
+        "tags": [
+            "Rangefinder",
+            "35mm",
+            "Leica",
+            "classic",
+            "vintage"
+        ],
+        "salesStatsByCountry": {
+            "United States": "Over 220,000 units sold by 1966",
+            "Germany": "Strong domestic and professional use",
+            "Europe": "Iconic among photographers"
+        },
+        "images": [
+            "https://www.istockphoto.com/photo/leica-m3-camera-gm1303745623-395678912"
+        ]
     },
     {
+        "id": "015",
+        "brand": "Leica",
+        "model": "M4",
+        "type": "Rangefinder",
+        "filmFormat": "35mm",
+        "price": 1900,
+        "year": 1967,
+        "country": "Germany",
+        "description": "The Leica M4, released in 1967, improved on the M3 with a quick-load film system and refined rangefinder. It was a favorite among photojournalists for its reliability and compact size, maintaining Leica’s reputation for excellence.",
+        "functionalities": [
+            "Manual exposure",
+            "M-mount lenses",
+            "Quick-load film system",
+            "Bright viewfinder"
+        ],
+        "commonUse": "Photojournalism and street photography, ideal for discreet and high-quality shooting.",
+        "tags": [
+            "Rangefinder",
+            "35mm",
+            "Leica",
+            "professional",
+            "vintage"
+        ],
+        "salesStatsByCountry": {
+            "United States": "Moderate sales, ~50,000 units by 1975",
+            "Germany": "Strong professional market",
+            "Japan": "Growing collector interest"
+        },
+        "images": [
+            "https://www.istockphoto.com/photo/leica-m4-camera-gm1333745623-416543210"
+        ]
+    },
+    {
+        "id": "016",
         "brand": "Minolta",
         "model": "X-700",
         "type": "SLR",
-        "film_format": "35mm",
-        "year": 1981
+        "filmFormat": "35mm",
+        "price": 180,
+        "year": 1981,
+        "country": "Japan",
+        "description": "The Minolta X-700, launched in 1981, was a versatile SLR with program and aperture-priority modes, making it popular among enthusiasts. Its affordability and advanced features earned it awards and a loyal following.",
+        "functionalities": [
+            "Program mode",
+            "Aperture-priority auto-exposure",
+            "Manual exposure",
+            "Minolta MD lenses"
+        ],
+        "commonUse": "General photography, including portrait and landscape, suitable for both beginners and advanced users.",
+        "tags": [
+            "SLR",
+            "35mm",
+            "Minolta",
+            "versatile",
+            "vintage"
+        ],
+        "salesStatsByCountry": {
+            "United States": "Over 1 million units sold by 1990",
+            "Japan": "Strong enthusiast market",
+            "Europe": "Popular in amateur photography"
+        },
+        "images": [
+            "https://www.istockphoto.com/photo/minolta-x700-camera-gm1343745623-422987654"
+        ]
     },
     {
+        "id": "017",
+        "brand": "Minolta",
+        "model": "SRT-101",
+        "type": "SLR",
+        "filmFormat": "35mm",
+        "price": 160,
+        "year": 1966,
+        "country": "Japan",
+        "description": "The Minolta SRT-101, introduced in 1966, was a durable SLR with TTL metering, popular for its reliability and Minolta’s Rokkor lenses. It was a staple for enthusiasts during the 1960s and 1970s.",
+        "functionalities": [
+            "TTL metering",
+            "Manual exposure",
+            "Minolta SR lenses",
+            "Robust build"
+        ],
+        "commonUse": "Portrait, landscape, and documentary photography, valued for its lens quality and metering.",
+        "tags": [
+            "SLR",
+            "35mm",
+            "Minolta",
+            "vintage",
+            "reliable"
+        ],
+        "salesStatsByCountry": {
+            "United States": "Strong sales, ~500,000 units by 1975",
+            "Japan": "Popular domestic model",
+            "Europe": "Moderate but steady sales"
+        },
+        "images": [
+            "https://www.istockphoto.com/photo/minolta-srt101-camera-gm1363745623-435678912"
+        ]
+    },
+    {
+        "id": "018",
+        "brand": "Minolta",
+        "model": "Autocord",
+        "type": "TLR",
+        "filmFormat": "120",
+        "price": 300,
+        "year": 1955,
+        "country": "Japan",
+        "description": "The Minolta Autocord, released in 1955, was a twin-lens reflex camera known for its sharp Rokkor lenses and ease of use. It was popular among medium-format enthusiasts for its quality and affordability.",
+        "functionalities": [
+            "Manual exposure",
+            "Fixed 75mm Rokkor lens",
+            "Waist-level viewfinder",
+            "Leaf shutter"
+        ],
+        "commonUse": "Portrait and fine art photography, favored for its medium-format quality and bokeh.",
+        "tags": [
+            "TLR",
+            "120",
+            "Minolta",
+            "medium format",
+            "vintage"
+        ],
+        "salesStatsByCountry": {
+            "United States": "Niche sales, ~50,000 units by 1965",
+            "Japan": "Moderate domestic success",
+            "Europe": "Popular among portrait photographers"
+        },
+        "images": [
+            "https://www.istockphoto.com/photo/minolta-autocord-camera-gm1373745623-442345678"
+        ]
+    },
+    {
+        "id": "019",
         "brand": "Yashica",
         "model": "Electro 35",
         "type": "Rangefinder",
-        "film_format": "35mm",
-        "year": 1966
+        "filmFormat": "35mm",
+        "price": 120,
+        "year": 1966,
+        "country": "Japan",
+        "description": "The Yashica Electro 35, launched in 1966, was a pioneering rangefinder with aperture-priority auto-exposure. Its bright 45mm f/1.7 lens and affordability made it a hit among amateurs and street photographers.",
+        "functionalities": [
+            "Aperture-priority auto-exposure",
+            "Fixed 45mm f/1.7 lens",
+            "Leaf shutter",
+            "Built-in light meter"
+        ],
+        "commonUse": "Street and casual photography, ideal for low-light shooting and snapshots.",
+        "tags": [
+            "Rangefinder",
+            "35mm",
+            "Yashica",
+            "affordable",
+            "vintage"
+        ],
+        "salesStatsByCountry": {
+            "United States": "Over 1 million units sold by 1975",
+            "Japan": "Mass-market success",
+            "Europe": "Popular for casual photography"
+        },
+        "images": [
+            "https://images.unsplash.com/photo-1600585154340-be6161a56a0c"
+        ]
     },
     {
-        "brand": "Rolleiflex",
-        "model": "2.8F",
+        "id": "020",
+        "brand": "Yashica",
+        "model": "Mat 124G",
         "type": "TLR",
-        "film_format": "120",
-        "year": 1960
+        "filmFormat": "120",
+        "price": 200,
+        "year": 1970,
+        "country": "Japan",
+        "description": "The Yashica Mat 124G, introduced in 1970, was a twin-lens reflex camera with a built-in light meter, known for its sharp 80mm lens and medium-format quality. It was popular among enthusiasts for its affordability.",
+        "functionalities": [
+            "Manual exposure",
+            "Built-in light meter",
+            "Fixed 80mm f/3.5 lens",
+            "Waist-level viewfinder"
+        ],
+        "commonUse": "Portrait, landscape, and fine art photography, valued for its medium-format aesthetic.",
+        "tags": [
+            "TLR",
+            "120",
+            "Yashica",
+            "medium format",
+            "vintage"
+        ],
+        "salesStatsByCountry": {
+            "United States": "Moderate sales, ~100,000 units by 1980",
+            "Japan": "Strong enthusiast market",
+            "Europe": "Popular among medium-format users"
+        },
+        "images": [
+            "https://www.istockphoto.com/photo/yashica-mat124g-camera-gm1383745623-449012345"
+        ]
     },
     {
+        "id": "021",
+        "brand": "Yashica",
+        "model": "FX-3",
+        "type": "SLR",
+        "filmFormat": "35mm",
+        "price": 130,
+        "year": 1979,
+        "country": "Japan",
+        "description": "The Yashica FX-3, released in 1979, was a budget-friendly manual SLR compatible with Contax/Yashica lenses. Its simplicity and affordability made it popular among students and hobbyists.",
+        "functionalities": [
+            "Manual exposure",
+            "Contax/Yashica lens compatibility",
+            "Built-in light meter",
+            "Compact design"
+        ],
+        "commonUse": "Educational and general photography, suitable for beginners and budget-conscious shooters.",
+        "tags": [
+            "SLR",
+            "35mm",
+            "Yashica",
+            "budget",
+            "vintage"
+        ],
+        "salesStatsByCountry": {
+            "United States": "Moderate sales, ~200,000 units by 1985",
+            "Japan": "Popular among students",
+            "Europe": "Steady sales in amateur markets"
+        },
+        "images": [
+            "https://www.istockphoto.com/photo/yashica-fx3-camera-gm1393745623-455678912"
+        ]
+    },
+    {
+        "id": "022",
+        "brand": "Contax",
+        "model": "G2",
+        "type": "Rangefinder",
+        "filmFormat": "35mm",
+        "price": 1500,
+        "year": 1996,
+        "country": "Japan",
+        "description": "The Contax G2, launched in 1996, was a premium rangefinder with autofocus and Zeiss lenses, offering a modern take on classic rangefinder design. It was favored by professionals for its optical quality and automation.",
+        "functionalities": [
+            "Autofocus",
+            "Zeiss G-series lenses",
+            "Aperture-priority auto-exposure",
+            "TTL metering"
+        ],
+        "commonUse": "Street, portrait, and fine art photography, ideal for professionals seeking high-quality optics.",
+        "tags": [
+            "Rangefinder",
+            "35mm",
+            "Contax",
+            "premium",
+            "vintage"
+        ],
+        "salesStatsByCountry": {
+            "United States": "Niche sales, ~50,000 units by 2005",
+            "Japan": "Strong professional market",
+            "Europe": "Favored by high-end photographers"
+        },
+        "images": [
+            "https://www.istockphoto.com/photo/contax-g2-camera-gm1403745623-462345678"
+        ]
+    },
+    {
+        "id": "023",
+        "brand": "Contax",
+        "model": "Aria",
+        "type": "SLR",
+        "filmFormat": "35mm",
+        "price": 400,
+        "year": 1998,
+        "country": "Japan",
+        "description": "The Contax Aria, released in 1998, was a lightweight SLR with advanced features like matrix metering and program modes. Its Zeiss lenses and compact design made it a favorite among enthusiasts.",
+        "functionalities": [
+            "Program mode",
+            "Aperture-priority",
+            "Matrix metering",
+            "Zeiss lens compatibility"
+        ],
+        "commonUse": "General and travel photography, valued for its automation and lens quality.",
+        "tags": [
+            "SLR",
+            "35mm",
+            "Contax",
+            "versatile",
+            "vintage"
+        ],
+        "salesStatsByCountry": {
+            "United States": "Limited sales, ~30,000 units by 2005",
+            "Japan": "Moderate enthusiast market",
+            "Europe": "Niche but popular among Zeiss fans"
+        },
+        "images": [
+            "https://www.istockphoto.com/photo/contax-aria-camera-gm1413745623-469012345"
+        ]
+    },
+    {
+        "id": "024",
+        "brand": "Contax",
+        "model": "RTS",
+        "type": "SLR",
+        "filmFormat": "35mm",
+        "price": 350,
+        "year": 1974,
+        "country": "Japan",
+        "description": "The Contax RTS, introduced in 1974, was a professional SLR with Zeiss lenses and a sleek design by Porsche. It was known for its build quality and was popular among pros in the 1970s.",
+        "functionalities": [
+            "Manual exposure",
+            "Zeiss lens compatibility",
+            "Built-in light meter",
+            "Motor drive option"
+        ],
+        "commonUse": "Professional photography, including fashion and studio work, due to its lens quality.",
+        "tags": [
+            "SLR",
+            "35mm",
+            "Contax",
+            "professional",
+            "vintage"
+        ],
+        "salesStatsByCountry": {
+            "United States": "Moderate sales, ~50,000 units by 1980",
+            "Japan": "Strong professional adoption",
+            "Europe": "Popular in fashion photography"
+        },
+        "images": [
+            "https://www.istockphoto.com/photo/contax-rts-camera-gm1423745623-475678912"
+        ]
+    },
+    {
+        "id": "025",
+        "brand": "Rollei",
+        "model": "35S",
+        "type": "Compact",
+        "filmFormat": "35mm",
+        "price": 300,
+        "year": 1969,
+        "country": "Germany",
+        "description": "The Rollei 35S, launched in 1969, was a compact 35mm camera with a collapsible 40mm Sonnar lens. Known for its small size and sharp optics, it was a favorite for discreet street photography.",
+        "functionalities": [
+            "Manual exposure",
+            "Fixed 40mm f/2.8 lens",
+            "Zone focusing",
+            "Built-in light meter"
+        ],
+        "commonUse": "Street and travel photography, ideal for discreet and portable shooting.",
+        "tags": [
+            "Compact",
+            "35mm",
+            "Rollei",
+            "discreet",
+            "vintage"
+        ],
+        "salesStatsByCountry": {
+            "United States": "Moderate sales, ~100,000 units by 1975",
+            "Germany": "Strong domestic market",
+            "Europe": "Popular among compact camera users"
+        },
+        "images": [
+            "https://www.istockphoto.com/photo/rollei-35s-camera-gm1433745623-482345678"
+        ]
+    },
+    {
+        "id": "026",
+        "brand": "Rollei",
+        "model": "Rolleiflex 2.8F",
+        "type": "TLR",
+        "filmFormat": "120",
+        "price": 1200,
+        "year": 1960,
+        "country": "Germany",
+        "description": "The Rolleiflex 2.8F, released in 1960, was a premium twin-lens reflex camera with a Zeiss Planar 80mm f/2.8 lens. Renowned for its image quality, it was a staple for portrait and fine art photographers.",
+        "functionalities": [
+            "Manual exposure",
+            "Fixed 80mm f/2.8 lens",
+            "Waist-level viewfinder",
+            "Built-in light meter"
+        ],
+        "commonUse": "Portrait, fine art, and studio photography, valued for its medium-format quality.",
+        "tags": [
+            "TLR",
+            "120",
+            "Rollei",
+            "premium",
+            "vintage"
+        ],
+        "salesStatsByCountry": {
+            "United States": "Niche sales, ~50,000 units by 1970",
+            "Germany": "Iconic in domestic market",
+            "Europe": "Favored by portrait photographers"
+        },
+        "images": [
+            "https://www.istockphoto.com/photo/rolleiflex-2-8f-camera-gm1443745623-489012345"
+        ]
+    },
+    {
+        "id": "027",
+        "brand": "Rollei",
+        "model": "SL35",
+        "type": "SLR",
+        "filmFormat": "35mm",
+        "price": 250,
+        "year": 1970,
+        "country": "Germany",
+        "description": "The Rollei SL35, introduced in 1970, was a 35mm SLR with Zeiss and Schneider lenses, known for its solid build and sharp optics. It was a competitor to Japanese SLRs in the 1970s.",
+        "functionalities": [
+            "Manual exposure",
+            "Rollei QBM lenses",
+            "Built-in light meter",
+            "Robust design"
+        ],
+        "commonUse": "General and portrait photography, appealing to enthusiasts seeking German engineering.",
+        "tags": [
+            "SLR",
+            "35mm",
+            "Rollei",
+            "vintage",
+            "Zeiss"
+        ],
+        "salesStatsByCountry": {
+            "United States": "Limited sales, ~30,000 units by 1980",
+            "Germany": "Moderate domestic success",
+            "Europe": "Niche but respected"
+        },
+        "images": [
+            "https://www.istockphoto.com/photo/rollei-sl35-camera-gm1453745623-495678912"
+        ]
+    },
+    {
+        "id": "028",
         "brand": "Hasselblad",
         "model": "500C/M",
-        "type": "SLR",
-        "film_format": "120",
-        "year": 1970
+        "type": "Medium Format SLR",
+        "filmFormat": "120",
+        "price": 2500,
+        "year": 1970,
+        "country": "Sweden",
+        "description": "The Hasselblad 500C/M, launched in 1970, was a modular medium-format SLR renowned for its image quality and Zeiss lenses. Used by NASA on Apollo missions, it was a favorite among professionals.",
+        "functionalities": [
+            "Manual exposure",
+            "Interchangeable lenses and backs",
+            "Zeiss lens compatibility",
+            "Leaf shutter"
+        ],
+        "commonUse": "Studio, portrait, and fine art photography, ideal for high-resolution medium-format work.",
+        "tags": [
+            "Medium Format",
+            "120",
+            "Hasselblad",
+            "professional",
+            "vintage"
+        ],
+        "salesStatsByCountry": {
+            "United States": "Niche but strong, ~50,000 units by 1980",
+            "Sweden": "Iconic domestic model",
+            "Europe": "Widely used in studios"
+        },
+        "images": [
+            "https://www.istockphoto.com/photo/hasselblad-500cm-camera-gm1313874967-402284123",
+            "https://images.unsplash.com/photo-1593501375287-1c7288e4063f"
+        ]
     },
     {
-        "brand": "Mamiya",
-        "model": "RB67",
+        "id": "029",
+        "brand": "Hasselblad",
+        "model": "503CX",
+        "type": "Medium Format SLR",
+        "filmFormat": "120",
+        "price": 2800,
+        "year": 1988,
+        "country": "Sweden",
+        "description": "The Hasselblad 503CX, released in 1988, improved on the 500C/M with TTL flash metering, making it a favorite for studio photographers. Its modular design and Zeiss lenses ensured top-tier image quality.",
+        "functionalities": [
+            "TTL flash metering",
+            "Interchangeable lenses and backs",
+            "Zeiss lens compatibility",
+            "Leaf shutter"
+        ],
+        "commonUse": "Studio and portrait photography, especially for flash-based setups.",
+        "tags": [
+            "Medium Format",
+            "120",
+            "Hasselblad",
+            "professional",
+            "vintage"
+        ],
+        "salesStatsByCountry": {
+            "United States": "Niche sales, ~30,000 units by 1995",
+            "Sweden": "Strong professional market",
+            "Europe": "Popular in commercial photography"
+        },
+        "images": [
+            "https://www.istockphoto.com/photo/hasselblad-503cx-camera-gm1463745623-502345678"
+        ]
+    },
+    {
+        "id": "030",
+        "brand": "Hasselblad",
+        "model": "500EL/M",
+        "type": "Medium Format SLR",
+        "filmFormat": "120",
+        "price": 2700,
+        "year": 1971,
+        "country": "Sweden",
+        "description": "The Hasselblad 500EL/M, introduced in 1971, was an electrically driven version of the 500C/M, designed for studio and scientific use. Its motor drive made it ideal for high-volume shooting.",
+        "functionalities": [
+            "Motor drive",
+            "Interchangeable lenses and backs",
+            "Zeiss lens compatibility",
+            "Leaf shutter"
+        ],
+        "commonUse": "Studio, scientific, and fashion photography, suited for automated shooting.",
+        "tags": [
+            "Medium Format",
+            "120",
+            "Hasselblad",
+            "professional",
+            "vintage"
+        ],
+        "salesStatsByCountry": {
+            "United States": "Limited sales, ~20,000 units by 1980",
+            "Sweden": "Niche professional use",
+            "Europe": "Used in specialized applications"
+        },
+        "images": [
+            "https://www.istockphoto.com/photo/hasselblad-500elm-camera-gm1473745623-509012345"
+        ]
+    },
+    {
+        "id": "031",
+        "brand": "Miranda",
+        "model": "Sensorex",
         "type": "SLR",
-        "film_format": "120",
-        "year": 1969
+        "filmFormat": "35mm",
+        "price": 250,
+        "year": 1966,
+        "country": "Japan",
+        "description": "The Miranda Sensorex, launched in 1966, was a versatile SLR with interchangeable viewfinders and TTL metering. It was known for its unique design and compatibility with a wide range of lenses.",
+        "functionalities": [
+            "TTL metering",
+            "Interchangeable viewfinders",
+            "Miranda bayonet lenses",
+            "Manual exposure"
+        ],
+        "commonUse": "General and portrait photography, appealing to enthusiasts for its flexibility.",
+        "tags": [
+            "SLR",
+            "35mm",
+            "Miranda",
+            "vintage",
+            "flexible"
+        ],
+        "salesStatsByCountry": {
+            "United States": "Moderate sales, ~50,000 units by 1975",
+            "Japan": "Niche domestic market",
+            "Europe": "Limited but respected"
+        },
+        "images": [
+            "https://www.istockphoto.com/photo/miranda-sensorex-camera-gm1483745623-515678912"
+        ]
+    },
+    {
+        "id": "032",
+        "brand": "Miranda",
+        "model": "Auto Sensorex EE",
+        "type": "SLR",
+        "filmFormat": "35mm",
+        "price": 270,
+        "year": 1970,
+        "country": "Japan",
+        "description": "The Miranda Auto Sensorex EE, released in 1970, added auto-exposure to the Sensorex line, making it more user-friendly. It retained the interchangeable viewfinder system and was popular among enthusiasts.",
+        "functionalities": [
+            "Aperture-priority auto-exposure",
+            "TTL metering",
+            "Interchangeable viewfinders",
+            "Miranda bayonet lenses"
+        ],
+        "commonUse": "General and street photography, suitable for users seeking automation.",
+        "tags": [
+            "SLR",
+            "35mm",
+            "Miranda",
+            "auto-exposure",
+            "vintage"
+        ],
+        "salesStatsByCountry": {
+            "United States": "Limited sales, ~30,000 units by 1975",
+            "Japan": "Moderate enthusiast market",
+            "Europe": "Niche adoption"
+        },
+        "images": [
+            "https://www.istockphoto.com/photo/miranda-auto-sensorex-ee-camera-gm1493745623-522345678"
+        ]
+    },
+    {
+        "id": "033",
+        "brand": "Miranda",
+        "model": "F",
+        "type": "SLR",
+        "filmFormat": "35mm",
+        "price": 200,
+        "year": 1963,
+        "country": "Japan",
+        "description": "The Miranda F, introduced in 1963, was an early SLR with a distinctive design and interchangeable viewfinders. It was a budget-friendly option for enthusiasts seeking flexibility and quality.",
+        "functionalities": [
+            "Manual exposure",
+            "Interchangeable viewfinders",
+            "Miranda bayonet lenses",
+            "Built-in light meter"
+        ],
+        "commonUse": "General photography, particularly for budget-conscious enthusiasts.",
+        "tags": [
+            "SLR",
+            "35mm",
+            "Miranda",
+            "budget",
+            "vintage"
+        ],
+        "salesStatsByCountry": {
+            "United States": "Moderate sales, ~40,000 units by 1970",
+            "Japan": "Niche but steady sales",
+            "Europe": "Limited market presence"
+        },
+        "images": [
+            "https://live.staticflickr.com/65535/50806400211_ae585a9a19.jpg",
+            "https://kamerastore.com/cdn/shop/products/Miranda-140037-jr2.jpg?v=1689936572&width=990"
+        ]
     }
 ]
