@@ -1,10 +1,9 @@
 const express = require('express')
-const { data } = require('./data/index.js')
+const { logic } = require('./logic')
 
 const server = express()
 
 let query
-const cart = []
 
 server.get('/', (request, response) => {
     response.send('Hello, World!')
@@ -14,12 +13,10 @@ server.get('/search', (request, response) => {
     const { q } = request.query
 
     query = q
+    try {
+        const cameras = logic.searchProducts(q)
 
-    let cameras = data.loadCameras()
-
-    cameras = cameras.filter(camera => camera.brand.toLowerCase() === q.toLowerCase())
-
-    response.send(`<doctype html>
+        response.send(`<doctype html>
         <html>
             <head>
                 <title>Results</title>
@@ -44,12 +41,44 @@ server.get('/search', (request, response) => {
                 </ul>
             </body>        
         </html>`)
+    } catch (error) {
+        console.error(error)
+
+        response.send(`<doctype html>
+        <html>
+            <head>
+                <title>Error</title>
+            </head>
+            
+            <body>
+                <h1>Error</h1>
+                <p>${error.message}</p>
+            </body>
+        </html>`)
+    }
+
 })
 
 server.get('/products/:id/add', (request, response) => {
     const { id } = request.params
 
-    cart.push(id)
+    try {
+        const cart = logic.addProductToCart(id)
+    } catch (error) {
+        console.error(error)
+
+        response.send(`<doctype html>
+        <html>
+            <head>
+                <title>Error</title>
+            </head>
+            
+            <body>
+                <h1>Error</h1>
+                <p>${error.message}</p>
+            </body>
+        </html>`)
+    }
 
     console.debug(cart)
 
@@ -57,10 +86,10 @@ server.get('/products/:id/add', (request, response) => {
 })
 
 server.get('/cart', (request, response) => {
-    const cameras = data.loadCameras()
-    const items = cart.map(id => cameras.find(camera => camera.id === id))
+    try {
+        const items = logic.getCartProducts()
 
-    response.send(`<doctype html>
+        response.send(`<doctype html>
         <html>
             <head>
                 <title>Cart</title>
@@ -83,13 +112,27 @@ server.get('/cart', (request, response) => {
                 <strong>Total: ${items.reduce((acc, item) => acc + item.price, 0)}
             </body>
         </html>`)
+    } catch (error) {
+        console.error(error)
+
+        response.send(`<doctype html>
+        <html>
+            <head>
+                <title>Error</title>
+            </head>
+            
+            <body>
+                <h1>Error</h1>
+                <p>${error.message}</p>
+            </body>
+        </html>`)
+    }
 })
 
 server.get('/products/:id', (request, response) => {
     const { id } = request.params
 
-    const cameras = data.loadCameras()
-    const item = cameras.find(camera => camera.id === id)
+    const item = logic.getProductInfo(id)
 
     const { brand, model, type, filmFormat, price, year, country, description, functionalities, commonUse, tags, salesStatsByCountry, images } = item
 
@@ -126,6 +169,42 @@ server.get('/products/:id', (request, response) => {
                             </p>          
                 </article>
             </body>`)
+})
+
+server.get('/products/tags/:tag', (request, response) => {
+    const { tag } = request.params
+
+    const filteredCameras = logic.filterProductsByTag(tag)
+
+    response.send(`<doctype html>
+        <html>
+            <head>
+                <title>Tag Results</title>
+            </head>
+            
+            <body>
+                <h2>Tag Results</h2>
+                <a href="http://localhost:8080/cart">Cart</a>
+                <ul>
+                    ${filteredCameras.map(({ id, brand, model, type, filmFormat, price, tags }) => `
+                        <li>
+                            <h3><a href="http://localhost:8080/products/${id}"> ${brand} ${model}</a></h3>
+                        
+                            <i>${type} ${filmFormat}</i>
+                        
+                            <strong>${price}</strong>
+                        
+                            <a href="http://localhost:8080/products/${id}/add">Add</a>
+                        
+                            <a href="http://${brand}.com">${brand}</a>
+
+                            <p>Tags:
+                                ${tags.map(tag => `<a href="http://localhost:8080/products/tags/${tag}">${tag}</a>`).join(' ')}
+                            </p>
+                        </li>`).join('')}
+                </ul>
+            </body>        
+        </html>`)
 })
 
 server.listen(8080, () => console.log('Server is up on port 8080'))
