@@ -1,6 +1,9 @@
 const express = require('express')
 const app = express()
 
+const cookieParser = require('cookie-parser')
+app.use(cookieParser())
+
 // app.use((req, res) => {
 //     console.log('We got a new request')
 //     res.send({ color: 'red' })
@@ -36,6 +39,24 @@ app.get('/search', (req, res) => {
     const { q } = req.query
     if (!q) res.send('Nothing found if nothing searched')
     res.send(`<h1>Search results for: ${q}`)
+})
+
+// route that sets a cookie
+app.get('/set-cookie', (request, response) => {
+    response.cookie('name', 'Sabrina')
+    response.send('Cookie sent')
+})
+
+// route that reads the cookie
+app.get('/read-cookie', (request, response) => {
+    const { name } = request.cookies
+    response.send(`Your cookie says: ${name}`)
+})
+
+// route that deletes the cookie
+app.get('/delete-cookie', (request, response) => {
+    response.clearCookie('name')
+    response.send('Cookie deleted')
 })
 
 app.get(/(.*)/, (req, res) => {
