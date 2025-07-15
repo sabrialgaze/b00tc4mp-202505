@@ -1,7 +1,10 @@
 const express = require('express')
+const cookieParser = require('cookie-parser')
 const { logic } = require('./logic')
 
 const server = express()
+
+server.use(cookieParser())
 
 let query
 
@@ -132,13 +135,14 @@ server.get('/cart', (request, response) => {
 server.get('/products/:id', (request, response) => {
     const { id } = request.params
 
-    const item = logic.getProductInfo(id)
+    try {
+        const item = logic.getProductInfo(id)
 
-    const { brand, model, type, filmFormat, price, year, country, description, functionalities, commonUse, tags, salesStatsByCountry, images } = item
+        const { brand, model, type, filmFormat, price, year, country, description, functionalities, commonUse, tags, salesStatsByCountry, images } = item
 
-    const saleStatsKeys = Object.keys(salesStatsByCountry)
+        const saleStatsKeys = Object.keys(salesStatsByCountry)
 
-    response.send(`<doctype html>
+        response.send(`<doctype html>
         <html>
             <head>
                 <title>${brand} ${model}</title>
@@ -169,14 +173,30 @@ server.get('/products/:id', (request, response) => {
                             </p>          
                 </article>
             </body>`)
+    } catch (error) {
+        console.error(error)
+
+        response.send(`<doctype html>
+        <html>
+            <head>
+                <title>Error</title>
+            </head>
+            
+            <body>
+                <h1>Error</h1>
+                <p>${error.message}</p>
+            </body>
+        </html>`)
+    }
 })
 
 server.get('/products/tags/:tag', (request, response) => {
     const { tag } = request.params
 
-    const filteredCameras = logic.filterProductsByTag(tag)
+    try {
+        const filteredCameras = logic.filterProductsByTag(tag)
 
-    response.send(`<doctype html>
+        response.send(`<doctype html>
         <html>
             <head>
                 <title>Tag Results</title>
@@ -205,6 +225,124 @@ server.get('/products/tags/:tag', (request, response) => {
                 </ul>
             </body>        
         </html>`)
+    } catch (error) {
+        console.error(error)
+        response.send(`<doctype html>
+        <html>
+            <head>
+                <title>Error</title>
+            </head>
+            
+            <body>
+                <h1>Error</h1>
+                <p>${error.message}</p>
+            </body>
+        </html>`)
+    }
+})
+
+server.get('/register', (request, response) => {
+    response.send(`<doctype html>
+        <html>
+            <head>
+                <title>Register</title>
+            </head>
+            
+            <body>
+                <form action="/register/submit" method="get">
+                    <div>
+                        <label for="name">Name</label>
+                        <input type="text" id="name" name="name" />
+                    </div>
+                    <div>
+                        <label for="email">E-mail</label>
+                        <input type="email" id="email" name="email"/>
+                    </div>
+                    <div>
+                        <label for="username">Username</label>
+                        <input type="text" id="username" name="username" />
+                    </div>
+                    <div>
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="password" />
+                    </div>
+                    <div>
+                        <button type="reset">Clear</button>
+                        <button type="submit">Register</button>
+                    </div>
+                </form>
+            </body>`)
+})
+
+server.get('/register/submit', (request, response) => {
+    const { name, email, username, password } = request.query
+
+    try {
+        logic.registerUser(name, email, username, password)
+    } catch (error) {
+        console.error(error)
+        response.send(`<doctype html>
+        <html>
+            <head>
+                <title>Error</title>
+            </head>
+            
+            <body>
+                <h1>Error</h1>
+                <p>${error.message}</p>
+            </body>
+        </html>`)
+    }
+
+    response.redirect('/login')
+})
+
+server.get('/login', (request, response) => {
+    response.send(`<doctype html>
+        <html>
+            <head>
+                <title>Login</title>
+            </head>
+            
+            <body>
+                <form action="/login/submit" method="get">
+                    <div>
+                        <label for="username">Username</label>
+                        <input type="text" id="username" name="username" />
+                    </div>
+                    <div>
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="password" />
+                    </div>
+                    <div>
+                        <button type="reset">Clear</button>
+                        <button type="submit">Login</button>
+                    </div>
+                </form>
+            </body>`)
+})
+
+server.get('/login/submit', (request, response) => {
+    const { username, password } = request.query
+    try {
+        const user = logic.loginUser(username, password)
+        response.cookie('userId', user.id)
+        response.send(`Welcome ${user.name}!`)
+    } catch (error) {
+        console.error(error)
+
+        response.send(`<doctype html>
+        <html>
+            <head>
+                <title>Error</title>
+            </head>
+            
+            <body>
+                <h1>Error</h1>
+                <p>${error.message}</p>
+            </body>
+        </html>`)
+    }
 })
 
 server.listen(8080, () => console.log('Server is up on port 8080'))

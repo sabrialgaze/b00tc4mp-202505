@@ -1,12 +1,22 @@
 const cameras = require('./cameras.json')
-const cart = []
+let cartJSON = '[]'
+let usersJSON = '[]'
 
 const data = {
     loadCameras() {
         return cameras
     },
     loadCart() {
-        return cart
+        return JSON.parse(cartJSON)
+    },
+    saveCart(cart) {
+        cartJSON = JSON.stringify(cart)
+    },
+    loadUsers() {
+        return JSON.parse(usersJSON)
+    },
+    saveUsers(users) {
+        usersJSON = JSON.stringify(users)
     }
 }
 

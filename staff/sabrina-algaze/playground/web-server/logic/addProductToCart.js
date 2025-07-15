@@ -7,7 +7,7 @@ const addProductToCart = (id) => {
 
     cart.push(id)
 
-    return cart
+    data.saveCart(cart)
 }
 
 module.exports = { addProductToCart }
