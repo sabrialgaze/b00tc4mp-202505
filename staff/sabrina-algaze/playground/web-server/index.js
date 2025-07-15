@@ -62,11 +62,14 @@ server.get('/search', (request, response) => {
 
 })
 
-server.get('/products/:id/add', (request, response) => {
-    const { id } = request.params
+server.get('/products/:productId/add', (request, response) => {
+    const { userId } = request.cookies
+    const { productId } = request.params
 
     try {
-        const cart = logic.addProductToCart(id)
+        logic.addProductToCart(userId, productId)
+
+        response.redirect(`/search?q=${query}`)
     } catch (error) {
         console.error(error)
 
@@ -82,15 +85,12 @@ server.get('/products/:id/add', (request, response) => {
             </body>
         </html>`)
     }
-
-    console.debug(cart)
-
-    response.redirect(`/search?q=${query}`)
 })
 
 server.get('/cart', (request, response) => {
+    const { userId } = request.cookies
     try {
-        const items = logic.getCartProducts()
+        const items = logic.getCartProducts(userId)
 
         response.send(`<doctype html>
         <html>
@@ -279,6 +279,8 @@ server.get('/register/submit', (request, response) => {
 
     try {
         logic.registerUser(name, email, username, password)
+
+        response.redirect('/login')
     } catch (error) {
         console.error(error)
         response.send(`<doctype html>
@@ -293,8 +295,6 @@ server.get('/register/submit', (request, response) => {
             </body>
         </html>`)
     }
-
-    response.redirect('/login')
 })
 
 server.get('/login', (request, response) => {

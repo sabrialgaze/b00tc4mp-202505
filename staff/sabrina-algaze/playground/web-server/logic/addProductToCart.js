@@ -1,13 +1,25 @@
 const { data } = require('../data/index')
 
-const addProductToCart = (id) => {
-    if (typeof id !== 'string') throw new TypeError('Invalid id type')
+const addProductToCart = (userId, productId) => {
+    if (typeof userId !== 'string') throw new TypeError('Invalid userId type')
+    if (typeof productId !== 'string') throw new TypeError('Invalid productId type')
 
-    const cart = data.loadCart()
+    const users = data.loadUsers()
+    const carts = data.loadCarts()
 
-    cart.push(id)
+    const user = users.find(user => user.id === userId)
+    if (!user) throw Error('user not found')
 
-    data.saveCart(cart)
+    let cart = carts.find(cart => cart.owner === userId)
+
+    if (!cart) {
+        cart = { owner: userId, items: [] }
+        carts.push(cart)
+    }
+
+    cart.items.push(productId)
+
+    data.saveCarts(carts)
 }
 
 module.exports = { addProductToCart }
