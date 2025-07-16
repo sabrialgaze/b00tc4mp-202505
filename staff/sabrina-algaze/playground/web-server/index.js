@@ -9,7 +9,70 @@ server.use(cookieParser())
 let query
 
 server.get('/', (request, response) => {
-    response.send('Hello, World!')
+    const { userId } = request.cookies
+
+    if (!userId) {
+        response.send(`<doctype html>
+        <html>
+            <head>
+                <title>Landing</title>
+            </head>
+    
+            <body>
+                <h1>Landing</h1>
+                    <p>
+                        <a href="http://localhost:8080/register">Register</a> or <a href="http://localhost:8080/login">Login</a>
+                    </p>
+            </body>
+        </html>`
+        )
+    } else {
+        try {
+            const user = logic.getUserInfo(userId)
+            response.send(`<doctype html>
+        <html>
+            <head>
+                <title>Home</title>
+            </head>
+    
+            <body>
+                <h1>Home</h1>
+                <p>Welcome ${user.name}</p>
+                <a href="http://localhost:8080/logout">Logout</a>
+                <a href="http://localhost:8080/cart">Cart</a>
+                <form action="/search" method="get">
+                    <div>
+                        <label for="query">Search</label>
+                        <input type="text" id="query" name="q" />
+                    </div>
+                       <div>
+                        <button type="reset">Clear</button>
+                        <button type="submit">Search</button>
+                    </div>
+                </form>
+            </body>
+        </html>`)
+        } catch (error) {
+            console.error(error)
+
+            response.send(`<doctype html>
+    <html>
+        <head>
+            <title>Error</title>
+        </head>
+
+        <body>
+            <h1>Error</h1>
+            <p>${error.message}</p>
+        </body>
+    </html>`)
+        }
+    }
+})
+
+server.get('/logout', (request, response) => {
+    response.clearCookie('userId')
+    response.redirect('/login')
 })
 
 server.get('/search', (request, response) => {
@@ -20,16 +83,16 @@ server.get('/search', (request, response) => {
         const cameras = logic.searchProducts(q)
 
         response.send(`<doctype html>
-        <html>
-            <head>
-                <title>Results</title>
-            </head>
-            
-            <body>
-                <h2>Results</h2>
-                <a href="http://localhost:8080/cart">Cart</a>
-                <ul>
-                    ${cameras.map(({ id, brand, model, type, filmFormat, price }) => `
+    <html>
+        <head>
+            <title>Results</title>
+        </head>
+
+        <body>
+            <h2>Results</h2>
+            <a href="http://localhost:8080/cart">Cart</a>
+            <ul>
+                ${cameras.map(({ id, brand, model, type, filmFormat, price }) => `
                         <li>
                             <h3><a href="http://localhost:8080/products/${id}"> ${brand} ${model}</a></h3>
                         
@@ -41,23 +104,24 @@ server.get('/search', (request, response) => {
                         
                             <a href="http://${brand}.com">${brand}</a>
                         </li>`).join('')}
-                </ul>
-            </body>        
-        </html>`)
+            </ul>
+            <a href="http://localhost:8080/">Back</a>
+        </body>
+    </html>`)
     } catch (error) {
         console.error(error)
 
         response.send(`<doctype html>
-        <html>
-            <head>
-                <title>Error</title>
-            </head>
-            
-            <body>
-                <h1>Error</h1>
-                <p>${error.message}</p>
-            </body>
-        </html>`)
+    <html>
+        <head>
+            <title>Error</title>
+        </head>
+
+        <body>
+            <h1>Error</h1>
+            <p>${error.message}</p>
+        </body>
+    </html>`)
     }
 
 })
@@ -74,16 +138,16 @@ server.get('/products/:productId/add', (request, response) => {
         console.error(error)
 
         response.send(`<doctype html>
-        <html>
-            <head>
-                <title>Error</title>
-            </head>
-            
-            <body>
-                <h1>Error</h1>
-                <p>${error.message}</p>
-            </body>
-        </html>`)
+    <html>
+        <head>
+            <title>Error</title>
+        </head>
+
+        <body>
+            <h1>Error</h1>
+            <p>${error.message}</p>
+        </body>
+    </html>`)
     }
 })
 
@@ -93,42 +157,68 @@ server.get('/cart', (request, response) => {
         const items = logic.getCartProducts(userId)
 
         response.send(`<doctype html>
-        <html>
-            <head>
-                <title>Cart</title>
-            </head>
+    <html>
+        <head>
+            <title>Cart</title>
+        </head>
 
-            <body>
-                <h2>Cart</h2>
-                <a href="http://localhost:8080/search?q=${query}">Back</a>
-                <ul>
-                    ${items.map(({ id, brand, model, type, filmFormat, price }) => `<li>
-                            <h3>${brand} ${model}</h3>
+        <body>
+            <h2>Cart</h2>
+            <a href="http://localhost:8080/search?q=${query}">Back</a>
+            <ul>
+                ${items.map(({ id, brand, model, type, filmFormat, price }) => `<li>
+                            <h3><a href="http://localhost:8080/products/${id}"> ${brand} ${model}</a></h3>
 
                             <i>${type} ${filmFormat}</i>
 
                             <strong>${price}</strong>
 
                             <a href="https://${brand}.com">${brand}</a>
+                            <a href="http://localhost:8080/products/${id}/remove">🗑</a>
                         </li>`).join('')}
-                </ul>
-                <strong>Total: ${items.reduce((acc, item) => acc + item.price, 0)}
-            </body>
-        </html>`)
+            </ul>
+            <strong>Total: ${items.reduce((acc, item) => acc + item.price, 0)}
+        </body>
+    </html>`)
     } catch (error) {
         console.error(error)
 
         response.send(`<doctype html>
-        <html>
-            <head>
-                <title>Error</title>
-            </head>
-            
-            <body>
-                <h1>Error</h1>
-                <p>${error.message}</p>
-            </body>
-        </html>`)
+    <html>
+        <head>
+            <title>Error</title>
+        </head>
+
+        <body>
+            <h1>Error</h1>
+            <p>${error.message}</p>
+        </body>
+    </html>`)
+    }
+})
+
+server.get('/products/:productId/remove', (request, response) => {
+    const { userId } = request.cookies
+    const { productId } = request.params
+
+    try {
+        logic.removeProductFromCart(userId, productId)
+
+        response.redirect('/cart')
+    } catch (error) {
+        console.error(error)
+
+        response.send(`<doctype html>
+    <html>
+        <head>
+            <title>Error</title>
+        </head>
+
+        <body>
+            <h1>Error</h1>
+            <p>${error.message}</p>
+        </body>
+    </html>`)
     }
 })
 
@@ -143,50 +233,50 @@ server.get('/products/:id', (request, response) => {
         const saleStatsKeys = Object.keys(salesStatsByCountry)
 
         response.send(`<doctype html>
-        <html>
-            <head>
-                <title>${brand} ${model}</title>
-            </head>
-            
-            <body>
-                <article>
-                    <h1><a href="http://localhost:8080/products/${id}"> ${brand} ${model}</a></h1>
-                        
-                            <i>${type} ${filmFormat}</i>
-                        
-                            <strong>${price}</strong>
-                        
-                            <a href="http://localhost:8080/products/${id}/add">Add</a>
-                        
-                            <a href="http://${brand}.com">${brand}</a>
+    <html>
+        <head>
+            <title>${brand} ${model}</title>
+        </head>
 
-                            <p>Year: ${year}</p>
-                            <p>Country: ${country}</p>
-                            <p>Description: ${description}</p>
-                            <p>Funcionalities: ${functionalities}</p>
-                            <p>Common use: ${commonUse}</p>
-                            <p>Tags:
-                                ${tags.map(tag => `<a href="http://localhost:8080/products/tags/${tag}">${tag}</a>`).join(' ')}
-                            </p>
-                            <p>Sales stats by country: <ul>${saleStatsKeys.map(key => `<li>${key}: ${salesStatsByCountry[key]}</li>`).join('')}</ul></p>
-                            <p>Images: <ul>${images.map(image => `<li><img src="${image}" /></li>`).join('')}</ul>
-                            </p>          
-                </article>
-            </body>`)
+        <body>
+            <article>
+                <h1><a href="http://localhost:8080/products/${id}"> ${brand} ${model}</a></h1>
+
+                <i>${type} ${filmFormat}</i>
+
+                <strong>${price}</strong>
+
+                <a href="http://localhost:8080/products/${id}/add">Add</a>
+
+                <a href="http://${brand}.com">${brand}</a>
+
+                <p>Year: ${year}</p>
+                <p>Country: ${country}</p>
+                <p>Description: ${description}</p>
+                <p>Funcionalities: ${functionalities}</p>
+                <p>Common use: ${commonUse}</p>
+                <p>Tags:
+                    ${tags.map(tag => `<a href="http://localhost:8080/products/tags/${tag}">${tag}</a>`).join(' ')}
+                </p>
+                <p>Sales stats by country: <ul>${saleStatsKeys.map(key => `<li>${key}: ${salesStatsByCountry[key]}</li>`).join('')}</ul></p>
+                <p>Images: <ul>${images.map(image => `<li><img src="${image}" /></li>`).join('')}</ul>
+                </p>
+            </article>
+        </body>`)
     } catch (error) {
         console.error(error)
 
         response.send(`<doctype html>
-        <html>
-            <head>
-                <title>Error</title>
-            </head>
-            
-            <body>
-                <h1>Error</h1>
-                <p>${error.message}</p>
-            </body>
-        </html>`)
+            <html>
+                <head>
+                    <title>Error</title>
+                </head>
+
+                <body>
+                    <h1>Error</h1>
+                    <p>${error.message}</p>
+                </body>
+            </html>`)
     }
 })
 
@@ -197,16 +287,16 @@ server.get('/products/tags/:tag', (request, response) => {
         const filteredCameras = logic.filterProductsByTag(tag)
 
         response.send(`<doctype html>
-        <html>
-            <head>
-                <title>Tag Results</title>
-            </head>
-            
-            <body>
-                <h2>Tag Results</h2>
-                <a href="http://localhost:8080/cart">Cart</a>
-                <ul>
-                    ${filteredCameras.map(({ id, brand, model, type, filmFormat, price, tags }) => `
+                <html>
+                    <head>
+                        <title>Tag Results</title>
+                    </head>
+
+                    <body>
+                        <h2>Tag Results</h2>
+                        <a href="http://localhost:8080/cart">Cart</a>
+                        <ul>
+                            ${filteredCameras.map(({ id, brand, model, type, filmFormat, price, tags }) => `
                         <li>
                             <h3><a href="http://localhost:8080/products/${id}"> ${brand} ${model}</a></h3>
                         
@@ -222,22 +312,22 @@ server.get('/products/tags/:tag', (request, response) => {
                                 ${tags.map(tag => `<a href="http://localhost:8080/products/tags/${tag}">${tag}</a>`).join(' ')}
                             </p>
                         </li>`).join('')}
-                </ul>
-            </body>        
-        </html>`)
+                        </ul>
+                    </body>
+                </html>`)
     } catch (error) {
         console.error(error)
         response.send(`<doctype html>
-        <html>
-            <head>
-                <title>Error</title>
-            </head>
-            
-            <body>
-                <h1>Error</h1>
-                <p>${error.message}</p>
-            </body>
-        </html>`)
+                    <html>
+                        <head>
+                            <title>Error</title>
+                        </head>
+
+                        <body>
+                            <h1>Error</h1>
+                            <p>${error.message}</p>
+                        </body>
+                    </html>`)
     }
 })
 
@@ -271,6 +361,7 @@ server.get('/register', (request, response) => {
                         <button type="submit">Register</button>
                     </div>
                 </form>
+                <a href="http://localhost:8080/login">Login</a>
             </body>`)
 })
 
@@ -284,16 +375,16 @@ server.get('/register/submit', (request, response) => {
     } catch (error) {
         console.error(error)
         response.send(`<doctype html>
-        <html>
-            <head>
-                <title>Error</title>
-            </head>
-            
-            <body>
-                <h1>Error</h1>
-                <p>${error.message}</p>
-            </body>
-        </html>`)
+                        <html>
+                            <head>
+                                <title>Error</title>
+                            </head>
+
+                            <body>
+                                <h1>Error</h1>
+                                <p>${error.message}</p>
+                            </body>
+                        </html>`)
     }
 })
 
@@ -319,6 +410,7 @@ server.get('/login', (request, response) => {
                         <button type="submit">Login</button>
                     </div>
                 </form>
+                <a href="http://localhost:8080/register">Register</a>
             </body>`)
 })
 
@@ -327,21 +419,21 @@ server.get('/login/submit', (request, response) => {
     try {
         const user = logic.loginUser(username, password)
         response.cookie('userId', user.id)
-        response.send(`Welcome ${user.name}!`)
+        response.redirect('/')
     } catch (error) {
         console.error(error)
 
         response.send(`<doctype html>
-        <html>
-            <head>
-                <title>Error</title>
-            </head>
-            
-            <body>
-                <h1>Error</h1>
-                <p>${error.message}</p>
-            </body>
-        </html>`)
+                            <html>
+                                <head>
+                                    <title>Error</title>
+                                </head>
+
+                                <body>
+                                    <h1>Error</h1>
+                                    <p>${error.message}</p>
+                                </body>
+                            </html>`)
     }
 })
 

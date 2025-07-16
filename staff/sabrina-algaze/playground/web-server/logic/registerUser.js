@@ -21,7 +21,7 @@ const registerUser = (name, email, username, password) => {
 
     const id = parseInt((Date.now() + Math.random()).toString().replace('.', '')).toString(36)
 
-    user = { id, name, email, username, password, saved: [] }
+    user = { id, name, email, username, password }
 
     users.push(user)
 

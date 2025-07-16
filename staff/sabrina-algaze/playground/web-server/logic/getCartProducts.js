@@ -6,6 +6,7 @@ const getCartProducts = (userId) => {
     const carts = data.loadCarts()
 
     const cart = carts.find(cart => cart.owner === userId)
+    if (!cart) return []
 
     const items = cart.items.map(id => cameras.find(camera => camera.id === id))
 
