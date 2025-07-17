@@ -1,12 +1,15 @@
 const express = require('express')
 const cookieParser = require('cookie-parser')
 const { logic } = require('./logic')
+const { helper } = require('./helper')
 
 const server = express()
 
 const formBodyParser = express.urlencoded()
 
 server.use(cookieParser())
+
+server.use(express.static('public'))
 
 let query
 
@@ -35,11 +38,12 @@ server.get('/', (request, response) => {
         <html>
             <head>
                 <title>Home</title>
+                <link href="style.css" rel="stylesheet" />
             </head>
     
             <body>
                 <h1><a href="http://localhost:8080/">Home</a></h1>
-                <p>Welcome ${user.name}</p>
+                ${helper.renderWelcomeUser(user.name)}
                 <form action="/logout" method="post">
                     <button type="submit">Logout</button>
                 </form>
@@ -97,7 +101,7 @@ server.get('/search', (request, response) => {
         </head>
         <body>
             <h1><a href="http://localhost:8080/">Home</a></h1>
-            <p>Welcome ${user.name}</p>
+            ${helper.renderWelcomeUser(user.name)}
             <form action="/logout" method="post">
                     <button type="submit">Logout</button>
                 </form>
@@ -114,19 +118,9 @@ server.get('/search', (request, response) => {
             </form>
             <h2>Results</h2>
             <ul>
-                ${cameras.map(({ id, brand, model, type, filmFormat, price }) => `
+                ${cameras.map(camera => `
                         <li>
-                            <h3><a href="http://localhost:8080/products/${id}"> ${brand} ${model}</a></h3>
-                        
-                            <i>${type} ${filmFormat}</i>
-                        
-                            <strong>${price}</strong>
-                        
-                             <form action="/products/${id}/add" method="post">
-                                <button type="submit">Add</button>
-                            </form>
-                        
-                            <a href="http://${brand}.com">${brand}</a>
+                            ${helper.renderProductItem(camera)}
                         </li>`).join('')}
             </ul>
         </body>
@@ -188,7 +182,7 @@ server.get('/cart', (request, response) => {
 
         <body>
             <h1><a href="http://localhost:8080/">Home</a></h1>
-            <p>Welcome ${user.name}</p>
+            ${helper.renderWelcomeUser(user.name)}
             <form action="/logout" method="post">
                     <button type="submit">Logout</button>
                 </form>
@@ -205,18 +199,9 @@ server.get('/cart', (request, response) => {
             </form>
             <h2>Cart</h2>
             <ul>
-                ${items.map(({ id, brand, model, type, filmFormat, price }) => `<li>
-                            <h3><a href="http://localhost:8080/products/${id}"> ${brand} ${model}</a></h3>
-
-                            <i>${type} ${filmFormat}</i>
-
-                            <strong>${price}</strong>
-
-                            <a href="https://${brand}.com">${brand}</a>
-                            <form action="/products/${id}/remove" method="post">
-                                <button type="submit">🗑</button>
-                            </form>
-                        </li>`).join('')}
+                ${items.map(camera => `<li>
+                    ${helper.renderProductItem(camera, true)}
+                </li>`).join('')}
             </ul>
             <strong>Total: ${items.reduce((acc, item) => acc + item.price, 0)}
             <div><a href="http://localhost:8080/search?q=${query}">Back</a></div>
@@ -283,7 +268,7 @@ server.get('/products/:id', (request, response) => {
 
         <body>
             <h1><a href="http://localhost:8080/">Home</a></h1>
-            <p>Welcome ${user.name}</p>
+            ${helper.renderWelcomeUser(user.name)}
             <form action="/logout" method="post">
                     <button type="submit">Logout</button>
                 </form>
@@ -356,7 +341,7 @@ server.get('/products/tags/:tag', (request, response) => {
 
                     <body>
                         <h1><a href="http://localhost:8080/">Home</a></h1>
-                        <p>Welcome ${user.name}</p>
+                        ${helper.renderWelcomeUser(user.name)}
                         <form action="/logout" method="post">
                                 <button type="submit">Logout</button>
                             </form>
