@@ -4,6 +4,8 @@ const { logic } = require('./logic')
 
 const server = express()
 
+const formBodyParser = express.urlencoded()
+
 server.use(cookieParser())
 
 let query
@@ -36,9 +38,11 @@ server.get('/', (request, response) => {
             </head>
     
             <body>
-                <h1>Home</h1>
+                <h1><a href="http://localhost:8080/">Home</a></h1>
                 <p>Welcome ${user.name}</p>
-                <a href="http://localhost:8080/logout">Logout</a>
+                <form action="/logout" method="post">
+                    <button type="submit">Logout</button>
+                </form>
                 <a href="http://localhost:8080/cart">Cart</a>
                 <form action="/search" method="get">
                     <div>
@@ -70,16 +74,20 @@ server.get('/', (request, response) => {
     }
 })
 
-server.get('/logout', (request, response) => {
+server.post('/logout', (request, response) => {
     response.clearCookie('userId')
     response.redirect('/login')
 })
 
 server.get('/search', (request, response) => {
-    const { q } = request.query
-
-    query = q
     try {
+        const { userId } = request.cookies
+
+        const { q } = request.query
+
+        query = q
+        const user = logic.getUserInfo(userId)
+
         const cameras = logic.searchProducts(q)
 
         response.send(`<doctype html>
@@ -87,10 +95,24 @@ server.get('/search', (request, response) => {
         <head>
             <title>Results</title>
         </head>
-
         <body>
-            <h2>Results</h2>
+            <h1><a href="http://localhost:8080/">Home</a></h1>
+            <p>Welcome ${user.name}</p>
+            <form action="/logout" method="post">
+                    <button type="submit">Logout</button>
+                </form>
             <a href="http://localhost:8080/cart">Cart</a>
+            <form action="/search" method="get">
+                <div>
+                    <label for="query">Search</label>
+                    <input type="text" id="query" name="q" value="${query}" />
+                </div>
+                    <div>
+                    <button type="reset">Clear</button>
+                    <button type="submit">Search</button>
+                </div>
+            </form>
+            <h2>Results</h2>
             <ul>
                 ${cameras.map(({ id, brand, model, type, filmFormat, price }) => `
                         <li>
@@ -100,12 +122,13 @@ server.get('/search', (request, response) => {
                         
                             <strong>${price}</strong>
                         
-                            <a href="http://localhost:8080/products/${id}/add">Add</a>
+                             <form action="/products/${id}/add" method="post">
+                                <button type="submit">Add</button>
+                            </form>
                         
                             <a href="http://${brand}.com">${brand}</a>
                         </li>`).join('')}
             </ul>
-            <a href="http://localhost:8080/">Back</a>
         </body>
     </html>`)
     } catch (error) {
@@ -126,7 +149,7 @@ server.get('/search', (request, response) => {
 
 })
 
-server.get('/products/:productId/add', (request, response) => {
+server.post('/products/:productId/add', (request, response) => {
     const { userId } = request.cookies
     const { productId } = request.params
 
@@ -152,8 +175,9 @@ server.get('/products/:productId/add', (request, response) => {
 })
 
 server.get('/cart', (request, response) => {
-    const { userId } = request.cookies
     try {
+        const { userId } = request.cookies
+        const user = logic.getUserInfo(userId)
         const items = logic.getCartProducts(userId)
 
         response.send(`<doctype html>
@@ -163,8 +187,23 @@ server.get('/cart', (request, response) => {
         </head>
 
         <body>
+            <h1><a href="http://localhost:8080/">Home</a></h1>
+            <p>Welcome ${user.name}</p>
+            <form action="/logout" method="post">
+                    <button type="submit">Logout</button>
+                </form>
+            <a href="http://localhost:8080/cart">Cart</a>
+            <form action="/search" method="get">
+                <div>
+                    <label for="query">Search</label>
+                    <input type="text" id="query" name="q" value="${query}" />
+                </div>
+                    <div>
+                    <button type="reset">Clear</button>
+                    <button type="submit">Search</button>
+                </div>
+            </form>
             <h2>Cart</h2>
-            <a href="http://localhost:8080/search?q=${query}">Back</a>
             <ul>
                 ${items.map(({ id, brand, model, type, filmFormat, price }) => `<li>
                             <h3><a href="http://localhost:8080/products/${id}"> ${brand} ${model}</a></h3>
@@ -174,10 +213,13 @@ server.get('/cart', (request, response) => {
                             <strong>${price}</strong>
 
                             <a href="https://${brand}.com">${brand}</a>
-                            <a href="http://localhost:8080/products/${id}/remove">🗑</a>
+                            <form action="/products/${id}/remove" method="post">
+                                <button type="submit">🗑</button>
+                            </form>
                         </li>`).join('')}
             </ul>
             <strong>Total: ${items.reduce((acc, item) => acc + item.price, 0)}
+            <div><a href="http://localhost:8080/search?q=${query}">Back</a></div>
         </body>
     </html>`)
     } catch (error) {
@@ -197,7 +239,7 @@ server.get('/cart', (request, response) => {
     }
 })
 
-server.get('/products/:productId/remove', (request, response) => {
+server.post('/products/:productId/remove', (request, response) => {
     const { userId } = request.cookies
     const { productId } = request.params
 
@@ -223,9 +265,10 @@ server.get('/products/:productId/remove', (request, response) => {
 })
 
 server.get('/products/:id', (request, response) => {
-    const { id } = request.params
-
     try {
+        const { id } = request.params
+        const { userId } = request.cookies
+        const user = logic.getUserInfo(userId)
         const item = logic.getProductInfo(id)
 
         const { brand, model, type, filmFormat, price, year, country, description, functionalities, commonUse, tags, salesStatsByCountry, images } = item
@@ -239,14 +282,32 @@ server.get('/products/:id', (request, response) => {
         </head>
 
         <body>
+            <h1><a href="http://localhost:8080/">Home</a></h1>
+            <p>Welcome ${user.name}</p>
+            <form action="/logout" method="post">
+                    <button type="submit">Logout</button>
+                </form>
+            <a href="http://localhost:8080/cart">Cart</a>
+            <form action="/search" method="get">
+                <div>
+                    <label for="query">Search</label>
+                    <input type="text" id="query" name="q" value="${query}" />
+                </div>
+                    <div>
+                    <button type="reset">Clear</button>
+                    <button type="submit">Search</button>
+                </div>
+            </form>
             <article>
-                <h1><a href="http://localhost:8080/products/${id}"> ${brand} ${model}</a></h1>
+                <h2><a href="http://localhost:8080/products/${id}"> ${brand} ${model}</a></h2>
 
                 <i>${type} ${filmFormat}</i>
 
                 <strong>${price}</strong>
 
-                <a href="http://localhost:8080/products/${id}/add">Add</a>
+                <form action="/products/${id}/add" method="post">
+                    <button type="submit">Add</button>
+                </form>
 
                 <a href="http://${brand}.com">${brand}</a>
 
@@ -281,9 +342,10 @@ server.get('/products/:id', (request, response) => {
 })
 
 server.get('/products/tags/:tag', (request, response) => {
-    const { tag } = request.params
-
     try {
+        const { userId } = request.cookies
+        const user = logic.getUserInfo(userId)
+        const { tag } = request.params
         const filteredCameras = logic.filterProductsByTag(tag)
 
         response.send(`<doctype html>
@@ -293,6 +355,22 @@ server.get('/products/tags/:tag', (request, response) => {
                     </head>
 
                     <body>
+                        <h1><a href="http://localhost:8080/">Home</a></h1>
+                        <p>Welcome ${user.name}</p>
+                        <form action="/logout" method="post">
+                                <button type="submit">Logout</button>
+                            </form>
+                        <a href="http://localhost:8080/cart">Cart</a>
+                        <form action="/search" method="get">
+                            <div>
+                                <label for="query">Search</label>
+                                <input type="text" id="query" name="q" value="${query}" />
+                            </div>
+                                <div>
+                                <button type="reset">Clear</button>
+                                <button type="submit">Search</button>
+                            </div>
+                        </form>
                         <h2>Tag Results</h2>
                         <a href="http://localhost:8080/cart">Cart</a>
                         <ul>
@@ -304,7 +382,9 @@ server.get('/products/tags/:tag', (request, response) => {
                         
                             <strong>${price}</strong>
                         
-                            <a href="http://localhost:8080/products/${id}/add">Add</a>
+                            <form action="/products/${id}/add" method="post">
+                                <button type="submit">Add</button>
+                            </form>
                         
                             <a href="http://${brand}.com">${brand}</a>
 
@@ -339,7 +419,7 @@ server.get('/register', (request, response) => {
             </head>
             
             <body>
-                <form action="/register/submit" method="get">
+                <form action="/register/submit" method="post">
                     <div>
                         <label for="name">Name</label>
                         <input type="text" id="name" name="name" />
@@ -365,8 +445,8 @@ server.get('/register', (request, response) => {
             </body>`)
 })
 
-server.get('/register/submit', (request, response) => {
-    const { name, email, username, password } = request.query
+server.post('/register/submit', formBodyParser, (request, response) => {
+    const { name, email, username, password } = request.body
 
     try {
         logic.registerUser(name, email, username, password)
@@ -396,7 +476,7 @@ server.get('/login', (request, response) => {
             </head>
             
             <body>
-                <form action="/login/submit" method="get">
+                <form action="/login/submit" method="post">
                     <div>
                         <label for="username">Username</label>
                         <input type="text" id="username" name="username" />
@@ -414,8 +494,8 @@ server.get('/login', (request, response) => {
             </body>`)
 })
 
-server.get('/login/submit', (request, response) => {
-    const { username, password } = request.query
+server.post('/login/submit', formBodyParser, (request, response) => {
+    const { username, password } = request.body
     try {
         const user = logic.loginUser(username, password)
         response.cookie('userId', user.id)
