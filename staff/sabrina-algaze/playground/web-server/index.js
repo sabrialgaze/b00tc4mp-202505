@@ -45,17 +45,17 @@ server.get('/', (request, response) => {
                 <h1><a href="http://localhost:8080/">Home</a></h1>
                 ${helper.renderWelcomeUser(user.name)}
                 <form action="/logout" method="post">
-                    <button type="submit">Logout</button>
+                    ${helper.renderButton("submit", "Logout")}
                 </form>
                 <a href="http://localhost:8080/cart">Cart</a>
                 <form action="/search" method="get">
                     <div>
-                        <label for="query">Search</label>
-                        <input type="text" id="query" name="q" />
+                        ${helper.renderLabel("query", "Search")}
+                        ${helper.renderInput("text", "query", "q", query)}
                     </div>
                        <div>
-                        <button type="reset">Clear</button>
-                        <button type="submit">Search</button>
+                       ${helper.renderButton("reset", "Clear")}
+                       ${helper.renderButton("submit", "Search")}
                     </div>
                 </form>
             </body>
@@ -103,17 +103,17 @@ server.get('/search', (request, response) => {
             <h1><a href="http://localhost:8080/">Home</a></h1>
             ${helper.renderWelcomeUser(user.name)}
             <form action="/logout" method="post">
-                    <button type="submit">Logout</button>
+                    ${helper.renderButton("submit", "Logout")}
                 </form>
             <a href="http://localhost:8080/cart">Cart</a>
             <form action="/search" method="get">
                 <div>
-                    <label for="query">Search</label>
-                    <input type="text" id="query" name="q" value="${query}" />
+                    ${helper.renderLabel("query", "Search")}
+                    ${helper.renderInput("text", "query", "q", query)}
                 </div>
                     <div>
-                    <button type="reset">Clear</button>
-                    <button type="submit">Search</button>
+                    ${helper.renderButton("reset", "Clear")}
+                    ${helper.renderButton("submit", "Search")}
                 </div>
             </form>
             <h2>Results</h2>
@@ -184,17 +184,17 @@ server.get('/cart', (request, response) => {
             <h1><a href="http://localhost:8080/">Home</a></h1>
             ${helper.renderWelcomeUser(user.name)}
             <form action="/logout" method="post">
-                    <button type="submit">Logout</button>
+                    ${helper.renderButton("submit", "Logout")}
                 </form>
             <a href="http://localhost:8080/cart">Cart</a>
             <form action="/search" method="get">
                 <div>
-                    <label for="query">Search</label>
-                    <input type="text" id="query" name="q" value="${query}" />
+                    ${helper.renderLabel("query", "Search")}
+                    ${helper.renderInput("text", "query", "q", query)}
                 </div>
                     <div>
-                    <button type="reset">Clear</button>
-                    <button type="submit">Search</button>
+                    ${helper.renderButton("reset", "Clear")}
+                    ${helper.renderButton("submit", "Search")}
                 </div>
             </form>
             <h2>Cart</h2>
@@ -270,17 +270,17 @@ server.get('/products/:id', (request, response) => {
             <h1><a href="http://localhost:8080/">Home</a></h1>
             ${helper.renderWelcomeUser(user.name)}
             <form action="/logout" method="post">
-                    <button type="submit">Logout</button>
+                    ${helper.renderButton("submit", "Logout")}
                 </form>
             <a href="http://localhost:8080/cart">Cart</a>
             <form action="/search" method="get">
                 <div>
-                    <label for="query">Search</label>
-                    <input type="text" id="query" name="q" value="${query}" />
+                    ${helper.renderLabel("query", "Search")}
+                    ${helper.renderInput("text", "query", "q", query)}
                 </div>
                     <div>
-                    <button type="reset">Clear</button>
-                    <button type="submit">Search</button>
+                    ${helper.renderButton("reset", "Clear")}
+                    ${helper.renderButton("submit", "Search")}
                 </div>
             </form>
             <article>
@@ -291,7 +291,7 @@ server.get('/products/:id', (request, response) => {
                 <strong>${price}</strong>
 
                 <form action="/products/${id}/add" method="post">
-                    <button type="submit">Add</button>
+                    ${helper.renderButton("submit", "Add")}
                 </form>
 
                 <a href="http://${brand}.com">${brand}</a>
@@ -343,17 +343,17 @@ server.get('/products/tags/:tag', (request, response) => {
                         <h1><a href="http://localhost:8080/">Home</a></h1>
                         ${helper.renderWelcomeUser(user.name)}
                         <form action="/logout" method="post">
-                                <button type="submit">Logout</button>
+                                ${helper.renderButton("submit", "Logout")}
                             </form>
                         <a href="http://localhost:8080/cart">Cart</a>
                         <form action="/search" method="get">
                             <div>
-                                <label for="query">Search</label>
-                                <input type="text" id="query" name="q" value="${query}" />
+                                ${helper.renderLabel("query", "Search")}
+                                ${helper.renderInput("text", "query", "q", query)}
                             </div>
                                 <div>
-                                <button type="reset">Clear</button>
-                                <button type="submit">Search</button>
+                                    ${helper.renderButton("reset", "Clear")}
+                                    ${helper.renderButton("submit", "Search")}
                             </div>
                         </form>
                         <h2>Tag Results</h2>
@@ -368,7 +368,7 @@ server.get('/products/tags/:tag', (request, response) => {
                             <strong>${price}</strong>
                         
                             <form action="/products/${id}/add" method="post">
-                                <button type="submit">Add</button>
+                                ${helper.renderButton("submit", "Add")}
                             </form>
                         
                             <a href="http://${brand}.com">${brand}</a>
@@ -406,12 +406,14 @@ server.get('/register', (request, response) => {
             <body>
                 <form action="/register/submit" method="post">
                     <div>
+                        ${helper.renderLabel("name", "Name")}
+                        ${helper.renderInput("text", "name", "name")}
                         <label for="name">Name</label>
                         <input type="text" id="name" name="name" />
                     </div>
                     <div>
-                        <label for="email">E-mail</label>
-                        <input type="email" id="email" name="email"/>
+                        ${helper.renderLabel("email", "E-mail")}
+                        ${helper.renderInput("email", "email", "email")}
                     </div>
                     <div>
                         <label for="username">Username</label>
@@ -422,8 +424,8 @@ server.get('/register', (request, response) => {
                         <input type="password" id="password" name="password" />
                     </div>
                     <div>
-                        <button type="reset">Clear</button>
-                        <button type="submit">Register</button>
+                        ${helper.renderButton("reset", "Clear")}
+                        ${helper.renderButton("submit", "Register")}
                     </div>
                 </form>
                 <a href="http://localhost:8080/login">Login</a>
@@ -471,8 +473,8 @@ server.get('/login', (request, response) => {
                         <input type="password" id="password" name="password" />
                     </div>
                     <div>
-                        <button type="reset">Clear</button>
-                        <button type="submit">Login</button>
+                        ${helper.renderButton("reset", "Clear")}
+                        ${helper.renderButton("submit", "Login")}
                     </div>
                 </form>
                 <a href="http://localhost:8080/register">Register</a>

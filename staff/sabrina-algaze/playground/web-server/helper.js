@@ -16,9 +16,19 @@ ${isCart ? `<form action="/products/${id}/remove" method="post">
 
 <a href="http://${brand}.com">${brand}</a>`
 
+const renderButton = (type, text) => `<button type=${type}>${text}</button>`
+
+const renderLabel = (forId, text) => `<label for="${forId}">${text}</label>`
+
+const renderInput = (type, id, name, value = '') => `<input type="${type}" id="${id}" name="${name}" value="${value}" />`
+
+
 const helper = {
     renderWelcomeUser,
-    renderProductItem
+    renderProductItem,
+    renderButton,
+    renderLabel,
+    renderInput
 }
 
 module.exports = { helper }
