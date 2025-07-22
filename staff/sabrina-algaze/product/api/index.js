@@ -27,7 +27,7 @@ api.post('/users/auth', jsonBodyParser, (req, res) => {
     try {
         const userId = logic.authenticateUser(username, password)
 
-        res.status(200).json({ userId })
+        res.status(200).json(userId)
     } catch (error) {
         console.error(error)
 
@@ -35,25 +35,57 @@ api.post('/users/auth', jsonBodyParser, (req, res) => {
     }
 })
 
-api.post('/users/info', jsonBodyParser, (req, res) => {
-    const { userId } = req.body
-
+api.get('/users/info', (req, res) => {
     try {
+        const userId = req.headers.authorization.slice(6)
+
         const user = logic.getUserInfo(userId)
 
-        res.status(200).json({ user })
+        res.status(200).json(user)
     } catch (error) {
         res.status(500).json({ error: error.constructor.name, message: error.message })
     }
 })
 
-api.post('/posts/create', jsonBodyParser, (req, res) => {
-    const { image, text, userId } = req.body
-
+api.post('/posts', jsonBodyParser, (req, res) => {
     try {
-        logic.createPost(image, text, userId)
+        const userId = req.headers.authorization.slice(6)
+
+        const { image, text } = req.body
+
+        logic.createPost(userId, image, text)
 
         res.status(201).send()
+    } catch (error) {
+        console.error(error)
+
+        res.status(500).json({ error: error.constructor.name, message: error.message })
+    }
+})
+
+api.get('/posts', (req, res) => {
+    try {
+        const userId = req.headers.authorization.slice(6)
+
+        const posts = logic.getPosts(userId)
+
+        res.status(200).json(posts)
+    } catch (error) {
+        console.error(error)
+
+        res.status(500).json({ error: error.constructor.name, message: error.message })
+    }
+})
+
+api.delete('/posts/:postId', (req, res) => {
+    try {
+        const userId = req.headers.authorization.slice(6)
+
+        const { postId } = req.params
+
+        logic.removePost(userId, postId)
+
+        res.status(204).send()
     } catch (error) {
         console.error(error)
 

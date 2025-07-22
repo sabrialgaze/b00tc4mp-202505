@@ -1,1 +1,1 @@
-curl  -X POST -H 'Content-Type: application/json' -d '{"image":"https://media.giphy.com/media/v1/giphy/gif", "text": "test", "userId": "4smix8ro22s"}' http://localhost:8080/posts/create -v
+curl  -X POST -H 'Authorization: Basic abc123' -H 'Content-Type: application/json' -d '{"image":"https://media.giphy.com/media/v1/giphy/gif", "text": "test"}' http://localhost:8080/posts -v

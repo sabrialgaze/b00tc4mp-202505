@@ -1,6 +1,7 @@
 import { data } from '../data/index.js'
 
-export const createPost = (image, text, userId) => {
+export const createPost = (userId, image, text) => {
+    if (typeof userId !== 'string') throw new TypeError('invalid userId type')
     if (typeof image !== 'string') throw new TypeError('invalid image type')
     if (!image.length) throw new Error('No image was provided')
     if (typeof text !== 'string') throw new TypeError('invalid text type')
