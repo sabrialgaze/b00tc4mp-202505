@@ -1,0 +1,1 @@
+curl -X POST -H 'Content-Type: application/json' -d '{"userId":"4smix8ro22s"}' http://localhost:8080/users/info -v
