@@ -93,5 +93,82 @@ api.delete('/posts/:postId', (req, res) => {
     }
 })
 
+api.patch('/posts/:postId/likes', (req, res) => {
+    try {
+        const userId = req.headers.authorization.slice(6)
+
+        const { postId } = req.params
+
+        logic.toggleLikePost(userId, postId)
+
+        res.status(204).send()
+    } catch (error) {
+        console.error(error)
+
+        res.status(500).json({ error: error.constructor.name, message: error.message })
+    }
+})
+
+api.patch('/posts/:postId/saved', (req, res) => {
+    try {
+        const userId = req.headers.authorization.slice(6)
+
+        const { postId } = req.params
+
+        logic.toggleSavePost(userId, postId)
+
+        res.status(204).send()
+    } catch (error) {
+        console.error(error)
+
+        res.status(500).json({ error: error.constructor.name, message: error.message })
+    }
+})
+
+api.patch('/posts/:postId/archived', (req, res) => {
+    try {
+        const userId = req.headers.authorization.slice(6)
+
+        const { postId } = req.params
+
+        logic.toggleArchivePost(userId, postId)
+
+        res.status(204).send()
+    } catch (error) {
+        console.error(error)
+
+        res.status(500).json({ error: error.constructor.name, message: error.message })
+    }
+})
+
+api.get('/posts/saved', (req, res) => {
+    try {
+        const userId = req.headers.authorization.slice(6)
+
+        const posts = logic.getSavedPosts(userId)
+
+        res.status(200).json(posts)
+    } catch (error) {
+        console.error(error)
+
+        res.status(500).json({ error: error.constructor.name, message: error.message })
+    }
+})
+
+api.get('/posts/archived', (req, res) => {
+    try {
+        const userId = req.headers.authorization.slice(6)
+
+        const posts = logic.getArchivedPosts(userId)
+
+        res.status(200).json(posts)
+    } catch (error) {
+        console.error(error)
+
+        res.status(500).json({ error: error.constructor.name, message: error.message })
+    }
+})
+
+
 api.listen(8080, () => console.log('API listening on port 8080'))
 

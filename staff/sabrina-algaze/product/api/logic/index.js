@@ -4,6 +4,11 @@ import { getUserInfo } from './getUserInfo.js'
 import { createPost } from './createPost.js'
 import { getPosts } from './getPosts.js'
 import { removePost } from './removePost.js'
+import { toggleLikePost } from './toggleLikePost.js'
+import { toggleSavePost } from './toggleSavePost.js'
+import { toggleArchivePost } from './toggleArchivePost.js'
+import { getSavedPosts } from './getSavedPosts.js'
+import { getArchivedPosts } from './getArchivedPosts.js'
 
 export const logic = {
     registerUser,
@@ -11,5 +16,10 @@ export const logic = {
     getUserInfo,
     createPost,
     getPosts,
-    removePost
+    removePost,
+    toggleLikePost,
+    toggleSavePost,
+    toggleArchivePost,
+    getSavedPosts,
+    getArchivedPosts
 }
