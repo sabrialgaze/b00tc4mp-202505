@@ -270,8 +270,8 @@ server.get('/products/:id', (request, response) => {
             <h1><a href="http://localhost:8080/">Home</a></h1>
             ${helper.renderWelcomeUser(user.name)}
             <form action="/logout" method="post">
-                    ${helper.renderButton("submit", "Logout")}
-                </form>
+                ${helper.renderButton("submit", "Logout")}
+            </form>
             <a href="http://localhost:8080/cart">Cart</a>
             <form action="/search" method="get">
                 <div>
@@ -408,20 +408,18 @@ server.get('/register', (request, response) => {
                     <div>
                         ${helper.renderLabel("name", "Name")}
                         ${helper.renderInput("text", "name", "name")}
-                        <label for="name">Name</label>
-                        <input type="text" id="name" name="name" />
                     </div>
                     <div>
                         ${helper.renderLabel("email", "E-mail")}
                         ${helper.renderInput("email", "email", "email")}
                     </div>
                     <div>
-                        <label for="username">Username</label>
-                        <input type="text" id="username" name="username" />
+                        ${helper.renderLabel("username", "Username")}
+                        ${helper.renderInput("text", "username", "username")}
                     </div>
                     <div>
-                        <label for="password">Password</label>
-                        <input type="password" id="password" name="password" />
+                        ${helper.renderLabel("password", "Password")}
+                        ${helper.renderInput("password", "password", "password")}
                     </div>
                     <div>
                         ${helper.renderButton("reset", "Clear")}
@@ -465,12 +463,12 @@ server.get('/login', (request, response) => {
             <body>
                 <form action="/login/submit" method="post">
                     <div>
-                        <label for="username">Username</label>
-                        <input type="text" id="username" name="username" />
+                        ${helper.renderLabel("username", "Username")}
+                        ${helper.renderInput("text", "username", "username")}
                     </div>
                     <div>
-                        <label for="password">Password</label>
-                        <input type="password" id="password" name="password" />
+                        ${helper.renderLabel("password", "Password")}
+                        ${helper.renderInput("password", "password", "password")}
                     </div>
                     <div>
                         ${helper.renderButton("reset", "Clear")}
