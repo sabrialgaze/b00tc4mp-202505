@@ -1,21 +1,38 @@
 import { data } from '../data'
+/**
+ * Removes a post.
+ * 
+ * @example
+ ```js
+ // demo
 
+removePost('12345')
+    .then(() => console.log('Post removed'))
+    .catch(error => console.error(error))
+ ```
+ */
 export const removePost = postId => {
-    const userId = data.loadUserId()
+    if (typeof postId !== 'string') throw new TypeError('invalid postId type')
 
-    const users = data.loadUsers()
+    return fetch(`http://localhost:8080/posts/${postId}`, {
+        method: 'DELETE',
+        headers: {
+            Authorization: `Basic ${data.loadUserId()}`
+        },
+    })
+        .catch(error => { throw new Error('connection error') })
+        .then(res => {
+            const { status } = res
 
-    const user = users.find(user => user.id === userId)
+            if (status === 204) return
 
-    if (!user) throw Error('user not found')
+            return res.json()
+                .catch(error => { throw new Error('json error') })
+                .then(body => {
+                    const { error, message } = body
 
-    const posts = data.loadPosts()
-
-    const index = posts.findIndex(post => post.id === postId)
-
-    if (index < 0) throw Error('post not found')
-
-    posts.splice(index, 1)
-
-    data.savePosts(posts)
+                    throw new Error(message)
+                })
+        })
 }
+

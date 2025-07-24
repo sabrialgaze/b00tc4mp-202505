@@ -11,5 +11,7 @@ export const getUserInfo = userId => {
 
     delete user.password
 
+    delete user.saved
+
     return user
 }

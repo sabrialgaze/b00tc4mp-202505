@@ -1,40 +1,39 @@
 import { data } from '../data'
+/**
+ * Gets posts.
+ * 
+ * @example
+ ```js
+ // demo
+
+ getPosts()
+     .then(posts => console.log(posts))
+     .catch(error => console.error(error))
+ ```
+ */
 
 export const getPosts = () => {
-    const userId = data.loadUserId()
+    return fetch('http://localhost:8080/posts', {
+        method: 'GET',
+        headers: {
+            Authorization: `Basic ${data.loadUserId()}`
+        },
 
-    const users = data.loadUsers()
-
-    const user = users.find(user => user.id === userId)
-
-    if (!user) throw Error('user not found')
-
-    let posts = data.loadPosts()
-
-    posts = posts.filter(post => !post.archived)
-
-    posts.reverse()
-
-    posts.forEach(post => {
-        const author = users.find(user => user.id === post.author)
-
-        if (!author) throw Error('author not found')
-
-        const { id, username } = author
-
-        // populate author
-        post.author = { id, username }
-
-        post.own = post.author.id === userId
-
-        post.liked = post.likes.includes(userId)
-
-        post.likesCount = post.likes.length
-
-        delete post.likes
-
-        post.saved = user.saved.includes(post.id)
     })
+        .catch(error => { throw new Error('connection error') })
+        .then(res => {
+            const { status } = res
 
-    return posts
+            if (status === 200)
+                return res.json()
+                    .catch(error => { throw new Error('json error') })
+                    .then(posts => posts)
+            return res.json()
+                .catch(error => { throw new Error('json error') })
+                .then(body => {
+                    const { error, message } = body
+
+                    throw new Error(message)
+                })
+        })
 }

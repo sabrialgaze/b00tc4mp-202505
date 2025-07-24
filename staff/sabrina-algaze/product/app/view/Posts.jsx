@@ -9,9 +9,15 @@ export const Posts = () => {
 
     useEffect(() => {
         try {
-            const posts = logic.getPosts()
+            logic.getPosts()
+                .then(posts => {
+                    setPosts(posts)
+                })
+                .catch(error => {
+                    console.error(error)
 
-            setPosts(posts)
+                    alert(error.message)
+                })
         } catch (error) {
             console.error(error)
 
@@ -21,9 +27,15 @@ export const Posts = () => {
 
     const handlePostRemoved = () => {
         try {
-            const posts = logic.getPosts()
+            logic.getPosts()
+                .then(posts => {
+                    setPosts(posts)
+                })
+                .catch(error => {
+                    console.error(error)
 
-            setPosts(posts)
+                    alert(error.message)
+                })
         } catch (error) {
             console.error(error)
 
@@ -33,9 +45,15 @@ export const Posts = () => {
 
     const handlePostLikeToggled = () => {
         try {
-            const posts = logic.getPosts()
+            logic.getPosts()
+                .then(posts => {
+                    setPosts(posts)
+                })
+                .catch(error => {
+                    console.error(error)
 
-            setPosts(posts)
+                    alert(error.message)
+                })
         } catch (error) {
             console.error(error)
 
@@ -45,9 +63,15 @@ export const Posts = () => {
 
     const handlePostSaveToggled = () => {
         try {
-            const posts = logic.getPosts()
+            logic.getPosts()
+                .then(posts => {
+                    setPosts(posts)
+                })
+                .catch(error => {
+                    console.error(error)
 
-            setPosts(posts)
+                    alert(error.message)
+                })
         } catch (error) {
             console.error(error)
 
@@ -56,9 +80,15 @@ export const Posts = () => {
     }
     const handlePostArchiveToggled = () => {
         try {
-            const posts = logic.getPosts()
+            logic.getPosts()
+                .then(posts => {
+                    setPosts(posts)
+                })
+                .catch(error => {
+                    console.error(error)
 
-            setPosts(posts)
+                    alert(error.message)
+                })
         } catch (error) {
             console.error(error)
 

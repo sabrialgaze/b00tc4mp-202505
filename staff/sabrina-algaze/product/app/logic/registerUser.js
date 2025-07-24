@@ -1,5 +1,20 @@
-import { data } from '../data'
+/**
+ * Registers a user.
+ * 
+ * @example
+ ```js
+// demo
 
+registerUser('Sabrina2', 'sabrina2@mail.com', 'sabrina2', '123123123')
+    .then(() => console.log('user registered'))
+    .catch(error => console.error(error))
+ ```
+ * 
+ * @param {string} name The user name.
+ * @param {string} email The user email.
+ * @param {string} username The user username.
+ * @param {string} password The user password.
+ */
 export const registerUser = (name, email, username, password) => {
     if (typeof name !== 'string') throw new TypeError('invalid name')
     if (!name.length) throw new RangeError('invalid name length')
@@ -25,19 +40,30 @@ export const registerUser = (name, email, username, password) => {
     const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/
     if (!passwordRegex.test(password)) throw new Error('invalid password format')
 
+    return fetch('http://localhost:8080/users', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            name,
+            email,
+            username,
+            password
+        })
+    })
+        .catch(error => { throw new Error('connection error') })
+        .then(res => {
+            const { status } = res
 
+            if (status === 201) return
 
-    const users = data.loadUsers()
+            return res.json()
+                .catch(error => { throw new Error('json error') })
+                .then(body => {
+                    const { error, message } = body
 
-    let user = users.find(user => user.email === email || user.username === username)
-
-    if (user) throw new Error('user already exists')
-
-    const id = parseInt((Date.now() + Math.random()).toString().replace('.', '')).toString(36)
-
-    user = { id, name, email, username, password, saved: [], archived: [] }
-
-    users.push(user)
-
-    data.saveUsers(users)
+                    throw new Error(message)
+                })
+        })
 }

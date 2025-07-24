@@ -1,15 +1,39 @@
 import { data } from '../data'
+/**
+ * Gets user info.
+ * 
+ * @example
+ ```js
+// demo
+
+getUserInfo()
+    .then(user => console.log(user))
+    .catch(error => console.error(error))
+ ```
+ */
 
 export const getUserInfo = () => {
-    const userId = data.loadUserId()
+    return fetch('http://localhost:8080/users/info', {
+        method: 'GET',
+        headers: {
+            Authorization: `Basic ${data.loadUserId()}`
+        },
 
-    const users = data.loadUsers()
+    })
+        .catch(error => { throw new Error('connection error') })
+        .then(res => {
+            const { status } = res
 
-    const user = users.find(user => user.id === userId)
+            if (status === 200)
+                return res.json()
+                    .catch(error => { throw new Error('json error') })
+                    .then(user => user)
+            return res.json()
+                .catch(error => { throw new Error('json error') })
+                .then(body => {
+                    const { error, message } = body
 
-    if (!user) throw Error('user not found')
-
-    delete user.password
-
-    return user
+                    throw new Error(message)
+                })
+        })
 }

@@ -5,8 +5,14 @@ export const Post = ({ post, onPostRemoved, onPostLikeToggled, onPostSaveToggled
         if (confirm('Delete post?')) {
             try {
                 logic.removePost(post.id)
+                    .then(() => {
+                        onPostRemoved()
+                    })
+                    .catch(error => {
+                        console.error(error)
 
-                onPostRemoved()
+                        alert(error.message)
+                    })
             } catch (error) {
                 console.error(error)
 
