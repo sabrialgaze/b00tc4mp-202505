@@ -1,19 +1,7 @@
 import { data } from '../data'
-/**
- * Gets posts.
- * 
- * @example
- ```js
- // demo
 
- getPosts()
-     .then(posts => console.log(posts))
-     .catch(error => console.error(error))
- ```
- */
-
-export const getPosts = () => {
-    return fetch('http://localhost:8080/posts', {
+export const getArchivedPosts = () => {
+    return fetch('http://localhost:8080/posts/archived', {
         method: 'GET',
         headers: {
             Authorization: `Basic ${data.loadUserId()}`

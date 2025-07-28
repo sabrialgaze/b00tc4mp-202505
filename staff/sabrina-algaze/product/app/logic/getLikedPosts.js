@@ -1,19 +1,7 @@
 import { data } from '../data'
-/**
- * Gets posts.
- * 
- * @example
- ```js
- // demo
 
- getPosts()
-     .then(posts => console.log(posts))
-     .catch(error => console.error(error))
- ```
- */
-
-export const getPosts = () => {
-    return fetch('http://localhost:8080/posts', {
+export const getLikedPosts = () => {
+    return fetch('http://localhost:8080/posts/liked', {
         method: 'GET',
         headers: {
             Authorization: `Basic ${data.loadUserId()}`
@@ -23,7 +11,7 @@ export const getPosts = () => {
         .then(res => {
             const { status } = res
 
-            if (status === 200)
+            if (status == 200)
                 return res.json()
                     .catch(error => { throw new Error('json error') })
                     .then(posts => posts)

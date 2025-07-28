@@ -24,8 +24,14 @@ export const Post = ({ post, onPostRemoved, onPostLikeToggled, onPostSaveToggled
     const handleToggleLikePostClick = () => {
         try {
             logic.toggleLikePost(post.id)
+                .then(() => {
+                    onPostLikeToggled()
+                })
+                .catch(error => {
+                    console.error(error)
 
-            onPostLikeToggled()
+                    alert(error.message)
+                })
         } catch (error) {
             console.error(error)
 
@@ -36,8 +42,14 @@ export const Post = ({ post, onPostRemoved, onPostLikeToggled, onPostSaveToggled
     const handleToggleSavePostClick = () => {
         try {
             logic.toggleSavePost(post.id)
+                .then(() => {
+                    onPostSaveToggled()
+                })
+                .catch(error => {
+                    console.error(error)
 
-            onPostSaveToggled()
+                    alert(error.message)
+                })
         } catch (error) {
             console.error(error)
 
@@ -49,8 +61,14 @@ export const Post = ({ post, onPostRemoved, onPostLikeToggled, onPostSaveToggled
         if (confirm(`${post.archived ? 'Unarchive' : 'Archive'} post?`)) {
             try {
                 logic.toggleArchivePost(post.id)
+                    .then(() => {
+                        onPostArchiveToggled()
+                    })
+                    .catch(error => {
+                        console.error(error)
 
-                onPostArchiveToggled()
+                        alert(error.message)
+                    })
             } catch (error) {
                 console.error(error)
 

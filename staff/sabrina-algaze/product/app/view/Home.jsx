@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react'
 
+import { logic } from '../logic'
+
 import { Posts } from './Posts'
 
 import { SavedPosts } from './SavedPosts'
-
-import { logic } from '../logic'
 import { ArchivedPosts } from './ArchivedPosts'
+import { LikedPosts } from './LikedPosts'
 
 export const Home = ({ onUserLoggedOut }) => {
     const [name, setName] = useState('')
@@ -44,10 +45,16 @@ export const Home = ({ onUserLoggedOut }) => {
 
         try {
             logic.createPost(image, text)
+                .then(() => {
+                    form.reset()
 
-            form.reset()
+                    setView('posts')
+                })
+                .catch(error => {
+                    console.error(error)
 
-            setView('posts')
+                    alert(error.message)
+                })
         } catch (error) {
             console.error(error)
 
@@ -79,6 +86,12 @@ export const Home = ({ onUserLoggedOut }) => {
         setView('archived-posts')
     }
 
+    const handleLikedPostsClick = event => {
+        event.preventDefault()
+
+        setView('liked-posts')
+    }
+
     const handleAppClick = event => {
         event.preventDefault()
 
@@ -93,7 +106,8 @@ export const Home = ({ onUserLoggedOut }) => {
         <button type="button" onClick={handleLogoutClick}>Logout</button>
         <button type="button" onClick={handleNewPostClick}>+</button>
         <a href="" onClick={handleSavedPostsClick}>Saved </a>
-        <a href="" onClick={handleArchivedPostsClick}> Archived</a>
+        <a href="" onClick={handleArchivedPostsClick}> Archived </a>
+        <a href="" onClick={handleLikedPostsClick}> Liked</a>
         {view === 'posts' && <Posts />}
         {view === 'new-post' && <div>
             <h2>New post</h2>
@@ -114,5 +128,6 @@ export const Home = ({ onUserLoggedOut }) => {
         </div>}
         {view === 'saved-posts' && <SavedPosts />}
         {view === 'archived-posts' && <ArchivedPosts />}
+        {view === 'liked-posts' && <LikedPosts />}
     </div>
 }

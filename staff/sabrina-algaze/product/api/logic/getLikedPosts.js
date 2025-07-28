@@ -1,7 +1,7 @@
-import { data } from '../data'
+import { data } from '../data/index.js'
 
-export const getArchivedPosts = () => {
-    const userId = data.loadUserId()
+export const getLikedPosts = userId => {
+    if (typeof userId !== 'string') throw new TypeError('invalid userId type')
 
     const users = data.loadUsers()
 
@@ -11,7 +11,7 @@ export const getArchivedPosts = () => {
 
     let posts = data.loadPosts()
 
-    posts = posts.filter(post => post.archived && post.author === userId)
+    posts = posts.filter(post => post.likes.includes(user.id) && !post.archived)
 
     posts.forEach(post => {
         const author = users.find(user => user.id === post.author)

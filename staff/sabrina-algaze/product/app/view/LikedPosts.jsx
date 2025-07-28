@@ -4,12 +4,12 @@ import { Post } from './Post'
 
 import { logic } from '../logic'
 
-export const ArchivedPosts = () => {
+export const LikedPosts = () => {
     const [posts, setPosts] = useState([])
 
     useEffect(() => {
         try {
-            logic.getArchivedPosts()
+            logic.getLikedPosts()
                 .then(posts => {
                     setPosts(posts)
                 })
@@ -27,8 +27,8 @@ export const ArchivedPosts = () => {
 
     const handlePostRemoved = () => {
         try {
-            logic.getArchivedPosts()
-                .then((posts) => {
+            logic.getLikedPosts()
+                .then(posts => {
                     setPosts(posts)
                 })
                 .catch(error => {
@@ -45,8 +45,8 @@ export const ArchivedPosts = () => {
 
     const handlePostLikeToggled = () => {
         try {
-            logic.getArchivedPosts()
-                .then((posts) => {
+            logic.getLikedPosts()
+                .then(posts => {
                     setPosts(posts)
                 })
                 .catch(error => {
@@ -63,8 +63,8 @@ export const ArchivedPosts = () => {
 
     const handlePostSaveToggled = () => {
         try {
-            logic.getArchivedPosts()
-                .then((posts) => {
+            logic.getLikedPosts()
+                .then(posts => {
                     setPosts(posts)
                 })
                 .catch(error => {
@@ -81,8 +81,8 @@ export const ArchivedPosts = () => {
 
     const handlePostArchiveToggled = () => {
         try {
-            logic.getArchivedPosts()
-                .then((posts) => {
+            logic.getLikedPosts()
+                .then(posts => {
                     setPosts(posts)
                 })
                 .catch(error => {
@@ -97,7 +97,7 @@ export const ArchivedPosts = () => {
         }
     }
 
-    console.debug('ArchivedPosts -> render')
+    console.debug('likedPosts -> render')
 
     return <div>
         <ul className="list-style-none p-0">
@@ -105,4 +105,3 @@ export const ArchivedPosts = () => {
         </ul>
     </div>
 }
-

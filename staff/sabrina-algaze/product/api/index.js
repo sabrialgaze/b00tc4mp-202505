@@ -172,6 +172,20 @@ api.get('/posts/archived', (req, res) => {
     }
 })
 
+api.get('/posts/liked', (req, res) => {
+    try {
+        const userId = req.headers.authorization.slice(6)
+
+        const posts = logic.getLikedPosts(userId)
+
+        res.status(200).json(posts)
+    } catch (error) {
+        console.error(error)
+
+        res.status(500).json({ error: error.constructor.name, message: error.message })
+    }
+})
+
 
 api.listen(8080, () => console.log('API listening on port 8080'))
 
