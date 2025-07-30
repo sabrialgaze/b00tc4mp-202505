@@ -8,7 +8,7 @@ export const getSavedPosts = userId => {
 
     const user = users.find(user => user.id === userId)
 
-    if (!user) throw NotFoundError('user not found')
+    if (!user) throw new NotFoundError('user not found')
 
     let posts = data.loadPosts()
 
@@ -17,7 +17,7 @@ export const getSavedPosts = userId => {
     posts.forEach(post => {
         const author = users.find(user => user.id === post.author)
 
-        if (!author) throw NotFoundError('author not found')
+        if (!author) throw new NotFoundError('author not found')
 
         const { id, username } = author
 

@@ -1,4 +1,5 @@
 import { data } from '../data'
+import { errors } from 'com'
 
 export const getArchivedPosts = () => {
     return fetch('http://localhost:8080/posts/archived', {
@@ -20,7 +21,8 @@ export const getArchivedPosts = () => {
                 .then(body => {
                     const { error, message } = body
 
-                    throw new Error(message)
+                    const constructor = errors[error]
+                    throw new constructor(message)
                 })
         })
 }

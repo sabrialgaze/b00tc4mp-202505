@@ -1,4 +1,5 @@
 import { data } from '../data'
+import { errors } from 'com'
 
 export const createPost = (image, text) => {
     if (typeof image !== 'string') throw new TypeError('invalid image type')
@@ -28,7 +29,8 @@ export const createPost = (image, text) => {
                 .then(body => {
                     const { error, message } = body
 
-                    throw new Error(message)
+                    const constructor = errors[error]
+                    throw new constructor(message)
                 })
         })
 }

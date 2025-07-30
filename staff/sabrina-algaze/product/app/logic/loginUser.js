@@ -1,5 +1,5 @@
 import { data } from '../data'
-import { validate } from 'com'
+import { validate, errors } from 'com'
 /**
  * Logs in a user.
  * @example
@@ -42,7 +42,8 @@ export const loginUser = (username, password) => {
                 .then(body => {
                     const { error, message } = body
 
-                    throw new Error(message)
+                    const constructor = errors[error]
+                    throw new constructor(message)
                 })
         })
 }

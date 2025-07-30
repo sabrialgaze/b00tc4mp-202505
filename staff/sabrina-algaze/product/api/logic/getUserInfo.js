@@ -8,7 +8,7 @@ export const getUserInfo = userId => {
 
     const user = users.find(user => user.id === userId)
 
-    if (!user) throw NotFoundError('user not found')
+    if (!user) throw new NotFoundError('user not found')
 
     delete user.password
 

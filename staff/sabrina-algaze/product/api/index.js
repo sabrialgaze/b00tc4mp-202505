@@ -1,6 +1,7 @@
 import express from 'express'
 import cors from 'cors'
 import { logic } from './logic/index.js'
+import { DuplicityError, ValidationError, NotFoundError, OwnershipError, CredentialsError } from 'com'
 
 const api = express()
 
@@ -10,7 +11,7 @@ api.use(cors())
 
 api.get('/', (req, res) => res.send('Hello API'))
 
-api.post('/users', jsonBodyParser, (req, res) => {
+api.post('/users', jsonBodyParser, (req, res, next) => {
     const { name, email, username, password } = req.body
 
     try {
@@ -18,13 +19,11 @@ api.post('/users', jsonBodyParser, (req, res) => {
 
         res.status(201).send()
     } catch (error) {
-        console.error(error)
-
-        res.status(500).json({ error: error.constructor.name, message: error.message })
+        next(error)
     }
 })
 
-api.post('/users/auth', jsonBodyParser, (req, res) => {
+api.post('/users/auth', jsonBodyParser, (req, res, next) => {
     const { username, password } = req.body
 
     try {
@@ -32,13 +31,11 @@ api.post('/users/auth', jsonBodyParser, (req, res) => {
 
         res.status(200).json(userId)
     } catch (error) {
-        console.error(error)
-
-        res.status(500).json({ error: error.constructor.name, message: error.message })
+        next(error)
     }
 })
 
-api.get('/users/info', (req, res) => {
+api.get('/users/info', (req, res, next) => {
     try {
         const userId = req.headers.authorization.slice(6)
 
@@ -46,11 +43,11 @@ api.get('/users/info', (req, res) => {
 
         res.status(200).json(user)
     } catch (error) {
-        res.status(500).json({ error: error.constructor.name, message: error.message })
+        next(error)
     }
 })
 
-api.post('/posts', jsonBodyParser, (req, res) => {
+api.post('/posts', jsonBodyParser, (req, res, next) => {
     try {
         const userId = req.headers.authorization.slice(6)
 
@@ -60,13 +57,11 @@ api.post('/posts', jsonBodyParser, (req, res) => {
 
         res.status(201).send()
     } catch (error) {
-        console.error(error)
-
-        res.status(500).json({ error: error.constructor.name, message: error.message })
+        next(error)
     }
 })
 
-api.get('/posts', (req, res) => {
+api.get('/posts', (req, res, next) => {
     try {
         const userId = req.headers.authorization.slice(6)
 
@@ -74,13 +69,11 @@ api.get('/posts', (req, res) => {
 
         res.status(200).json(posts)
     } catch (error) {
-        console.error(error)
-
-        res.status(500).json({ error: error.constructor.name, message: error.message })
+        next(error)
     }
 })
 
-api.delete('/posts/:postId', (req, res) => {
+api.delete('/posts/:postId', (req, res, next) => {
     try {
         const userId = req.headers.authorization.slice(6)
 
@@ -90,13 +83,11 @@ api.delete('/posts/:postId', (req, res) => {
 
         res.status(204).send()
     } catch (error) {
-        console.error(error)
-
-        res.status(500).json({ error: error.constructor.name, message: error.message })
+        next(error)
     }
 })
 
-api.patch('/posts/:postId/likes', (req, res) => {
+api.patch('/posts/:postId/likes', (req, res, next) => {
     try {
         const userId = req.headers.authorization.slice(6)
 
@@ -106,13 +97,11 @@ api.patch('/posts/:postId/likes', (req, res) => {
 
         res.status(204).send()
     } catch (error) {
-        console.error(error)
-
-        res.status(500).json({ error: error.constructor.name, message: error.message })
+        next(error)
     }
 })
 
-api.patch('/posts/:postId/saved', (req, res) => {
+api.patch('/posts/:postId/saved', (req, res, next) => {
     try {
         const userId = req.headers.authorization.slice(6)
 
@@ -122,13 +111,11 @@ api.patch('/posts/:postId/saved', (req, res) => {
 
         res.status(204).send()
     } catch (error) {
-        console.error(error)
-
-        res.status(500).json({ error: error.constructor.name, message: error.message })
+        next(error)
     }
 })
 
-api.patch('/posts/:postId/archived', (req, res) => {
+api.patch('/posts/:postId/archived', (req, res, next) => {
     try {
         const userId = req.headers.authorization.slice(6)
 
@@ -138,13 +125,11 @@ api.patch('/posts/:postId/archived', (req, res) => {
 
         res.status(204).send()
     } catch (error) {
-        console.error(error)
-
-        res.status(500).json({ error: error.constructor.name, message: error.message })
+        next(error)
     }
 })
 
-api.get('/posts/saved', (req, res) => {
+api.get('/posts/saved', (req, res, next) => {
     try {
         const userId = req.headers.authorization.slice(6)
 
@@ -152,13 +137,11 @@ api.get('/posts/saved', (req, res) => {
 
         res.status(200).json(posts)
     } catch (error) {
-        console.error(error)
-
-        res.status(500).json({ error: error.constructor.name, message: error.message })
+        next(error)
     }
 })
 
-api.get('/posts/archived', (req, res) => {
+api.get('/posts/archived', (req, res, next) => {
     try {
         const userId = req.headers.authorization.slice(6)
 
@@ -166,13 +149,11 @@ api.get('/posts/archived', (req, res) => {
 
         res.status(200).json(posts)
     } catch (error) {
-        console.error(error)
-
-        res.status(500).json({ error: error.constructor.name, message: error.message })
+        next(error)
     }
 })
 
-api.get('/posts/liked', (req, res) => {
+api.get('/posts/liked', (req, res, next) => {
     try {
         const userId = req.headers.authorization.slice(6)
 
@@ -180,10 +161,27 @@ api.get('/posts/liked', (req, res) => {
 
         res.status(200).json(posts)
     } catch (error) {
-        console.error(error)
-
-        res.status(500).json({ error: error.constructor.name, message: error.message })
+        next(error)
     }
+})
+
+api.use((error, req, res, next) => {
+    console.error(error)
+
+    let status = 500
+
+    if (error instanceof ValidationError)
+        status = 400
+    else if (error instanceof NotFoundError)
+        status = 404
+    else if (error instanceof DuplicityError)
+        status = 409
+    else if (error instanceof OwnershipError)
+        status = 406
+    else if (error instanceof CredentialsError)
+        status = 401
+
+    res.status(status).json({ error: error.constructor.name, message: error.message })
 })
 
 

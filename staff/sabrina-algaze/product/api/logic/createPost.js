@@ -10,7 +10,7 @@ export const createPost = (userId, image, text) => {
 
     const user = users.find(user => user.id === userId)
 
-    if (!user) throw NotFoundError('user not found')
+    if (!user) throw new NotFoundError('user not found')
 
     const id = parseInt((Date.now() + Math.random()).toString().replace('.', '')).toString(36)
 

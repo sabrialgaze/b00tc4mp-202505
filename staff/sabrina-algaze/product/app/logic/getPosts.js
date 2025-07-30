@@ -1,4 +1,5 @@
 import { data } from '../data'
+import { errors } from 'com'
 /**
  * Gets posts.
  * 
@@ -32,7 +33,8 @@ export const getPosts = () => {
                 .then(body => {
                     const { error, message } = body
 
-                    throw new Error(message)
+                    const constructor = errors[error]
+                    throw new constructor(message)
                 })
         })
 }

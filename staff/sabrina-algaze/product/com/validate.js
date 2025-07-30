@@ -1,4 +1,4 @@
-import { ValidationError } from "./errors"
+import { ValidationError } from './errors.js'
 export const validate = {
     name(name) {
         if (typeof name !== 'string') throw new ValidationError('invalid name')

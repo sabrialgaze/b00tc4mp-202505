@@ -1,4 +1,5 @@
 import { data } from '../data'
+import { errors } from 'com'
 /**
  * Gets user info.
  * 
@@ -33,7 +34,9 @@ export const getUserInfo = () => {
                 .then(body => {
                     const { error, message } = body
 
-                    throw new Error(message)
+                    const constructor = errors[error]
+
+                    throw new constructor(message)
                 })
         })
 }

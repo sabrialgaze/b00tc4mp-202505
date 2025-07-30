@@ -21,3 +21,17 @@ export class CredentialsError extends Error {
         super(message)
     }
 }
+
+export class OwnershipError extends Error {
+    constructor(message) {
+        super(message)
+    }
+}
+
+export const errors = {
+    ValidationError,
+    DuplicityError,
+    NotFoundError,
+    CredentialsError,
+    OwnershipError
+}

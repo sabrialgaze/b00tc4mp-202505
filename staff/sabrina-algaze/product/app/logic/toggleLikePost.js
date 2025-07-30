@@ -1,4 +1,5 @@
 import { data } from '../data'
+import { errors } from 'com'
 
 export const toggleLikePost = postId => {
     if (typeof postId !== 'string') throw new TypeError('invalid postId type')
@@ -20,7 +21,9 @@ export const toggleLikePost = postId => {
                 .then(body => {
                     const { error, message } = body
 
-                    throw new Error(message)
+                    const constructor = errors[error]
+
+                    throw new constructor(message)
                 })
         })
 }

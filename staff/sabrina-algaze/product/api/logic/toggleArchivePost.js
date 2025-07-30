@@ -9,13 +9,13 @@ export const toggleArchivePost = (userId, postId) => {
 
     const user = users.find(user => user.id === userId)
 
-    if (!user) throw NotFoundError('user not found')
+    if (!user) throw new NotFoundError('user not found')
 
     const posts = data.loadPosts()
 
     const post = posts.find(post => post.id === postId)
 
-    if (!post) throw NotFoundError('post not found')
+    if (!post) throw new NotFoundError('post not found')
 
     post.archived = !post.archived
 

@@ -1,4 +1,5 @@
 import { data } from '../data'
+import { errors } from 'com'
 /**
  * Removes a post.
  * 
@@ -31,7 +32,9 @@ export const removePost = postId => {
                 .then(body => {
                     const { error, message } = body
 
-                    throw new Error(message)
+                    const constructor = errors[error]
+
+                    throw new constructor(message)
                 })
         })
 }

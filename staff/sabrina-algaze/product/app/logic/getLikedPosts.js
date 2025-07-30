@@ -1,4 +1,5 @@
 import { data } from '../data'
+import { errors } from 'com'
 
 export const getLikedPosts = () => {
     return fetch('http://localhost:8080/posts/liked', {
@@ -20,7 +21,8 @@ export const getLikedPosts = () => {
                 .then(body => {
                     const { error, message } = body
 
-                    throw new Error(message)
+                    const constructor = errors[error]
+                    throw new constructor(message)
                 })
         })
 }
