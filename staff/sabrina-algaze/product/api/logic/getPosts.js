@@ -1,13 +1,14 @@
 import { data } from '../data/index.js'
+import { validate, NotFoundError } from 'com'
 
 export const getPosts = (userId) => {
-    if (typeof userId !== 'string') throw new TypeError('invalid userId type')
+    validate.userId(userId)
 
     const users = data.loadUsers()
 
     const user = users.find(user => user.id === userId)
 
-    if (!user) throw Error('user not found')
+    if (!user) throw NotFoundError('user not found')
 
     let posts = data.loadPosts()
 
@@ -18,7 +19,7 @@ export const getPosts = (userId) => {
     posts.forEach(post => {
         const author = users.find(user => user.id === post.author)
 
-        if (!author) throw Error('author not found')
+        if (!author) throw NotFoundError('author not found')
 
         const { id, username } = author
 

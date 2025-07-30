@@ -1,23 +1,17 @@
 import { data } from '../data/index.js'
+import { validate, DuplicityError } from 'com'
 
 export const registerUser = (name, email, username, password) => {
-    if (typeof name !== 'string') throw new TypeError('invalid name type')
-    if (!name.length) throw new RangeError('invalid name length')
-
-    if (typeof email !== 'string') throw new TypeError('invalid email type')
-    if (!email.length) throw new RangeError('invalid email length')
-
-    if (typeof username !== 'string') throw new TypeError('invalid username type')
-    if (!username.length) throw new RangeError('invalid username length')
-
-    if (typeof password !== 'string') throw new TypeError('invalid password type')
-    if (!password.length) throw new RangeError('invalid password length')
+    validate.name(name)
+    validate.email(email)
+    validate.username(username)
+    validate.password(password)
 
     const users = data.loadUsers()
 
     let user = users.find(user => user.email === email || user.username === username)
 
-    if (user) throw new Error('user already exists')
+    if (user) throw new DuplicityError('user already exists')
 
     const id = parseInt((Date.now() + Math.random()).toString().replace('.', '')).toString(36)
 

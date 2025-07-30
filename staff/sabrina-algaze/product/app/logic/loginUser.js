@@ -1,4 +1,5 @@
 import { data } from '../data'
+import { validate } from 'com'
 /**
  * Logs in a user.
  * @example
@@ -14,17 +15,8 @@ loginUser('pepitogrillo', 'pepito123')
  * @param {string} password The user password.   
 */
 export const loginUser = (username, password) => {
-    if (typeof username !== 'string') throw new TypeError('invalid username')
-    if (!username.length) throw new RangeError('invalid username length')
-
-    const usernameRegex = /^[a-zA-Z0-9_]{4,16}$/
-    if (!usernameRegex.test(username)) throw new Error('invalid username format')
-
-    if (typeof password !== 'string') throw new TypeError('invalid password')
-    if (!password.length) throw new RangeError('invalid password length')
-
-    const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/
-    if (!passwordRegex.test(password)) throw new Error('invalid password format')
+    validate.username(username)
+    validate.password(password)
 
     return fetch('http://localhost:8080/users/auth', {
         method: 'POST',

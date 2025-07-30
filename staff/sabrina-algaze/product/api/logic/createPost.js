@@ -1,17 +1,16 @@
 import { data } from '../data/index.js'
+import { validate, NotFoundError } from 'com'
 
 export const createPost = (userId, image, text) => {
-    if (typeof userId !== 'string') throw new TypeError('invalid userId type')
-    if (typeof image !== 'string') throw new TypeError('invalid image type')
-    if (!image.length) throw new Error('No image was provided')
-    if (typeof text !== 'string') throw new TypeError('invalid text type')
-    if (!text.length) throw new Error('No text was provided')
+    validate.userId(userId)
+    validate.image(image)
+    validate.text(text)
 
     const users = data.loadUsers()
 
     const user = users.find(user => user.id === userId)
 
-    if (!user) throw Error('user not found')
+    if (!user) throw NotFoundError('user not found')
 
     const id = parseInt((Date.now() + Math.random()).toString().replace('.', '')).toString(36)
 

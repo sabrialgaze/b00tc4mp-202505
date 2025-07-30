@@ -10,6 +10,7 @@
     "vite": "^7.0.0"
   },
   "dependencies": {
+    "com": "file:../com",
     "react": "^19.1.0",
     "react-dom": "^19.1.0"
   }
