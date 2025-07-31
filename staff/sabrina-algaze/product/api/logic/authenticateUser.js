@@ -5,13 +5,14 @@ export const authenticateUser = (username, password) => {
     validate.username(username)
     validate.password(password)
 
-    const users = data.loadUsers()
+    return data.loadUsers()
+        .then(users => {
+            const user = users.find(user => user.username === username)
 
-    const user = users.find(user => user.username === username)
+            if (!user) throw new NotFoundError('user not found')
 
-    if (!user) throw new NotFoundError('user not found')
+            if (user.password !== password) throw new CredentialsError('wrong password')
 
-    if (user.password !== password) throw new CredentialsError('wrong password')
-
-    return user.id
+            return user.id
+        })
 }

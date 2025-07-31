@@ -1,0 +1,18 @@
+[
+    {
+        "id": "abc123",
+        "name": "Pepito Grillo",
+        "email": "pepito@grillo.com",
+        "username": "pepitogrillo",
+        "password": "pepito123",
+        "saved": []
+    },
+    {
+        "id": "4spawr5cv7w",
+        "name": "Sabrina",
+        "email": "sabrina@algaze.com",
+        "username": "sabrina",
+        "password": "sabrina123",
+        "saved": []
+    }
+]

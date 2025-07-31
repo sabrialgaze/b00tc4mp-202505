@@ -6,24 +6,24 @@ export const users = Router()
 const jsonBodyParser = express.json()
 
 users.post('/', jsonBodyParser, (req, res, next) => {
-    const { name, email, username, password } = req.body
-
     try {
-        logic.registerUser(name, email, username, password)
+        const { name, email, username, password } = req.body
 
-        res.status(201).send()
+        logic.registerUser(name, email, username, password)
+            .then(() => res.status(201).send())
+            .catch(error => next(error))
     } catch (error) {
         next(error)
     }
 })
 
 users.post('/auth', jsonBodyParser, (req, res, next) => {
-    const { username, password } = req.body
-
     try {
-        const userId = logic.authenticateUser(username, password)
+        const { username, password } = req.body
 
-        res.status(200).json(userId)
+        logic.authenticateUser(username, password)
+            .then(userId => res.status(200).json(userId))
+            .catch(error => next(error))
     } catch (error) {
         next(error)
     }

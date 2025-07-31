@@ -28,10 +28,17 @@ export class OwnershipError extends Error {
     }
 }
 
+export class SystemError extends Error {
+    constructor(message) {
+        super(message)
+    }
+}
+
 export const errors = {
     ValidationError,
     DuplicityError,
     NotFoundError,
     CredentialsError,
-    OwnershipError
+    OwnershipError,
+    SystemError
 }

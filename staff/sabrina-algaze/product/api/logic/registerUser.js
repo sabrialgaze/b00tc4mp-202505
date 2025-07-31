@@ -7,17 +7,18 @@ export const registerUser = (name, email, username, password) => {
     validate.username(username)
     validate.password(password)
 
-    const users = data.loadUsers()
+    return data.loadUsers()
+        .then(users => {
+            let user = users.find(user => user.email === email || user.username === username)
 
-    let user = users.find(user => user.email === email || user.username === username)
+            if (user) throw new DuplicityError('user already exists')
 
-    if (user) throw new DuplicityError('user already exists')
+            const id = parseInt((Date.now() + Math.random()).toString().replace('.', '')).toString(36)
 
-    const id = parseInt((Date.now() + Math.random()).toString().replace('.', '')).toString(36)
+            user = { id, name, email, username, password, saved: [] }
 
-    user = { id, name, email, username, password }
+            users.push(user)
 
-    users.push(user)
-
-    data.saveUsers(users)
+            return data.saveUsers(users)
+        })
 }

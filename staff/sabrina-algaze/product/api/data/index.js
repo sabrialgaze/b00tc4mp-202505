@@ -1,14 +1,18 @@
-let usersJSON = '[ {"id": "abc123", "name": "Pepito Grillo", "email": "pepito@grillo.com", "username": "pepitogrillo", "password": "pepito123", "saved": []} ]' // '[ {"id": "123", "name": "Pepito Grillo", ... }, ...]'
-
-let postsJSON = '[ {"id": "12345", "author": "abc123", "image": "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOW5ldHdjaTdoaTMyN29rNDN0cjd0b3RjY2RnazBjdmhtMHI1cHZhYyZlcD12MV9naWZzX3NlYXJjaCZjdD1n/fsTQcL5JkgNdS/giphy.gif", "text": "hello world", "date": "2025-07-22T13:35:13.428Z", "likes" : [], "archived": false} ]'
+import { readFile, writeFile } from 'fs/promises'
+import { SystemError } from 'com'
 
 export const data = {
     loadUsers() {
-        return JSON.parse(usersJSON)
+        return readFile('./data/users.json', 'utf8')
+            .catch(error => { throw new SystemError('file read error') })
+            .then(json => JSON.parse(json))
+            .catch(error => { throw new SystemError('json parse error') })
     },
 
     saveUsers(users) {
-        usersJSON = JSON.stringify(users)
+        return writeFile('./data/users.json', JSON.stringify(users))
+            .catch(error => { throw new SystemError('file write error') })
+            .then(() => { })
     },
 
     loadPosts() {
