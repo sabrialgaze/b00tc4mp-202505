@@ -16,11 +16,16 @@ export const data = {
     },
 
     loadPosts() {
-        return JSON.parse(postsJSON)
+        return readFile('./data/posts.json', 'utf8')
+            .catch(error => { throw new SystemError('file read error') })
+            .then(json => JSON.parse(json))
+            .catch(error => { throw new SystemError('json parse error') })
     },
 
     savePosts(posts) {
-        postsJSON = JSON.stringify(posts)
+        return writeFile('./data/posts.json', JSON.stringify(posts))
+            .catch(error => { throw new SystemError('file write error') })
+            .then(() => { })
     }
 
 }

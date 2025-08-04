@@ -5,25 +5,27 @@ export const toggleLikePost = (userId, postId) => {
     validate.userId(userId)
     validate.postId(postId)
 
-    const users = data.loadUsers()
+    return data.loadUsers()
+        .then(users => {
+            const user = users.find(user => user.id === userId)
 
-    const user = users.find(user => user.id === userId)
+            if (!user) throw new NotFoundError('user not found')
 
-    if (!user) throw new NotFoundError('user not found')
+            return data.loadPosts()
+                .then(posts => {
+                    const post = posts.find(post => post.id === postId)
 
-    const posts = data.loadPosts()
+                    if (!post) throw new NotFoundError('post not found')
 
-    const post = posts.find(post => post.id === postId)
+                    const { likes } = post
 
-    if (!post) throw new NotFoundError('post not found')
+                    const index = likes.findIndex(likeUserId => likeUserId === userId)
 
-    const { likes } = post
+                    if (index < 0) likes.push(userId)
 
-    const index = likes.findIndex(likeUserId => likeUserId === userId)
+                    else likes.splice(index, 1)
 
-    if (index < 0) likes.push(userId)
-
-    else likes.splice(index, 1)
-
-    data.savePosts(posts)
+                    return data.savePosts(posts)
+                })
+        })
 }

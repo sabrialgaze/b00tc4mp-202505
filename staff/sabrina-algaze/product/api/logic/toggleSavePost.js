@@ -5,25 +5,27 @@ export const toggleSavePost = (userId, postId) => {
     validate.userId(userId)
     validate.postId(postId)
 
-    const users = data.loadUsers()
+    return data.loadUsers()
+        .then(users => {
+            const user = users.find(user => user.id === userId)
 
-    const user = users.find(user => user.id === userId)
+            if (!user) throw new NotFoundError('user not found')
 
-    if (!user) throw new NotFoundError('user not found')
+            return data.loadPosts()
+                .then(posts => {
+                    const post = posts.find(post => post.id === postId)
 
-    const posts = data.loadPosts()
+                    if (!post) throw new NotFoundError('post not found')
 
-    const post = posts.find(post => post.id === postId)
+                    const { saved } = user
 
-    if (!post) throw new NotFoundError('post not found')
+                    const index = saved.findIndex(savedPostId => savedPostId === postId)
 
-    const { saved } = user
+                    if (index < 0) saved.push(postId)
 
-    const index = saved.findIndex(savedPostId => savedPostId === postId)
+                    else saved.splice(index, 1)
 
-    if (index < 0) saved.push(postId)
-
-    else saved.splice(index, 1)
-
-    data.saveUsers(users)
+                    return data.saveUsers(users)
+                })
+        })
 }

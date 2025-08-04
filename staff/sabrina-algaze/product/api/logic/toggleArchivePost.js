@@ -5,19 +5,21 @@ export const toggleArchivePost = (userId, postId) => {
     validate.userId(userId)
     validate.postId(postId)
 
-    const users = data.loadUsers()
+    return data.loadUsers()
+        .then(users => {
+            const user = users.find(user => user.id === userId)
 
-    const user = users.find(user => user.id === userId)
+            if (!user) throw new NotFoundError('user not found')
 
-    if (!user) throw new NotFoundError('user not found')
+            return data.loadPosts()
+                .then(posts => {
+                    const post = posts.find(post => post.id === postId)
 
-    const posts = data.loadPosts()
+                    if (!post) throw new NotFoundError('post not found')
 
-    const post = posts.find(post => post.id === postId)
+                    post.archived = !post.archived
 
-    if (!post) throw new NotFoundError('post not found')
-
-    post.archived = !post.archived
-
-    data.savePosts(posts)
+                    return data.savePosts(posts)
+                })
+        })
 }

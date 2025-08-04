@@ -4,15 +4,16 @@ import { validate, NotFoundError } from 'com'
 export const getUserInfo = userId => {
     validate.userId(userId)
 
-    const users = data.loadUsers()
+    return data.loadUsers()
+        .then(users => {
+            const user = users.find(user => user.id === userId)
 
-    const user = users.find(user => user.id === userId)
+            if (!user) throw new NotFoundError('user not found')
 
-    if (!user) throw new NotFoundError('user not found')
+            delete user.password
 
-    delete user.password
+            delete user.saved
 
-    delete user.saved
-
-    return user
+            return user
+        })
 }

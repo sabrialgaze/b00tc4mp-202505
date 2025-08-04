@@ -33,9 +33,9 @@ users.get('/info', (req, res, next) => {
     try {
         const userId = req.headers.authorization.slice(6)
 
-        const user = logic.getUserInfo(userId)
-
-        res.status(200).json(user)
+        logic.getUserInfo(userId)
+            .then(user => res.status(200).json(user))
+            .catch(error => next(error))
     } catch (error) {
         next(error)
     }

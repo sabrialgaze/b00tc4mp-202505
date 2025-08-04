@@ -4,36 +4,37 @@ import { validate, NotFoundError } from 'com'
 export const getLikedPosts = userId => {
     validate.userId(userId)
 
-    const users = data.loadUsers()
+    return data.loadUsers()
+        .then(users => {
+            const user = users.find(user => user.id === userId)
 
-    const user = users.find(user => user.id === userId)
+            if (!user) throw new NotFoundError('user not found')
 
-    if (!user) throw new NotFoundError('user not found')
+            return data.loadPosts()
+                .then(posts => {
+                    posts = posts.filter(post => post.likes.includes(user.id) && !post.archived)
 
-    let posts = data.loadPosts()
+                    posts.forEach(post => {
+                        const author = users.find(user => user.id === post.author)
 
-    posts = posts.filter(post => post.likes.includes(user.id) && !post.archived)
+                        if (!author) throw new NotFoundError('author not found')
 
-    posts.forEach(post => {
-        const author = users.find(user => user.id === post.author)
+                        const { id, username } = author
 
-        if (!author) throw new NotFoundError('author not found')
+                        // populate author
+                        post.author = { id, username }
 
-        const { id, username } = author
+                        post.own = post.author.id === userId
 
-        // populate author
-        post.author = { id, username }
+                        post.liked = post.likes.includes(userId)
 
-        post.own = post.author.id === userId
+                        post.likesCount = post.likes.length
 
-        post.liked = post.likes.includes(userId)
+                        delete post.likes
 
-        post.likesCount = post.likes.length
-
-        delete post.likes
-
-        post.saved = true
-    })
-
-    return posts
+                        post.saved = true
+                    })
+                    return posts
+                })
+        })
 }

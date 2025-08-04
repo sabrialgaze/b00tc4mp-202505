@@ -6,27 +6,29 @@ export const createPost = (userId, image, text) => {
     validate.image(image)
     validate.text(text)
 
-    const users = data.loadUsers()
+    return data.loadUsers()
+        .then(users => {
+            const user = users.find(user => user.id === userId)
 
-    const user = users.find(user => user.id === userId)
+            if (!user) throw new NotFoundError('user not found')
 
-    if (!user) throw new NotFoundError('user not found')
+            const id = parseInt((Date.now() + Math.random()).toString().replace('.', '')).toString(36)
 
-    const id = parseInt((Date.now() + Math.random()).toString().replace('.', '')).toString(36)
+            const post = {
+                id,
+                author: userId,
+                image,
+                text,
+                date: new Date().toISOString(),
+                likes: [],
+                archived: false
+            }
 
-    const post = {
-        id,
-        author: userId,
-        image,
-        text,
-        date: new Date().toISOString(),
-        likes: [],
-        archived: false
-    }
+            return data.loadPosts()
+                .then(posts => {
+                    posts.push(post)
 
-    const posts = data.loadPosts()
-
-    posts.push(post)
-
-    data.savePosts(posts)
+                    return data.savePosts(posts)
+                })
+        })
 }
