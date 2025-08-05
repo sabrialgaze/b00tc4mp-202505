@@ -4,7 +4,7 @@
         "name": "Pepito Grillo",
         "email": "pepito@grillo.com",
         "username": "pepitogrillo",
-        "password": "pepito123",
+        "password": "$2b$10$lcHSOjeGJN.00mwng0WLXeq07TV.G3ZoYy7uVRIfIS8DYlIJ2fDJi",
         "saved": []
     },
     {
@@ -12,7 +12,25 @@
         "name": "Sabrina",
         "email": "sabrina@algaze.com",
         "username": "sabrina",
-        "password": "sabrina123",
+        "password": "$2b$10$lcHSOjeGJN.00mwng0WLXeq07TV.G3ZoYy7uVRIfIS8DYlIJ2fDJi",
+        "saved": [
+            "12345"
+        ]
+    },
+    {
+        "id": "4sqikndbu2w",
+        "name": "Wendy Darling",
+        "email": "wendy@darling.com",
+        "username": "wendydarling",
+        "password": "$2b$10$lcHSOjeGJN.00mwng0WLXeq07TV.G3ZoYy7uVRIfIS8DYlIJ2fDJi",
+        "saved": []
+    },
+    {
+        "id": "h9voisu8zg",
+        "name": "Sabrina",
+        "email": "sabrina2@algaze.com",
+        "username": "sabrina2",
+        "password": "$2b$10$lcHSOjeGJN.00mwng0WLXeq07TV.G3ZoYy7uVRIfIS8DYlIJ2fDJi",
         "saved": []
     }
 ]

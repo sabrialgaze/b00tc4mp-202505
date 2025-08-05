@@ -1,5 +1,6 @@
 import express, { Router } from 'express'
 import { logic } from '../logic/index.js'
+import jwt from 'jsonwebtoken'
 
 export const posts = Router()
 
@@ -7,7 +8,11 @@ const jsonBodyParser = express.json()
 
 posts.post('/', jsonBodyParser, (req, res, next) => {
     try {
-        const userId = req.headers.authorization.slice(6)
+        const token = req.headers.authorization.slice(7)
+
+        const payload = jwt.verify(token, 'ilovecheesetooat3am')
+
+        const { sub: userId } = payload
 
         const { image, text } = req.body
 
@@ -21,7 +26,11 @@ posts.post('/', jsonBodyParser, (req, res, next) => {
 
 posts.get('/', (req, res, next) => {
     try {
-        const userId = req.headers.authorization.slice(6)
+        const token = req.headers.authorization.slice(7)
+
+        const payload = jwt.verify(token, 'ilovecheesetooat3am')
+
+        const { sub: userId } = payload
 
         logic.getPosts(userId)
             .then(posts => res.status(200).json(posts))
@@ -33,7 +42,11 @@ posts.get('/', (req, res, next) => {
 
 posts.delete('/:postId', (req, res, next) => {
     try {
-        const userId = req.headers.authorization.slice(6)
+        const token = req.headers.authorization.slice(7)
+
+        const payload = jwt.verify(token, 'ilovecheesetooat3am')
+
+        const { sub: userId } = payload
 
         const { postId } = req.params
 
@@ -47,7 +60,11 @@ posts.delete('/:postId', (req, res, next) => {
 
 posts.patch('/:postId/likes', (req, res, next) => {
     try {
-        const userId = req.headers.authorization.slice(6)
+        const token = req.headers.authorization.slice(7)
+
+        const payload = jwt.verify(token, 'ilovecheesetooat3am')
+
+        const { sub: userId } = payload
 
         const { postId } = req.params
 
@@ -61,7 +78,11 @@ posts.patch('/:postId/likes', (req, res, next) => {
 
 posts.patch('/:postId/saved', (req, res, next) => {
     try {
-        const userId = req.headers.authorization.slice(6)
+        const token = req.headers.authorization.slice(7)
+
+        const payload = jwt.verify(token, 'ilovecheesetooat3am')
+
+        const { sub: userId } = payload
 
         const { postId } = req.params
 
@@ -75,7 +96,11 @@ posts.patch('/:postId/saved', (req, res, next) => {
 
 posts.patch('/:postId/archived', (req, res, next) => {
     try {
-        const userId = req.headers.authorization.slice(6)
+        const token = req.headers.authorization.slice(7)
+
+        const payload = jwt.verify(token, 'ilovecheesetooat3am')
+
+        const { sub: userId } = payload
 
         const { postId } = req.params
 
@@ -89,7 +114,11 @@ posts.patch('/:postId/archived', (req, res, next) => {
 
 posts.get('/saved', (req, res, next) => {
     try {
-        const userId = req.headers.authorization.slice(6)
+        const token = req.headers.authorization.slice(7)
+
+        const payload = jwt.verify(token, 'ilovecheesetooat3am')
+
+        const { sub: userId } = payload
 
         logic.getSavedPosts(userId)
             .then(posts => res.status(200).json(posts))
@@ -101,7 +130,11 @@ posts.get('/saved', (req, res, next) => {
 
 posts.get('/archived', (req, res, next) => {
     try {
-        const userId = req.headers.authorization.slice(6)
+        const token = req.headers.authorization.slice(7)
+
+        const payload = jwt.verify(token, 'ilovecheesetooat3am')
+
+        const { sub: userId } = payload
 
         logic.getArchivedPosts(userId)
             .then(posts => res.status(200).json(posts))
@@ -113,7 +146,11 @@ posts.get('/archived', (req, res, next) => {
 
 posts.get('/liked', (req, res, next) => {
     try {
-        const userId = req.headers.authorization.slice(6)
+        const token = req.headers.authorization.slice(7)
+
+        const payload = jwt.verify(token, 'ilovecheesetooat3am')
+
+        const { sub: userId } = payload
 
         logic.getLikedPosts(userId)
             .then(posts => res.status(200).json(posts))

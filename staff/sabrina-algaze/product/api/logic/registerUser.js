@@ -1,5 +1,6 @@
 import { data } from '../data/index.js'
-import { validate, DuplicityError } from 'com'
+import { validate, DuplicityError, SystemError } from 'com'
+import bcrypt from 'bcryptjs'
 
 export const registerUser = (name, email, username, password) => {
     validate.name(name)
@@ -15,10 +16,16 @@ export const registerUser = (name, email, username, password) => {
 
             const id = parseInt((Date.now() + Math.random()).toString().replace('.', '')).toString(36)
 
-            user = { id, name, email, username, password, saved: [] }
+            return bcrypt.hash(password, 10)
+                .catch(error => {
+                    throw new SystemError('password hash error')
+                })
+                .then(hash => {
+                    user = { id, name, email, username, password: hash, saved: [] }
 
-            users.push(user)
+                    users.push(user)
 
-            return data.saveUsers(users)
+                    return data.saveUsers(users)
+                })
         })
 }

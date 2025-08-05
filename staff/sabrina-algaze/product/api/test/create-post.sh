@@ -1,1 +1,1 @@
-curl  -X POST -H 'Authorization: Basic abc123' -H 'Content-Type: application/json' -d '{"image":"https://media.giphy.com/media/v1/giphy/gif", "text": "last test"}' http://localhost:8080/posts -v
+curl  -X POST -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0c3Bhd3I1Y3Y3dyIsImlhdCI6MTc1NDMzODY1MH0.6GReDuVBba-ll-kIUS9AqPOEGt7-5hmXZWwMXDCtW2A' -H 'Content-Type: application/json' -d '{"image":"https://media.giphy.com/media/v1/giphy/gif", "text": "last test"}' http://localhost:8080/posts -v

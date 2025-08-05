@@ -1,1 +1,1 @@
-curl -X GET -H 'Authorization: Basic abc123' http://localhost:8080/posts/archived -v
+curl -X GET -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0c3Bhd3I1Y3Y3dyIsImlhdCI6MTc1NDMzODY1MH0.6GReDuVBba-ll-kIUS9AqPOEGt7-5hmXZWwMXDCtW2A' http://localhost:8080/posts/archived -v

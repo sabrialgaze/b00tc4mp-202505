@@ -1,5 +1,6 @@
 import express, { Router } from 'express'
 import { logic } from '../logic/index.js'
+import jwt from 'jsonwebtoken'
 
 export const users = Router()
 
@@ -22,7 +23,11 @@ users.post('/auth', jsonBodyParser, (req, res, next) => {
         const { username, password } = req.body
 
         logic.authenticateUser(username, password)
-            .then(userId => res.status(200).json(userId))
+            .then(userId => {
+                const token = jwt.sign({ sub: userId }, 'ilovecheesetooat3am')
+
+                res.status(200).json(token)
+            })
             .catch(error => next(error))
     } catch (error) {
         next(error)
@@ -31,7 +36,11 @@ users.post('/auth', jsonBodyParser, (req, res, next) => {
 
 users.get('/info', (req, res, next) => {
     try {
-        const userId = req.headers.authorization.slice(6)
+        const token = req.headers.authorization.slice(7)
+
+        const payload = jwt.verify(token, 'ilovecheesetooat3am')
+
+        const { sub: userId } = payload
 
         logic.getUserInfo(userId)
             .then(user => res.status(200).json(user))
