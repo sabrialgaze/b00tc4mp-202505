@@ -1,43 +1,13 @@
-import { MongoClient } from 'mongodb'
+import mongoose from 'mongoose'
+import { User } from './models.js'
 
-const client = new MongoClient('mongodb://localhost:27017')
-
-let users
-
-client.connect()
+mongoose.connect('mongodb://127.0.0.1:27017/test')
+    .then(() => console.log('Connected'))
     .then(() => {
-        console.log('Connected to MongoDB')
+        const wendy = new User({ name: 'Wendy Darling', email: 'wendy@darling.com', username: 'wendydarling1', password: 'wendy123' })
 
-        const db = client.db('test')
-
-        users = db.collection('users')
-
-        return users.deleteMany()
+        return wendy.save()
+            .then(() => console.log('created'))
     })
-    .then(() => {
-        // TODO crud
-        return users.insertOne({ name: 'Wendy Darling', email: 'wendy@darling.com', username: 'wendydarling', password: 'wendy123' })
-    })
-    .then(() => {
-        return users.insertMany([
-            { name: 'Pepito Grillo', email: 'pepito@grillo.com', username: 'pepitogrillo', password: 'pepito123' },
-            { name: 'Peter Pan', email: 'peter@pan.com', username: 'peterpan', password: 'peter123' },
-            { name: 'James Hook', email: 'james@hook.com', username: 'jameshook', password: 'james123' },
-            { name: 'Campanita', email: 'campa@nita.com', username: 'campanita', password: 'campanita123' }
-        ])
-    })
-    .then(() => {
-        return users.updateOne(
-            { username: 'peterpan' },
-            { $set: { name: 'Peter Flan' } }
-        )
-    })
-    .then(() => {
-        return users.deleteOne({ username: 'peterpan' })
-    })
-
-    .then(() => console.log('done'))
-    .catch(error => {
-        console.error(error)
-    })
+    .catch(error => console.error(error))
 

@@ -1,15 +1,14 @@
-import { data } from '../data/index.js'
 import { validate, NotFoundError, CredentialsError, SystemError } from 'com'
 import bcrypt from 'bcryptjs'
+import { User } from '../data/models.js'
 
 export const authenticateUser = (username, password) => {
     validate.username(username)
     validate.password(password)
 
-    return data.loadUsers()
-        .then(users => {
-            const user = users.find(user => user.username === username)
-
+    return User.findOne({ username })
+        .catch(error => { throw new SystemError('mongo error') })
+        .then(user => {
             if (!user) throw new NotFoundError('user not found')
 
             return bcrypt.compare(password, user.password)

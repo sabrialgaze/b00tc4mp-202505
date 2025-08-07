@@ -1,29 +1,25 @@
-import { data } from '../data/index.js'
-import { validate, NotFoundError, OwnershipError } from 'com'
+import { validate, NotFoundError, OwnershipError, SystemError } from 'com'
+import { User, Post } from '../data/models.js'
 
 export const removePost = (userId, postId) => {
     validate.userId(userId)
     validate.postId(postId)
 
-    return data.loadUsers()
-        .then(users => {
-            const user = users.find(user => user.id === userId)
-
+    return User.findById(userId)
+        .catch(error => { throw new SystemError('mongo error') })
+        .then(user => {
             if (!user) throw new NotFoundError('user not found')
 
-            return data.loadPosts()
-                .then(posts => {
-                    const index = posts.findIndex(post => post.id === postId)
+            return Post.findById(postId)
+                .catch(error => { throw new SystemError('mongo error') })
+                .then(post => {
+                    if (!post) throw new NotFoundError('post not found')
 
-                    const post = posts[index]
+                    if (post.author.toString() !== userId) throw new OwnershipError('user not owner of post')
 
-                    if (index < 0) throw new NotFoundError('post not found')
-
-                    if (post.author !== userId) throw new OwnershipError('user not owner of post')
-
-                    posts.splice(index, 1)
-
-                    return data.savePosts(posts)
+                    return Post.deleteOne({ _id: postId })
                 })
+                .then(() => { })
+
         })
 }
