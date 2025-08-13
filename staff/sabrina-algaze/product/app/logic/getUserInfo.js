@@ -17,7 +17,7 @@ export const getUserInfo = () => {
     return fetch('http://localhost:8080/users/info', {
         method: 'GET',
         headers: {
-            Authorization: `Basic ${data.loadUserId()}`
+            Authorization: `Bearer ${data.loadUserId()}`
         },
 
     })

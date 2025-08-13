@@ -1,7 +1,7 @@
 import { validate, NotFoundError, SystemError } from 'com'
 import { User, Post } from '../data/models.js'
 
-export const getPosts = (userId) => {
+export const getPosts = userId => {
     validate.userId(userId)
 
     return User.findById(userId)

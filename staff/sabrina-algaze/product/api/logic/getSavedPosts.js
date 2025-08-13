@@ -1,40 +1,39 @@
-import { data } from '../data/index.js'
-import { validate, NotFoundError } from 'com'
+import { validate, NotFoundError, SystemError } from 'com'
+import { User, Post } from '../data/models.js'
+
 
 export const getSavedPosts = userId => {
     validate.userId(userId)
 
-    return data.loadUsers()
-        .then(users => {
-            const user = users.find(user => user.id === userId)
-
+    return User.findById(userId)
+        .catch(error => { throw new SystemError('mongo error') })
+        .then(user => {
             if (!user) throw new NotFoundError('user not found')
 
-            return data.loadPosts()
+            return Post.find({ _id: { $in: user.saved }, archived: false }, '-__v').populate('author', 'username').lean()
+                .catch(error => { throw new SystemError('mongo error') })
                 .then(posts => {
-                    posts = posts.filter(post => user.saved.includes(post.id) && !post.archived)
+                    return posts.map(post => {
+                        post.id = post._id.toString()
+                        delete post._id
 
-                    posts.forEach(post => {
-                        const author = users.find(user => user.id === post.author)
-
-                        if (!author) throw new NotFoundError('author not found')
-
-                        const { id, username } = author
-
-                        // populate author
-                        post.author = { id, username }
+                        if (post.author._id) {
+                            post.author.id = post.author._id.toString()
+                            delete post.author._id
+                        }
 
                         post.own = post.author.id === userId
 
-                        post.liked = post.likes.includes(userId)
+                        post.liked = post.likes.some(userObjectId => userObjectId.toString() === userId)
 
                         post.likesCount = post.likes.length
 
                         delete post.likes
 
-                        post.saved = true
+                        post.saved = user.saved.some(postObjectId => postObjectId.toString() === post.id)
+
+                        return post
                     })
-                    return posts
                 })
         })
 }

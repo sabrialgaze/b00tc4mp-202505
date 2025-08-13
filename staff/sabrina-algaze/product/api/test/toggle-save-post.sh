@@ -1,1 +1,1 @@
-curl -X PATCH -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0c3Bhd3I1Y3Y3dyIsImlhdCI6MTc1NDMzODY1MH0.6GReDuVBba-ll-kIUS9AqPOEGt7-5hmXZWwMXDCtW2A' http://localhost:8080/posts/12345/saved -v
+curl -X PATCH -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2ODliM2Q5ZDVmOTY4OTFiNjFhOTBiMjMiLCJpYXQiOjE3NTUwMDUwNDR9.5U-O9Eey44CElVK3OJ4ckgLgY-fUg54fZP90CgVtuk4' http://localhost:8080/posts/6894af52375eec6947459bb8/saved -v

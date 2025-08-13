@@ -1,25 +1,29 @@
-import { data } from '../data/index.js'
-import { validate, NotFoundError } from 'com'
+import { validate, NotFoundError, SystemError, OwnershipError } from 'com'
+import { User, Post } from '../data/models.js'
+
 
 export const toggleArchivePost = (userId, postId) => {
     validate.userId(userId)
     validate.postId(postId)
 
-    return data.loadUsers()
-        .then(users => {
-            const user = users.find(user => user.id === userId)
-
+    return User.findById(userId)
+        .catch(error => { throw new SystemError('mongo error') })
+        .then(user => {
             if (!user) throw new NotFoundError('user not found')
 
-            return data.loadPosts()
-                .then(posts => {
-                    const post = posts.find(post => post.id === postId)
-
+            return Post.findById(postId)
+                .catch(error => { throw new SystemError('mongo error') })
+                .then(post => {
                     if (!post) throw new NotFoundError('post not found')
+                    if (post.author.toString() !== userId) throw new OwnershipError('user not owner of post')
 
-                    post.archived = !post.archived
-
-                    return data.savePosts(posts)
+                    return Post.updateOne(
+                        { _id: postId },
+                        [{ $set: { archived: { $not: "$archived" } } }],
+                    )
+                        .catch(error => { throw new SystemError('mongo error') })
+                        .then(result => { })
                 })
         })
 }
+

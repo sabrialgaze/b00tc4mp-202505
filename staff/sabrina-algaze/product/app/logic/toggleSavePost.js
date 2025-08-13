@@ -7,7 +7,7 @@ export const toggleSavePost = postId => {
     return fetch(`http://localhost:8080/posts/${postId}/saved`, {
         method: 'PATCH',
         headers: {
-            Authorization: `Basic ${data.loadUserId()}`
+            Authorization: `Bearer ${data.loadUserId()}`
         },
     })
         .catch(error => { throw new Error('connection error') })

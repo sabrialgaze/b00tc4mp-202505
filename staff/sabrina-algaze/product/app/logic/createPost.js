@@ -11,7 +11,7 @@ export const createPost = (image, text) => {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            Authorization: `Basic ${data.loadUserId()}`
+            Authorization: `Bearer ${data.loadUserId()}`
         },
         body: JSON.stringify({
             image,

@@ -15,6 +15,10 @@ export const getUserInfo = userId => {
 
             delete user.saved
 
+            delete user._id
+
+            delete user.__v
+
             return user
         })
 }

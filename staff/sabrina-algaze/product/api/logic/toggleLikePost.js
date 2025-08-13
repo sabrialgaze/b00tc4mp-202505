@@ -1,31 +1,51 @@
-import { data } from '../data/index.js'
 import { validate, NotFoundError } from 'com'
+import { User, Post } from '../data/models.js'
+
 
 export const toggleLikePost = (userId, postId) => {
     validate.userId(userId)
     validate.postId(postId)
 
-    return data.loadUsers()
-        .then(users => {
-            const user = users.find(user => user.id === userId)
-
+    return User.findById(userId)
+        .catch(error => { throw new SystemError('mongo error') })
+        .then(user => {
             if (!user) throw new NotFoundError('user not found')
 
-            return data.loadPosts()
-                .then(posts => {
-                    const post = posts.find(post => post.id === postId)
+            // return Post.findById(postId)
+            //     .catch(error => { throw new SystemError('mongo error') })
+            //     .then(post => {
+            //         if (!post) throw new NotFoundError('post not found')
 
-                    if (!post) throw new NotFoundError('post not found')
+            //         const { likes } = post
 
-                    const { likes } = post
+            //         const index = likes.findIndex(likeUserId => likeUserId.toString() === userId)
 
-                    const index = likes.findIndex(likeUserId => likeUserId === userId)
+            //         if (index < 0) likes.push(userId)
 
-                    if (index < 0) likes.push(userId)
+            //         else likes.splice(index, 1)
 
-                    else likes.splice(index, 1)
+            //         return post.save()
+            //             .catch(error => { throw new SystemError('mongo error') })
+            //     })
+            //     .then(() => { })
 
-                    return data.savePosts(posts)
+            return Post.updateOne(
+                { _id: postId },
+                { $addToSet: { likes: userId } }
+            )
+                .catch(error => { throw new SystemError('mongo error') })
+                .then(result => {
+                    if (result.matchedCount === 0) { throw new NotFoundError('post not found') }
+
+                    if (result.modifiedCount === 0) {
+                        return Post.updateOne(
+                            { _id: postId, likes: userId },
+                            { $pull: { likes: userId } }
+                        )
+                            .catch(error => { throw new SystemError('mongo error') })
+                            .then(() => { })
+                    }
                 })
         })
 }
+

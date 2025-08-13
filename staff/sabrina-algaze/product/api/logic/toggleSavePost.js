@@ -1,31 +1,47 @@
-import { data } from '../data/index.js'
-import { validate, NotFoundError } from 'com'
+import { validate, NotFoundError, SystemError } from 'com'
+import { User, Post } from '../data/models.js'
 
 export const toggleSavePost = (userId, postId) => {
     validate.userId(userId)
     validate.postId(postId)
 
-    return data.loadUsers()
-        .then(users => {
-            const user = users.find(user => user.id === userId)
+    // return User.findById(userId)
+    //     .catch(error => { throw new SystemError('mongo error') })
+    //     .then(user => {
+    //         if (!user) throw new NotFoundError('user not found')
 
-            if (!user) throw new NotFoundError('user not found')
+    //         return Post.findById(postId)
+    //             .catch(error => { throw new SystemError('mongo error') })
+    //             .then(post => {
+    //                 if (!post) throw new NotFoundError('post not found')
 
-            return data.loadPosts()
-                .then(posts => {
-                    const post = posts.find(post => post.id === postId)
+    //                 const { saved } = user
 
-                    if (!post) throw new NotFoundError('post not found')
+    //                 const index = saved.findIndex(savedPostId => savedPostId.toString() === postId)
 
-                    const { saved } = user
+    //                 if (index < 0) saved.push(postId)
 
-                    const index = saved.findIndex(savedPostId => savedPostId === postId)
+    //                 else saved.splice(index, 1)
 
-                    if (index < 0) saved.push(postId)
+    //                 return user.save()
+    //             })
+    //     })
 
-                    else saved.splice(index, 1)
+    return User.updateOne(
+        { _id: userId },
+        { $addToSet: { saved: postId } }
+    )
+        .catch(error => { throw new SystemError('mongo error') })
+        .then(result => {
+            if (result.matchedCount === 0) throw new NotFoundError('user not found')
 
-                    return data.saveUsers(users)
-                })
+            if (result.modifiedCount === 0) {
+                return User.updateOne(
+                    { _id: userId, saved: postId },
+                    { $pull: { saved: postId } }
+                )
+                    .catch(error => { throw new SystemError('mongo error') })
+                    .then(() => { })
+            }
         })
 }

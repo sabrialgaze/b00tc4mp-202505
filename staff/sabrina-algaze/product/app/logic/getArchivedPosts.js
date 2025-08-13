@@ -5,7 +5,7 @@ export const getArchivedPosts = () => {
     return fetch('http://localhost:8080/posts/archived', {
         method: 'GET',
         headers: {
-            Authorization: `Basic ${data.loadUserId()}`
+            Authorization: `Bearer ${data.loadUserId()}`
         }
     })
         .catch(error => { throw new Error('connection error') })
