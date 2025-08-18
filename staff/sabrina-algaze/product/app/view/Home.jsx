@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react'
 
+import { Routes, Route, useNavigate } from 'react-router'
+
 import { logic } from '../logic'
 
 import { Posts } from './Posts'
@@ -11,7 +13,7 @@ import { LikedPosts } from './LikedPosts'
 export const Home = ({ onUserLoggedOut }) => {
     const [name, setName] = useState('')
 
-    const [view, setView] = useState('posts')
+    const navigate = useNavigate()
 
     useEffect(() => {
         try {
@@ -31,9 +33,9 @@ export const Home = ({ onUserLoggedOut }) => {
         }
     }, [])
 
-    const handleNewPostClick = () => setView('new-post')
+    const handleNewPostClick = () => navigate('/new-post')
 
-    const handleNewPostCancelClick = () => setView('posts')
+    const handleNewPostCancelClick = () => navigate('/posts')
 
     const handleNewPostSubmit = event => {
         event.preventDefault()
@@ -48,7 +50,7 @@ export const Home = ({ onUserLoggedOut }) => {
                 .then(() => {
                     form.reset()
 
-                    setView('posts')
+                    navigate('/posts')
                 })
                 .catch(error => {
                     console.error(error)
@@ -77,25 +79,25 @@ export const Home = ({ onUserLoggedOut }) => {
     const handleSavedPostsClick = event => {
         event.preventDefault()
 
-        setView('saved-posts')
+        navigate('/home/posts/saved')
     }
 
     const handleArchivedPostsClick = event => {
         event.preventDefault()
 
-        setView('archived-posts')
+        navigate('/home/posts/archived')
     }
 
     const handleLikedPostsClick = event => {
         event.preventDefault()
 
-        setView('liked-posts')
+        navigate('/home/posts/liked')
     }
 
     const handleAppClick = event => {
         event.preventDefault()
 
-        setView('posts')
+        navigate('/home/posts')
     }
 
     console.debug('Home -> render')
@@ -108,26 +110,28 @@ export const Home = ({ onUserLoggedOut }) => {
         <a href="" onClick={handleSavedPostsClick}>Saved </a>
         <a href="" onClick={handleArchivedPostsClick}> Archived </a>
         <a href="" onClick={handleLikedPostsClick}> Liked</a>
-        {view === 'posts' && <Posts />}
-        {view === 'new-post' && <div>
-            <h2>New post</h2>
-            <form onSubmit={handleNewPostSubmit}>
-                <div className="flex flex-col m-y-10">
-                    <label htmlFor="image">Image</label>
-                    <input id="image" type="url" />
-                </div>
-                <div className="flex flex-col m-y-10">
-                    <label htmlFor="text">Text</label>
-                    <input id="text" type="text" />
-                </div>
-                <div className="flex justify-end">
-                    <button type="button" onClick={handleNewPostCancelClick}>Cancel</button>
-                    <button type="submit">Create</button>
-                </div>
-            </form>
-        </div>}
-        {view === 'saved-posts' && <SavedPosts />}
-        {view === 'archived-posts' && <ArchivedPosts />}
-        {view === 'liked-posts' && <LikedPosts />}
+        <Routes>
+            <Route path="/posts" element={<Posts />} />
+            <Route path="/new-posts" element={<div>
+                <h2>New post</h2>
+                <form onSubmit={handleNewPostSubmit}>
+                    <div className="flex flex-col m-y-10">
+                        <label htmlFor="image">Image</label>
+                        <input id="image" type="url" />
+                    </div>
+                    <div className="flex flex-col m-y-10">
+                        <label htmlFor="text">Text</label>
+                        <input id="text" type="text" />
+                    </div>
+                    <div className="flex justify-end">
+                        <button type="button" onClick={handleNewPostCancelClick}>Cancel</button>
+                        <button type="submit">Create</button>
+                    </div>
+                </form>
+            </div>} />
+            <Route path="/posts/saved" element={<SavedPosts />} />
+            <Route path="/posts/archived" element={<ArchivedPosts />} />
+            <Route path="/posts/liked" element={<LikedPosts />} />
+        </Routes>
     </div>
 }

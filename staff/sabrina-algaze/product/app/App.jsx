@@ -16,7 +16,7 @@ export const App = () => {
         try {
             const loggedIn = logic.isUserLoggedIn()
 
-            if (loggedIn) navigate('/home')
+            // if (loggedIn) navigate('/home')
         } catch (error) {
             console.error(error)
 
@@ -43,6 +43,6 @@ export const App = () => {
 
         <Route path="/login" element={<Login onRegisterClicked={handleRegisterClicked} onUserLoggedIn={handleUserLoggedIn} />} />
 
-        <Route path="/home" element={<Home onUserLoggedOut={handleUserLoggedOut} />} />
+        <Route path="/home/*" element={<Home onUserLoggedOut={handleUserLoggedOut} />} />
     </Routes>
 }
