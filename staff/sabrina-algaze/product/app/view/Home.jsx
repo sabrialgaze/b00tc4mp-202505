@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 
-import { Routes, Route, useNavigate } from 'react-router'
+import { Routes, Route, useNavigate, Link } from 'react-router'
 
 import { logic } from '../logic'
 
@@ -9,6 +9,7 @@ import { Posts } from './Posts'
 import { SavedPosts } from './SavedPosts'
 import { ArchivedPosts } from './ArchivedPosts'
 import { LikedPosts } from './LikedPosts'
+import { Search } from './Search'
 
 export const Home = ({ onUserLoggedOut }) => {
     const [name, setName] = useState('')
@@ -76,40 +77,18 @@ export const Home = ({ onUserLoggedOut }) => {
         }
     }
 
-    const handleSavedPostsClick = event => {
-        event.preventDefault()
-
-        navigate('/saved-posts')
-    }
-
-    const handleArchivedPostsClick = event => {
-        event.preventDefault()
-
-        navigate('/archived-posts')
-    }
-
-    const handleLikedPostsClick = event => {
-        event.preventDefault()
-
-        navigate('/liked-posts')
-    }
-
-    const handleAppClick = event => {
-        event.preventDefault()
-
-        navigate('/posts')
-    }
-
     console.debug('Home -> render')
 
     return <div>
-        <h1><a href="" onClick={handleAppClick}>App</a></h1>
+        <h1><Link to="/">App</Link></h1>
         <p className="text-center">Hello, {name}!</p>
         <button type="button" onClick={handleLogoutClick}>Logout</button>
         <button type="button" onClick={handleNewPostClick}>+</button>
-        <a href="" onClick={handleSavedPostsClick}>Saved </a>
-        <a href="" onClick={handleArchivedPostsClick}> Archived </a>
-        <a href="" onClick={handleLikedPostsClick}> Liked</a>
+        <Link to="/saved-posts">Saved</Link>
+        <Link to="/archived-posts">Archived</Link>
+        <Link to="/liked-posts">Liked</Link>
+        <Link to="/search-posts">Search</Link>
+
         <Routes>
             <Route path="/" element={<Posts />} />
             <Route path="/new-posts" element={<div>
@@ -132,6 +111,7 @@ export const Home = ({ onUserLoggedOut }) => {
             <Route path="/saved-posts" element={<SavedPosts />} />
             <Route path="/archived-posts" element={<ArchivedPosts />} />
             <Route path="/liked-posts" element={<LikedPosts />} />
+            <Route path="/search-posts" element={<Search />} />
         </Routes>
     </div>
 }
