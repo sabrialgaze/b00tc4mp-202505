@@ -1,3 +1,3 @@
 import { data } from '../data'
 
-export const isUserLoggedIn = () => !!data.loadUserId()
+export const isUserLoggedIn = () => !!data.loadToken()

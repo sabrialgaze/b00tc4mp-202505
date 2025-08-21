@@ -1,27 +1,129 @@
-import { useNavigate, useSearchParams } from 'react-router'
+import { useSearchParams } from 'react-router'
+import { useState, useEffect } from 'react'
+
+import { Post } from './Post'
+
+import { logic } from '../logic'
 
 export const Search = () => {
-    const navigate = useNavigate()
     const [search, setSearch] = useSearchParams()
     const query = search.get('q') || ''
+
+    const [posts, setPosts] = useState([])
+
+    useEffect(() => {
+        try {
+            query && logic.searchPosts(query)
+                .then(posts => {
+                    setPosts(posts)
+                })
+                .catch(error => {
+                    console.error(error)
+
+                    alert(error.message)
+                })
+        } catch (error) {
+            console.error(error)
+
+            alert(error.message)
+        }
+    }, [query])
+
 
     const handleSearchSubmit = event => {
         event.preventDefault()
 
         const query = event.target.query.value
 
-        //logic to handle search with the query
-        console.log(`Searching for ${query}`)
+        setSearch({ q: query })
+    }
 
-        const queryString = new URLSearchParams({ q: query }).toString()
+    const handlePostRemoved = () => {
+        try {
+            logic.searchPosts(query)
+                .then(posts => {
+                    setPosts(posts)
+                })
+                .catch(error => {
+                    console.error(error)
 
-        navigate(`/search-posts?${queryString}`)
+                    alert(error.message)
+                })
+        } catch (error) {
+            console.error(error)
+
+            alert(error.message)
+        }
+    }
+
+    const handlePostLikeToggled = () => {
+        try {
+            logic.searchPosts(query)
+
+                .then(posts => {
+                    setPosts(posts)
+                })
+                .catch(error => {
+                    console.error(error)
+
+                    alert(error.message)
+                })
+        } catch (error) {
+            console.error(error)
+
+            alert(error.message)
+        }
+    }
+
+    const handlePostSaveToggled = () => {
+        try {
+            logic.searchPosts(query)
+
+                .then(posts => {
+                    setPosts(posts)
+                })
+                .catch(error => {
+                    console.error(error)
+
+                    alert(error.message)
+                })
+        } catch (error) {
+            console.error(error)
+
+            alert(error.message)
+        }
+    }
+
+    const handlePostArchiveToggled = () => {
+        try {
+            logic.searchPosts(query)
+
+                .then(posts => {
+                    setPosts(posts)
+                })
+                .catch(error => {
+                    console.error(error)
+
+                    alert(error.message)
+                })
+        } catch (error) {
+            console.error(error)
+
+            alert(error.message)
+        }
     }
 
     console.debug('Search -> render')
 
-    return <form onSubmit={handleSearchSubmit}>
-        <input type="text" placeholder="Search posts..." id="query" defaultValue={query} />
-        <button type="submit">Search</button>
-    </form>
+    return <div>
+        <form onSubmit={handleSearchSubmit}>
+            <input type="text" placeholder="Search posts..." id="query" defaultValue={query} />
+
+            <button type="submit">Search</button>
+        </form>
+
+        <ul className="list-style-none p-0">
+            {posts.map(post => <Post key={post.id} post={post} onPostRemoved={handlePostRemoved} onPostLikeToggled={handlePostLikeToggled} onPostSaveToggled={handlePostSaveToggled} onPostArchiveToggled={handlePostArchiveToggled} />)}
+        </ul>
+    </div>
 }

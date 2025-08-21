@@ -1,3 +1,3 @@
 import { data } from '../data'
 
-export const logoutUser = () => data.removeUserId()
+export const logoutUser = () => data.removeToken()

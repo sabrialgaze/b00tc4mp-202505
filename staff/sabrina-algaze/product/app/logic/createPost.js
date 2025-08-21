@@ -1,17 +1,15 @@
 import { data } from '../data'
-import { errors } from 'com'
+import { validate, errors, SystemError } from 'com'
 
 export const createPost = (image, text) => {
-    if (typeof image !== 'string') throw new TypeError('invalid image type')
-    if (!image.length) throw new Error('No image was provided')
-    if (typeof text !== 'string') throw new TypeError('invalid text type')
-    if (!text.length) throw new Error('No text was provided')
+    validate.image(image)
+    validate.text(text)
 
     return fetch('http://localhost:8080/posts', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            Authorization: `Bearer ${data.loadUserId()}`
+            Authorization: `Bearer ${data.loadToken()}`
         },
         body: JSON.stringify({
             image,
@@ -29,7 +27,7 @@ export const createPost = (image, text) => {
                 .then(body => {
                     const { error, message } = body
 
-                    const constructor = errors[error]
+                    const constructor = errors[error] || SystemError
                     throw new constructor(message)
                 })
         })

@@ -1,4 +1,4 @@
-import { validate, errors } from 'com'
+import { validate, errors, SystemError } from 'com'
 
 /**
  * Registers a user.
@@ -46,7 +46,7 @@ export const registerUser = (name, email, username, password) => {
                 .then(body => {
                     const { error, message } = body
 
-                    const constructor = errors[error]
+                    const constructor = errors[error] || SystemError
                     throw new constructor(message)
                 })
         })

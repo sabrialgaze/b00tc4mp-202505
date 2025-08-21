@@ -42,11 +42,16 @@ export const validate = {
 
     image(image) {
         if (typeof image !== 'string') throw new ValidationError('invalid image type')
-        if (!image.length) throw new ValidationError('No image was provided')
+        if (!image.length) throw new ValidationError('invalid image length')
     },
 
     text(text) {
         if (typeof text !== 'string') throw new ValidationError('invalid text type')
-        if (!text.length) throw new ValidationError('No text was provided')
+        if (!text.length) throw new ValidationError('invalid text length')
+    },
+
+    query(query) {
+        if (typeof query !== 'string') throw new ValidationError('invalid query type')
+        if (!query.length) throw new ValidationError('invalid query length')
     }
 }

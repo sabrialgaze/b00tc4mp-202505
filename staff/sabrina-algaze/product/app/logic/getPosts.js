@@ -1,5 +1,6 @@
 import { data } from '../data'
-import { errors } from 'com'
+import { errors, SystemError } from 'com'
+
 /**
  * Gets posts.
  * 
@@ -14,10 +15,10 @@ import { errors } from 'com'
  */
 
 export const getPosts = () => {
-    return fetch('http://localhost:8080/posts', {
+    return fetch('http://localhost:8080/posts/all', {
         method: 'GET',
         headers: {
-            Authorization: `Bearer ${data.loadUserId()}`
+            Authorization: `Bearer ${data.loadToken()}`
         }
     })
         .catch(error => { throw new Error('connection error') })
@@ -33,7 +34,7 @@ export const getPosts = () => {
                 .then(body => {
                     const { error, message } = body
 
-                    const constructor = errors[error]
+                    const constructor = errors[error] || SystemError
                     throw new constructor(message)
                 })
         })

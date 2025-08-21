@@ -1,5 +1,5 @@
 import { data } from '../data'
-import { errors } from 'com'
+import { errors, SystemError } from 'com'
 
 export const toggleArchivePost = postId => {
     if (typeof postId !== 'string') throw new TypeError('invalid postId type')
@@ -7,7 +7,7 @@ export const toggleArchivePost = postId => {
     return fetch(`http://localhost:8080/posts/${postId}/archived`, {
         method: 'PATCH',
         headers: {
-            Authorization: `Bearer ${data.loadUserId()}`
+            Authorization: `Bearer ${data.loadToken()}`
         },
     })
         .catch(error => { throw new Error('connection error') })
@@ -21,7 +21,7 @@ export const toggleArchivePost = postId => {
                 .then(body => {
                     const { error, message } = body
 
-                    const constructor = errors[error]
+                    const constructor = errors[error] || SystemError
 
                     throw new constructor(message)
                 })

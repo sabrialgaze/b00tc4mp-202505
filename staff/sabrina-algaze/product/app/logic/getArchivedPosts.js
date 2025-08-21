@@ -1,11 +1,11 @@
 import { data } from '../data'
-import { errors } from 'com'
+import { errors, SystemError } from 'com'
 
 export const getArchivedPosts = () => {
     return fetch('http://localhost:8080/posts/archived', {
         method: 'GET',
         headers: {
-            Authorization: `Bearer ${data.loadUserId()}`
+            Authorization: `Bearer ${data.loadToken()}`
         }
     })
         .catch(error => { throw new Error('connection error') })
@@ -21,7 +21,7 @@ export const getArchivedPosts = () => {
                 .then(body => {
                     const { error, message } = body
 
-                    const constructor = errors[error]
+                    const constructor = errors[error] || SystemError
                     throw new constructor(message)
                 })
         })

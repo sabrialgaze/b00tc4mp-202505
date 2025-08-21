@@ -1,5 +1,6 @@
 import { data } from '../data'
-import { validate, errors } from 'com'
+import { validate, errors, SystemError } from 'com'
+
 /**
  * Logs in a user.
  * @example
@@ -35,14 +36,14 @@ export const loginUser = (username, password) => {
             if (status === 200)
                 return res.json()
                     .catch(error => { throw new Error('json error') })
-                    .then(userId => { data.saveUserId(userId) })
+                    .then(userId => { data.saveToken(userId) })
 
             return res.json()
                 .catch(error => { throw new Error('json error') })
                 .then(body => {
                     const { error, message } = body
 
-                    const constructor = errors[error]
+                    const constructor = errors[error] || SystemError
                     throw new constructor(message)
                 })
         })

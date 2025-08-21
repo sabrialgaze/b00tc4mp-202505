@@ -13,6 +13,7 @@ import { getSavedPosts } from './getSavedPosts'
 import { toggleArchivePost } from './toggleArchivePost'
 import { getArchivedPosts } from './getArchivedPosts'
 import { getLikedPosts } from './getLikedPosts'
+import { searchPosts } from './searchPosts'
 
 export const logic = {
     registerUser,
@@ -29,5 +30,6 @@ export const logic = {
     getSavedPosts,
     toggleArchivePost,
     getArchivedPosts,
-    getLikedPosts
+    getLikedPosts,
+    searchPosts
 }

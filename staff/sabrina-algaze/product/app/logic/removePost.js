@@ -1,5 +1,6 @@
 import { data } from '../data'
-import { errors } from 'com'
+import { errors, SystemError } from 'com'
+
 /**
  * Removes a post.
  * 
@@ -18,7 +19,7 @@ export const removePost = postId => {
     return fetch(`http://localhost:8080/posts/${postId}`, {
         method: 'DELETE',
         headers: {
-            Authorization: `Bearer ${data.loadUserId()}`
+            Authorization: `Bearer ${data.loadToken()}`
         },
     })
         .catch(error => { throw new Error('connection error') })
@@ -32,7 +33,7 @@ export const removePost = postId => {
                 .then(body => {
                     const { error, message } = body
 
-                    const constructor = errors[error]
+                    const constructor = errors[error] || SystemError
 
                     throw new constructor(message)
                 })

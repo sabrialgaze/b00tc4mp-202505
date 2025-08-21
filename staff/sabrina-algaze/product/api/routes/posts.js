@@ -24,7 +24,7 @@ posts.post('/', jsonBodyParser, (req, res, next) => {
     }
 })
 
-posts.get('/', (req, res, next) => {
+posts.get('/all', (req, res, next) => {
     try {
         const token = req.headers.authorization.slice(7)
 
@@ -160,3 +160,20 @@ posts.get('/liked', (req, res, next) => {
     }
 })
 
+posts.get('/', (req, res, next) => {
+    try {
+        const token = req.headers.authorization.slice(7)
+
+        const payload = jwt.verify(token, 'ilovecheesetooat3am')
+
+        const { sub: userId } = payload
+
+        const { q: query } = req.query
+
+        logic.searchPosts(userId, query)
+            .then(posts => res.status(200).json(posts))
+            .catch(error => next(error))
+    } catch (error) {
+        next(error)
+    }
+})
