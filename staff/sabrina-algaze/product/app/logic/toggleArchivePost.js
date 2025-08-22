@@ -4,7 +4,7 @@ import { errors, SystemError } from 'com'
 export const toggleArchivePost = postId => {
     if (typeof postId !== 'string') throw new TypeError('invalid postId type')
 
-    return fetch(`http://localhost:8080/posts/${postId}/archived`, {
+    return fetch(`${import.meta.env.VITE_API_URL}/posts/${postId}/archived`, {
         method: 'PATCH',
         headers: {
             Authorization: `Bearer ${data.loadToken()}`

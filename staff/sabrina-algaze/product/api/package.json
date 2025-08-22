@@ -4,9 +4,9 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "node .",
-    "inspect": "node --inspect-brk .",
-    "watch": "node --watch .",
+    "start": "node --env-file .env .",
+    "inspect": "node --env-file .env --inspect-brk .",
+    "watch": "node --env-file .env --watch .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

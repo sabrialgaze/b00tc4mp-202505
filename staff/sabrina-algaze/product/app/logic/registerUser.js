@@ -7,7 +7,7 @@ import { validate, errors, SystemError } from 'com'
  ```js
 // demo
 
-registerUser('Sabrina2', 'sabrina2@mail.com', 'sabrina2', '123123123')
+registerUser('Sabrina', 'sabrina@mail.com', 'sabrina', '123123123')
     .then(() => console.log('user registered'))
     .catch(error => console.error(error))
  ```
@@ -23,7 +23,7 @@ export const registerUser = (name, email, username, password) => {
     validate.username(username)
     validate.password(password)
 
-    return fetch('http://localhost:8080/users', {
+    return fetch(`${import.meta.env.VITE_API_URL}/users`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

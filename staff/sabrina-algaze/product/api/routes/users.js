@@ -24,7 +24,9 @@ users.post('/auth', jsonBodyParser, (req, res, next) => {
 
         logic.authenticateUser(username, password)
             .then(userId => {
-                const token = jwt.sign({ sub: userId }, 'ilovecheesetooat3am')
+                const token = jwt.sign({ sub: userId }, process.env.JWT_SECRET, {
+                    expiresIn: process.env.JWT_EXPIRATION
+                })
 
                 res.status(200).json(token)
             })
@@ -38,7 +40,7 @@ users.get('/info', (req, res, next) => {
     try {
         const token = req.headers.authorization.slice(7)
 
-        const payload = jwt.verify(token, 'ilovecheesetooat3am')
+        const payload = jwt.verify(token, process.env.JWT_SECRET)
 
         const { sub: userId } = payload
 

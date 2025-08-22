@@ -2,7 +2,7 @@ import { data } from '../data'
 import { errors, SystemError } from 'com'
 
 export const getLikedPosts = () => {
-    return fetch('http://localhost:8080/posts/liked', {
+    return fetch(`${import.meta.env.VITE_API_URL}/posts/liked`, {
         method: 'GET',
         headers: {
             Authorization: `Bearer ${data.loadToken()}`

@@ -4,6 +4,8 @@ import { DuplicityError, ValidationError, NotFoundError, OwnershipError, Credent
 import { users, posts } from './routes/index.js'
 import mongoose from 'mongoose'
 
+const { PORT = 8080 } = process.env
+
 mongoose.connect('mongodb://127.0.0.1:27017/test')
     .then(() => {
         const api = express()
@@ -34,6 +36,6 @@ mongoose.connect('mongodb://127.0.0.1:27017/test')
 
             res.status(status).json({ error: error.constructor.name, message: error.message })
         })
-        api.listen(8080, () => console.log('API listening on port 8080'))
+        api.listen(PORT, () => console.log(`API listening on port ${PORT}`))
     })
     .catch(error => console.error(error))

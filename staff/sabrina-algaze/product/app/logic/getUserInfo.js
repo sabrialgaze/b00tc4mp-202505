@@ -15,7 +15,7 @@ getUserInfo()
  */
 
 export const getUserInfo = () => {
-    return fetch('http://localhost:8080/users/info', {
+    return fetch(`${import.meta.env.VITE_API_URL}/users/info`, {
         method: 'GET',
         headers: {
             Authorization: `Bearer ${data.loadToken()}`

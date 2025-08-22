@@ -10,7 +10,7 @@ posts.post('/', jsonBodyParser, (req, res, next) => {
     try {
         const token = req.headers.authorization.slice(7)
 
-        const payload = jwt.verify(token, 'ilovecheesetooat3am')
+        const payload = jwt.verify(token, process.env.JWT_SECRET)
 
         const { sub: userId } = payload
 
@@ -28,7 +28,7 @@ posts.get('/all', (req, res, next) => {
     try {
         const token = req.headers.authorization.slice(7)
 
-        const payload = jwt.verify(token, 'ilovecheesetooat3am')
+        const payload = jwt.verify(token, process.env.JWT_SECRET)
 
         const { sub: userId } = payload
 
@@ -44,7 +44,7 @@ posts.delete('/:postId', (req, res, next) => {
     try {
         const token = req.headers.authorization.slice(7)
 
-        const payload = jwt.verify(token, 'ilovecheesetooat3am')
+        const payload = jwt.verify(token, process.env.JWT_SECRET)
 
         const { sub: userId } = payload
 
@@ -62,7 +62,7 @@ posts.patch('/:postId/likes', (req, res, next) => {
     try {
         const token = req.headers.authorization.slice(7)
 
-        const payload = jwt.verify(token, 'ilovecheesetooat3am')
+        const payload = jwt.verify(token, process.env.JWT_SECRET)
 
         const { sub: userId } = payload
 
@@ -80,7 +80,7 @@ posts.patch('/:postId/saved', (req, res, next) => {
     try {
         const token = req.headers.authorization.slice(7)
 
-        const payload = jwt.verify(token, 'ilovecheesetooat3am')
+        const payload = jwt.verify(token, process.env.JWT_SECRET)
 
         const { sub: userId } = payload
 
@@ -98,7 +98,7 @@ posts.patch('/:postId/archived', (req, res, next) => {
     try {
         const token = req.headers.authorization.slice(7)
 
-        const payload = jwt.verify(token, 'ilovecheesetooat3am')
+        const payload = jwt.verify(token, process.env.JWT_SECRET)
 
         const { sub: userId } = payload
 
@@ -116,7 +116,7 @@ posts.get('/saved', (req, res, next) => {
     try {
         const token = req.headers.authorization.slice(7)
 
-        const payload = jwt.verify(token, 'ilovecheesetooat3am')
+        const payload = jwt.verify(token, process.env.JWT_SECRET)
 
         const { sub: userId } = payload
 
@@ -132,7 +132,7 @@ posts.get('/archived', (req, res, next) => {
     try {
         const token = req.headers.authorization.slice(7)
 
-        const payload = jwt.verify(token, 'ilovecheesetooat3am')
+        const payload = jwt.verify(token, process.env.JWT_SECRET)
 
         const { sub: userId } = payload
 
@@ -148,7 +148,7 @@ posts.get('/liked', (req, res, next) => {
     try {
         const token = req.headers.authorization.slice(7)
 
-        const payload = jwt.verify(token, 'ilovecheesetooat3am')
+        const payload = jwt.verify(token, process.env.JWT_SECRET)
 
         const { sub: userId } = payload
 
@@ -164,7 +164,7 @@ posts.get('/', (req, res, next) => {
     try {
         const token = req.headers.authorization.slice(7)
 
-        const payload = jwt.verify(token, 'ilovecheesetooat3am')
+        const payload = jwt.verify(token, process.env.JWT_SECRET)
 
         const { sub: userId } = payload
 
