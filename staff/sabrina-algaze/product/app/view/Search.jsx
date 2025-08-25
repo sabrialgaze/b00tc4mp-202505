@@ -116,10 +116,10 @@ export const Search = () => {
     console.debug('Search -> render')
 
     return <div>
-        <form onSubmit={handleSearchSubmit}>
-            <input type="text" placeholder="Search posts..." id="query" defaultValue={query} />
+        <form className="w-full space-y-1 space-x-1" onSubmit={handleSearchSubmit}>
+            <input className="border-1 rounded-full px-3 bg-gray-100 text-gray-900" type="text" placeholder="Search posts..." id="query" defaultValue={query} />
 
-            <button type="submit">Search</button>
+            <button className="rounded-full px-3 bg-gray-900 text-white hover:bg-gray-700 transition" type="submit">Search</button>
         </form>
 
         <ul className="list-style-none p-0">

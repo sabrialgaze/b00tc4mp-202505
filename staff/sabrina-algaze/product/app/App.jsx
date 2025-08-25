@@ -49,40 +49,42 @@ export const App = () => {
 
     console.log('App -> render')
 
-    return <Routes>
-        <Route path="/*" element={
-            loggedIn === null ?
-                <Loading />
-                :
-                loggedIn ?
-                    <Home onUserLoggedOut={handleUserLoggedOut} />
+    return <div className="p-2">
+        <Routes>
+            <Route path="/*" element={
+                loggedIn === null ?
+                    <Loading />
                     :
-                    location.pathname === '/' ?
-                        <Landing onRegisterClicked={handleRegisterClicked} onLoginClicked={handleLoginClicked} />
+                    loggedIn ?
+                        <Home onUserLoggedOut={handleUserLoggedOut} />
                         :
+                        location.pathname === '/' ?
+                            <Landing onRegisterClicked={handleRegisterClicked} onLoginClicked={handleLoginClicked} />
+                            :
+                            <Navigate to="/" />
+            } />
+
+            <Route path="/register" element={
+                loggedIn === null ?
+                    <Loading />
+                    :
+                    loggedIn ?
                         <Navigate to="/" />
-        } />
+                        :
+                        <Register onLoginClicked={handleLoginClicked} onUserRegistered={handleUserRegistered} />
+            } />
 
-        <Route path="/register" element={
-            loggedIn === null ?
-                <Loading />
-                :
-                loggedIn ?
-                    <Navigate to="/" />
+            <Route path="/login" element={
+                loggedIn === null ?
+                    <Loading />
                     :
-                    <Register onLoginClicked={handleLoginClicked} onUserRegistered={handleUserRegistered} />
-        } />
+                    loggedIn ?
+                        <Navigate to="/" />
+                        :
+                        <Login onRegisterClicked={handleRegisterClicked} onUserLoggedIn={handleUserLoggedIn} />
+            } />
 
-        <Route path="/login" element={
-            loggedIn === null ?
-                <Loading />
-                :
-                loggedIn ?
-                    <Navigate to="/" />
-                    :
-                    <Login onRegisterClicked={handleRegisterClicked} onUserLoggedIn={handleUserLoggedIn} />
-        } />
-
-        <Route path="*" element={<Navigate to="/" />} />
-    </Routes>
+            <Route path="*" element={<Navigate to="/" />} />
+        </Routes>
+    </div>
 }

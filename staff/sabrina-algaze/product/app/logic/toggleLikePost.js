@@ -4,7 +4,7 @@ import { errors, SystemError } from 'com'
 export const toggleLikePost = postId => {
     if (typeof postId !== 'string') throw new TypeError('invalid postId type')
 
-    return fetch(`${import.meta.env.VITE_API_URL}/${postId}/likes`, {
+    return fetch(`${import.meta.env.VITE_API_URL}/posts/${postId}/likes`, {
         method: 'PATCH',
         headers: {
             Authorization: `Bearer ${data.loadToken()}`
