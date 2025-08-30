@@ -64,13 +64,28 @@ User
 - email (string, required)
 - username (string, required)
 - password (string, required)
+- role (string, required, enum player|coach)
 
-Post
+Group
 - id (UUID, required)
-- author (UUID, User.id, required)
-- image (string, required)
-- text (string, required)
-- date (string, ISO, requried)
+- name (string, required)
+- players (UUID, [User.id])
+- date (Date, required)
+- coach (UUID, User.id, required)
+
+Training
+- id (UUID, required)
+- group (UUID, Group.id, required)
+- date (Date, required)
+- coach (UUID, User.id, required)
+- joined (UUID, [User.id])
+- invited (UUID, [User.id]) 
+
+Payment
+- id (UUID, required)
+- player (UUID, User.id)
+- service (string, required, enum monthly|daily)
+- date (Date, required)
 
 ### Technologies
 
