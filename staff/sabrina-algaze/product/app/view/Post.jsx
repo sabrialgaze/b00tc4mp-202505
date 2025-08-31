@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react'
 import { logic } from '../logic'
 import { convertISODateToFriendlyFormat } from './helper'
 
@@ -5,6 +6,20 @@ import { HeartIcon as HeartIconOutline, BookmarkIcon, ArchiveBoxIcon, ArchiveBox
 import { HeartIcon as HeartIconSolid, BookmarkIcon as BookmarkIconSolid } from '@heroicons/react/24/solid'
 
 export const Post = ({ post, onPostRemoved, onPostLikeToggled, onPostSaveToggled, onPostArchiveToggled }) => {
+    const [role, setRole] = useState(null)
+
+    useEffect(() => {
+        try {
+            const role = logic.getUserRole()
+
+            setRole(role)
+        } catch (error) {
+            console.error(error)
+
+            alert(error.message)
+        }
+    }, [])
+
     const handleDeletePostClick = () => {
         if (confirm('Delete post?')) {
             try {
@@ -94,6 +109,6 @@ export const Post = ({ post, onPostRemoved, onPostLikeToggled, onPostSaveToggled
         <button type="button" onClick={handleToggleLikePostClick}>{post.liked ? <HeartIconSolid className="w-6 h-6 inline text-red-500" /> : <HeartIconOutline className="w-6 h-6 inline text-gray-700" />} ({post.likesCount})</button>
         <button type="button" onClick={handleToggleSavePostClick}>{post.saved ? <BookmarkIconSolid className="w-6 h-6 inline text-cyan-600" /> : <BookmarkIcon className="w-6 h-6 inline text-gray-700" />}</button>
         {post.own && <button type="button" onClick={handleToggleArchivePostClick}>{post.archived ? <ArchiveBoxXMarkIcon className="w-6 h-6 inline text-gray-700" /> : <ArchiveBoxIcon className="w-6 h-6 inline text-gray-700" />}</button>}
-        {post.own && <button type="button" onClick={handleDeletePostClick}><TrashIcon className="w-6 h-6 inline text-gray-700" /></button>}
+        {(post.own || role === 'administrator') && <button type="button" onClick={handleDeletePostClick}><TrashIcon className="w-6 h-6 inline text-gray-700" /></button>}
     </li>
 }

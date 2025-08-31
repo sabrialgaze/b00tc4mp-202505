@@ -23,8 +23,10 @@ users.post('/auth', jsonBodyParser, (req, res, next) => {
         const { username, password } = req.body
 
         logic.authenticateUser(username, password)
-            .then(userId => {
-                const token = jwt.sign({ sub: userId }, process.env.JWT_SECRET, {
+            .then(user => {
+                const { id, role } = user
+
+                const token = jwt.sign({ sub: id, role }, process.env.JWT_SECRET, {
                     expiresIn: process.env.JWT_EXPIRATION
                 })
 

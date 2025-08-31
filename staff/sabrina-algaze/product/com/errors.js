@@ -34,11 +34,18 @@ export class SystemError extends Error {
     }
 }
 
+export class SessionError extends Error {
+    constructor(message) {
+        super(message)
+    }
+}
+
 export const errors = {
     ValidationError,
     DuplicityError,
     NotFoundError,
     CredentialsError,
     OwnershipError,
-    SystemError
+    SystemError,
+    SessionError
 }

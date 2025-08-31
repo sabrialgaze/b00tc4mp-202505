@@ -49,10 +49,14 @@ User
 - email (string, required)
 - username (string, required)
 - password (string, required)
+- saved([UUID], [Post.id])
+- role (string, required, enum regular|moderator|administrator)
 
 Post
 - id (UUID, required)
 - author (UUID, User.id, required)
 - image (string, required)
 - text (string, required)
-- date (string, ISO, required)
+- date (Date, required, default now)
+- likes([UUID], [Post.id])
+- archived(boolean, required, default false)

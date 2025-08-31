@@ -3,6 +3,7 @@ import { loginUser } from './loginUser'
 import { getUserInfo } from './getUserInfo'
 import { isUserLoggedIn } from './isUserLoggedIn'
 import { logoutUser } from './logoutUser'
+import { getUserRole } from './getUserRole'
 
 import { createPost } from './createPost'
 import { getPosts } from './getPosts'
@@ -21,6 +22,7 @@ export const logic = {
     getUserInfo,
     isUserLoggedIn,
     logoutUser,
+    getUserRole,
 
     createPost,
     getPosts,

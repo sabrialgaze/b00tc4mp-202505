@@ -36,7 +36,7 @@ export const loginUser = (username, password) => {
             if (status === 200)
                 return res.json()
                     .catch(error => { throw new Error('json error') })
-                    .then(userId => { data.saveToken(userId) })
+                    .then(token => { data.saveToken(token) })
 
             return res.json()
                 .catch(error => { throw new Error('json error') })

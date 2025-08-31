@@ -15,7 +15,7 @@ export const removePost = (userId, postId) => {
                 .then(post => {
                     if (!post) throw new NotFoundError('post not found')
 
-                    if (post.author.toString() !== userId) throw new OwnershipError('user not owner of post')
+                    if (user.role !== 'administrator' && post.author.toString() !== userId) throw new OwnershipError('user not owner of post')
 
                     return Post.deleteOne({ _id: postId })
                 })

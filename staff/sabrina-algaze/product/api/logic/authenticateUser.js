@@ -18,7 +18,9 @@ export const authenticateUser = (username, password) => {
                 .then(match => {
                     if (!match) throw new CredentialsError('wrong password')
 
-                    return user.id
+                    const { id, role } = user
+
+                    return { id, role }
                 })
         })
 }

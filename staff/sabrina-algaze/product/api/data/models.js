@@ -24,7 +24,13 @@ export const User = mongoose.model('User', {
     saved: [{
         type: ObjectId,
         ref: 'Post'
-    }]
+    }],
+    role: {
+        type: String,
+        required: true,
+        enum: ['regular', 'moderator', 'administrator'],
+        default: 'regular'
+    }
 })
 
 export const Post = mongoose.model('Post', {
