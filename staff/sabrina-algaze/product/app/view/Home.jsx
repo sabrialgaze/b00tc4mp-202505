@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
-
 import { Routes, Route, useNavigate, Link } from 'react-router'
+
+import { useRole } from '../hooks'
 
 import { logic } from '../logic'
 
@@ -17,19 +18,15 @@ import { HeartIcon as HeartIconSolid, BookmarkIcon as BookmarkIconSolid, Archive
 
 export const Home = ({ onUserLoggedOut }) => {
     const [name, setName] = useState(null)
-    const [role, setRole] = useState(null)
+
+    const role = useRole()
 
     const navigate = useNavigate()
 
     useEffect(() => {
         try {
             logic.getUserInfo()
-                .then(user => {
-                    const role = logic.getUserRole()
-
-                    setName(user.name)
-                    setRole(role)
-                })
+                .then(user => setName(user.name))
                 .catch(error => {
                     console.error(error)
 
@@ -100,7 +97,7 @@ export const Home = ({ onUserLoggedOut }) => {
         </header>
 
         <div className="py-15">
-            <p className="text-l text-center font-semibold mb-4">Hello, {name}! <img src={`/images/avatar/${role}.jpg`} /></p>
+            <p className="text-l text-center font-semibold mb-4">Hello, {name}! <img src={`/images/avatars/${role}.jpg`} /></p>
             <Routes>
                 <Route path="/" element={<Posts />} />
                 <Route path="/new-post" element={<div>

@@ -1,4 +1,7 @@
 import { useState, useEffect } from 'react'
+
+import { useRole } from '../hooks'
+
 import { logic } from '../logic'
 import { convertISODateToFriendlyFormat } from './helper'
 
@@ -6,19 +9,7 @@ import { HeartIcon as HeartIconOutline, BookmarkIcon, ArchiveBoxIcon, ArchiveBox
 import { HeartIcon as HeartIconSolid, BookmarkIcon as BookmarkIconSolid } from '@heroicons/react/24/solid'
 
 export const Post = ({ post, onPostRemoved, onPostLikeToggled, onPostSaveToggled, onPostArchiveToggled }) => {
-    const [role, setRole] = useState(null)
-
-    useEffect(() => {
-        try {
-            const role = logic.getUserRole()
-
-            setRole(role)
-        } catch (error) {
-            console.error(error)
-
-            alert(error.message)
-        }
-    }, [])
+    const role = useRole()
 
     const handleDeletePostClick = () => {
         if (confirm('Delete post?')) {
