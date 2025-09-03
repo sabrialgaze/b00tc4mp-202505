@@ -7,8 +7,6 @@ import { Register } from './view/Register'
 import { Login } from './view/Login'
 import { Home } from './view/Home'
 import { Loading } from './view/Loading'
-import { Alert } from './view/Alert'
-import { Confirm } from './view/Confirm'
 
 import { logic } from './logic'
 
@@ -88,9 +86,5 @@ export const App = () => {
 
             <Route path="*" element={<Navigate to="/" />} />
         </Routes>
-
-        {/* <Alert /> */}
-
-        {/* <Confirm /> */}
     </div>
 }
