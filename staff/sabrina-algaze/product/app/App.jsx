@@ -14,6 +14,7 @@ import { logic } from './logic'
 
 export const App = () => {
     const [loggedIn, setLoggedIn] = useState(null)
+    const [alertMessage, setAlertMessage] = useState(null)
 
     const navigate = useNavigate()
     const location = useLocation()
@@ -49,6 +50,8 @@ export const App = () => {
         navigate('/login')
     }
 
+    const handleAlertAccepted = () => setAlertMessage(null)
+
     console.log('App -> render')
 
     return <div className="p-2">
@@ -58,7 +61,7 @@ export const App = () => {
                     <Loading />
                     :
                     loggedIn ?
-                        <Home onUserLoggedOut={handleUserLoggedOut} />
+                        <Home onUserLoggedOut={handleUserLoggedOut} alert={setAlertMessage} />
                         :
                         location.pathname === '/' ?
                             <Landing onRegisterClicked={handleRegisterClicked} onLoginClicked={handleLoginClicked} />
@@ -73,7 +76,7 @@ export const App = () => {
                     loggedIn ?
                         <Navigate to="/" />
                         :
-                        <Register onLoginClicked={handleLoginClicked} onUserRegistered={handleUserRegistered} />
+                        <Register onLoginClicked={handleLoginClicked} onUserRegistered={handleUserRegistered} alert={setAlertMessage} />
             } />
 
             <Route path="/login" element={
@@ -83,13 +86,13 @@ export const App = () => {
                     loggedIn ?
                         <Navigate to="/" />
                         :
-                        <Login onRegisterClicked={handleRegisterClicked} onUserLoggedIn={handleUserLoggedIn} />
+                        <Login onRegisterClicked={handleRegisterClicked} onUserLoggedIn={handleUserLoggedIn} alert={setAlertMessage} />
             } />
 
             <Route path="*" element={<Navigate to="/" />} />
         </Routes>
 
-        {/* <Alert /> */}
+        {alertMessage && <Alert message={alertMessage} onAccepted={handleAlertAccepted} />}
 
         {/* <Confirm /> */}
     </div>

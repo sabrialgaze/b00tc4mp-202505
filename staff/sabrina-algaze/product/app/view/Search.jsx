@@ -5,7 +5,7 @@ import { Post } from './Post'
 
 import { logic } from '../logic'
 
-export const Search = () => {
+export const Search = ({ alert }) => {
     const [search, setSearch] = useSearchParams()
     const query = search.get('q') || ''
 

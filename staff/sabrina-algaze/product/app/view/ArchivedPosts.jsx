@@ -4,7 +4,7 @@ import { Post } from './Post'
 
 import { logic } from '../logic'
 
-export const ArchivedPosts = () => {
+export const ArchivedPosts = ({ alert }) => {
     const [posts, setPosts] = useState([])
 
     useEffect(() => {

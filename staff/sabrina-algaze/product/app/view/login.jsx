@@ -1,6 +1,6 @@
 import { logic } from '../logic'
 
-export const Login = ({ onRegisterClicked, onUserLoggedIn }) => {
+export const Login = ({ onRegisterClicked, onUserLoggedIn, alert }) => {
     const handleRegisterClick = event => {
         event.preventDefault()
 

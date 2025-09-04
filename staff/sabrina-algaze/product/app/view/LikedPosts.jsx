@@ -4,7 +4,7 @@ import { Post } from './Post'
 
 import { logic } from '../logic'
 
-export const LikedPosts = () => {
+export const LikedPosts = ({ alert }) => {
     const [posts, setPosts] = useState([])
 
     useEffect(() => {
