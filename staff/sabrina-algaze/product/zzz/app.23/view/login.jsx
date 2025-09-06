@@ -1,11 +1,6 @@
 import { logic } from '../logic'
 
-import { useContext } from '../hooks'
-
-
-export const Login = ({ onRegisterClicked, onUserLoggedIn }) => {
-    const { alert } = useContext()
-
+export const Login = ({ onRegisterClicked, onUserLoggedIn, alert }) => {
     const handleRegisterClick = event => {
         event.preventDefault()
 

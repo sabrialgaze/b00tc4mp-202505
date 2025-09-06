@@ -1,5 +1,7 @@
 import { useRole } from './useRole'
+import { useContext } from './useContext'
 
 export {
-    useRole
+    useRole,
+    useContext
 }

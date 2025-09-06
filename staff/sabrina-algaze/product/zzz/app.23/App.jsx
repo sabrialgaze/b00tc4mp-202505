@@ -1,7 +1,5 @@
 import { useState, useEffect } from 'react'
 
-import { Context } from './Context'
-
 import { Routes, Route, useNavigate, Navigate, useLocation } from 'react-router'
 
 import { Landing } from './view/Landing'
@@ -76,48 +74,46 @@ export const App = () => {
     }
     console.log('App -> render')
 
-    return <Context.Provider value={{ alert: handleAlert, confirm: handleConfirm }}>
-        <div className="p-2">
-            <Routes>
-                <Route path="/*" element={
-                    loggedIn === null ?
-                        <Loading />
+    return <div className="p-2">
+        <Routes>
+            <Route path="/*" element={
+                loggedIn === null ?
+                    <Loading />
+                    :
+                    loggedIn ?
+                        <Home onUserLoggedOut={handleUserLoggedOut} alert={handleAlert} confirm={handleConfirm} />
                         :
-                        loggedIn ?
-                            <Home onUserLoggedOut={handleUserLoggedOut} />
+                        location.pathname === '/' ?
+                            <Landing onRegisterClicked={handleRegisterClicked} onLoginClicked={handleLoginClicked} />
                             :
-                            location.pathname === '/' ?
-                                <Landing onRegisterClicked={handleRegisterClicked} onLoginClicked={handleLoginClicked} />
-                                :
-                                <Navigate to="/" />
-                } />
-
-                <Route path="/register" element={
-                    loggedIn === null ?
-                        <Loading />
-                        :
-                        loggedIn ?
                             <Navigate to="/" />
-                            :
-                            <Register onLoginClicked={handleLoginClicked} onUserRegistered={handleUserRegistered} />
-                } />
+            } />
 
-                <Route path="/login" element={
-                    loggedIn === null ?
-                        <Loading />
+            <Route path="/register" element={
+                loggedIn === null ?
+                    <Loading />
+                    :
+                    loggedIn ?
+                        <Navigate to="/" />
                         :
-                        loggedIn ?
-                            <Navigate to="/" />
-                            :
-                            <Login onRegisterClicked={handleRegisterClicked} onUserLoggedIn={handleUserLoggedIn} alert={handleAlert} />
-                } />
+                        <Register onLoginClicked={handleLoginClicked} onUserRegistered={handleUserRegistered} alert={handleAlert} />
+            } />
 
-                <Route path="*" element={<Navigate to="/" />} />
-            </Routes>
+            <Route path="/login" element={
+                loggedIn === null ?
+                    <Loading />
+                    :
+                    loggedIn ?
+                        <Navigate to="/" />
+                        :
+                        <Login onRegisterClicked={handleRegisterClicked} onUserLoggedIn={handleUserLoggedIn} alert={handleAlert} />
+            } />
 
-            {alertMessage && <Alert message={alertMessage} onAccepted={handleAlertAccepted} />}
+            <Route path="*" element={<Navigate to="/" />} />
+        </Routes>
 
-            {confirmMessage && <Confirm message={confirmMessage} onAccepted={handleConfirmAccepted} onCancelled={handleConfirmCancelled} />}
-        </div>
-    </Context.Provider>
+        {alertMessage && <Alert message={alertMessage} onAccepted={handleAlertAccepted} />}
+
+        {confirmMessage && <Confirm message={confirmMessage} onAccepted={handleConfirmAccepted} onCancelled={handleConfirmCancelled} />}
+    </div>
 }

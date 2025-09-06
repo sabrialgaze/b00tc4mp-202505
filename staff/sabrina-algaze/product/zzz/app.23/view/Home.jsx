@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Routes, Route, useNavigate, Link } from 'react-router'
 
-import { useRole, useContext } from '../hooks'
+import { useRole } from '../hooks'
 
 import { logic } from '../logic'
 
@@ -10,19 +10,17 @@ import { Posts } from './Posts'
 import { SavedPosts } from './SavedPosts'
 import { ArchivedPosts } from './ArchivedPosts'
 import { LikedPosts } from './LikedPosts'
-import { SearchPosts } from './SearchPosts'
+import { Search } from './Search'
 import { NewPost } from './NewPost'
 
 import { MagnifyingGlassIcon, ArrowLeftStartOnRectangleIcon } from '@heroicons/react/24/outline'
 import { HeartIcon as HeartIconSolid, BookmarkIcon as BookmarkIconSolid, ArchiveBoxIcon as ArchiveBoxIconSolid } from '@heroicons/react/24/solid'
 
 
-export const Home = ({ onUserLoggedOut }) => {
+export const Home = ({ onUserLoggedOut, alert, confirm }) => {
     const [name, setName] = useState(null)
 
     const role = useRole()
-
-    const { alert } = useContext
 
     const navigate = useNavigate()
 
@@ -77,12 +75,12 @@ export const Home = ({ onUserLoggedOut }) => {
         <div className="py-15">
             <p className="text-l text-center font-semibold mb-4">Hello, {name}! <img src={`/images/avatars/${role}.jpg`} /></p>
             <Routes>
-                <Route path="/" element={<Posts />} />
-                <Route path="/new-post" element={<NewPost onCreated={handleNewPostCreated} onCancelled={handleNewPostCancelClick} />} />
-                <Route path="/saved-posts" element={<SavedPosts />} />
-                <Route path="/archived-posts" element={<ArchivedPosts />} />
-                <Route path="/liked-posts" element={<LikedPosts />} />
-                <Route path="/search-posts" element={<SearchPosts />} />
+                <Route path="/" element={<Posts alert={alert} confirm={confirm} />} />
+                <Route path="/new-post" element={<NewPost onCreated={handleNewPostCreated} onCancelled={handleNewPostCancelClick} alert={alert} />} />
+                <Route path="/saved-posts" element={<SavedPosts alert={alert} confirm={confirm} />} />
+                <Route path="/archived-posts" element={<ArchivedPosts alert={alert} confirm={confirm} />} />
+                <Route path="/liked-posts" element={<LikedPosts alert={alert} confirm={confirm} />} />
+                <Route path="/search-posts" element={<Search alert={alert} confirm={confirm} />} />
             </Routes>
         </div>
 

@@ -1,4 +1,4 @@
-import { useRole, useContext } from '../hooks'
+import { useRole } from '../hooks'
 
 import { logic } from '../logic'
 import { convertISODateToFriendlyFormat } from './helper'
@@ -6,10 +6,8 @@ import { convertISODateToFriendlyFormat } from './helper'
 import { HeartIcon as HeartIconOutline, BookmarkIcon, ArchiveBoxIcon, ArchiveBoxXMarkIcon, TrashIcon } from '@heroicons/react/24/outline'
 import { HeartIcon as HeartIconSolid, BookmarkIcon as BookmarkIconSolid } from '@heroicons/react/24/solid'
 
-export const Post = ({ post, onPostRemoved, onPostLikeToggled, onPostSaveToggled, onPostArchiveToggled }) => {
+export const Post = ({ post, onPostRemoved, onPostLikeToggled, onPostSaveToggled, onPostArchiveToggled, alert, confirm }) => {
     const role = useRole()
-
-    const { alert, confirm } = useContext()
 
     const handleDeletePostClick = () => {
         confirm('Delete post?')

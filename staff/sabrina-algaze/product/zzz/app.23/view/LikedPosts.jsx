@@ -1,15 +1,11 @@
 import { useState, useEffect } from 'react'
 
-import { useContext } from '../hooks'
-
 import { Post } from './Post'
 
 import { logic } from '../logic'
 
-export const LikedPosts = () => {
+export const LikedPosts = ({ alert, confirm }) => {
     const [posts, setPosts] = useState([])
-
-    const { alert } = useContext()
 
     useEffect(() => {
         try {
@@ -105,7 +101,7 @@ export const LikedPosts = () => {
 
     return <div>
         <ul className="list-style-none p-0">
-            {posts.map(post => <Post key={post.id} post={post} onPostRemoved={handlePostRemoved} onPostLikeToggled={handlePostLikeToggled} onPostSaveToggled={handlePostSaveToggled} onPostArchiveToggled={handlePostArchiveToggled} />)}
+            {posts.map(post => <Post key={post.id} post={post} onPostRemoved={handlePostRemoved} onPostLikeToggled={handlePostLikeToggled} onPostSaveToggled={handlePostSaveToggled} onPostArchiveToggled={handlePostArchiveToggled} alert={alert} confirm={confirm} />)}
         </ul>
     </div>
 }

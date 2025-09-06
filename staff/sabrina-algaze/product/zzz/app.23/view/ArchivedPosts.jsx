@@ -1,19 +1,15 @@
 import { useState, useEffect } from 'react'
 
-import { useContext } from '../hooks'
-
 import { Post } from './Post'
 
 import { logic } from '../logic'
 
-export const LikedPosts = () => {
+export const ArchivedPosts = ({ alert, confirm }) => {
     const [posts, setPosts] = useState([])
-
-    const { alert } = useContext()
 
     useEffect(() => {
         try {
-            logic.getLikedPosts()
+            logic.getArchivedPosts()
                 .then(posts => {
                     setPosts(posts)
                 })
@@ -31,8 +27,8 @@ export const LikedPosts = () => {
 
     const handlePostRemoved = () => {
         try {
-            logic.getLikedPosts()
-                .then(posts => {
+            logic.getArchivedPosts()
+                .then((posts) => {
                     setPosts(posts)
                 })
                 .catch(error => {
@@ -49,8 +45,8 @@ export const LikedPosts = () => {
 
     const handlePostLikeToggled = () => {
         try {
-            logic.getLikedPosts()
-                .then(posts => {
+            logic.getArchivedPosts()
+                .then((posts) => {
                     setPosts(posts)
                 })
                 .catch(error => {
@@ -67,8 +63,8 @@ export const LikedPosts = () => {
 
     const handlePostSaveToggled = () => {
         try {
-            logic.getLikedPosts()
-                .then(posts => {
+            logic.getArchivedPosts()
+                .then((posts) => {
                     setPosts(posts)
                 })
                 .catch(error => {
@@ -85,8 +81,8 @@ export const LikedPosts = () => {
 
     const handlePostArchiveToggled = () => {
         try {
-            logic.getLikedPosts()
-                .then(posts => {
+            logic.getArchivedPosts()
+                .then((posts) => {
                     setPosts(posts)
                 })
                 .catch(error => {
@@ -101,11 +97,12 @@ export const LikedPosts = () => {
         }
     }
 
-    console.debug('LikedPosts -> render')
+    console.debug('ArchivedPosts -> render')
 
     return <div>
         <ul className="list-style-none p-0">
-            {posts.map(post => <Post key={post.id} post={post} onPostRemoved={handlePostRemoved} onPostLikeToggled={handlePostLikeToggled} onPostSaveToggled={handlePostSaveToggled} onPostArchiveToggled={handlePostArchiveToggled} />)}
+            {posts.map(post => <Post key={post.id} post={post} onPostRemoved={handlePostRemoved} onPostLikeToggled={handlePostLikeToggled} onPostSaveToggled={handlePostSaveToggled} onPostArchiveToggled={handlePostArchiveToggled} alert={alert} confirm={confirm} />)}
         </ul>
     </div>
 }
+
