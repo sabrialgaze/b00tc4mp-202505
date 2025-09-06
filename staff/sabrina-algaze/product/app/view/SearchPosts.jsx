@@ -11,9 +11,9 @@ export const SearchPosts = ({ alert, confirm }) => {
 
     const [posts, setPosts] = useState([])
 
-    useEffect(() => {
+    const loadPosts = () => {
         try {
-            query && logic.searchPosts(query)
+            logic.searchPosts(query)
                 .then(posts => {
                     setPosts(posts)
                 })
@@ -27,8 +27,9 @@ export const SearchPosts = ({ alert, confirm }) => {
 
             alert(error.message)
         }
-    }, [query])
+    }
 
+    useEffect(() => query && loadPosts(), [query])
 
     const handleSearchSubmit = event => {
         event.preventDefault()
@@ -38,80 +39,13 @@ export const SearchPosts = ({ alert, confirm }) => {
         setSearch({ q: query })
     }
 
-    const handlePostRemoved = () => {
-        try {
-            logic.searchPosts(query)
-                .then(posts => {
-                    setPosts(posts)
-                })
-                .catch(error => {
-                    console.error(error)
+    const handlePostRemoved = () => loadPosts()
 
-                    alert(error.message)
-                })
-        } catch (error) {
-            console.error(error)
+    const handlePostLikeToggled = () => loadPosts()
 
-            alert(error.message)
-        }
-    }
+    const handlePostSaveToggled = () => loadPosts()
 
-    const handlePostLikeToggled = () => {
-        try {
-            logic.searchPosts(query)
-
-                .then(posts => {
-                    setPosts(posts)
-                })
-                .catch(error => {
-                    console.error(error)
-
-                    alert(error.message)
-                })
-        } catch (error) {
-            console.error(error)
-
-            alert(error.message)
-        }
-    }
-
-    const handlePostSaveToggled = () => {
-        try {
-            logic.searchPosts(query)
-
-                .then(posts => {
-                    setPosts(posts)
-                })
-                .catch(error => {
-                    console.error(error)
-
-                    alert(error.message)
-                })
-        } catch (error) {
-            console.error(error)
-
-            alert(error.message)
-        }
-    }
-
-    const handlePostArchiveToggled = () => {
-        try {
-            logic.searchPosts(query)
-
-                .then(posts => {
-                    setPosts(posts)
-                })
-                .catch(error => {
-                    console.error(error)
-
-                    alert(error.message)
-                })
-        } catch (error) {
-            console.error(error)
-
-            alert(error.message)
-        }
-    }
+    const handlePostArchiveToggled = () => loadPosts()
 
     console.debug('Search -> render')
 

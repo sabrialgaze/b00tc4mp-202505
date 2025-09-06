@@ -11,25 +11,7 @@ export const LikedPosts = () => {
 
     const { alert } = useContext()
 
-    useEffect(() => {
-        try {
-            logic.getLikedPosts()
-                .then(posts => {
-                    setPosts(posts)
-                })
-                .catch(error => {
-                    console.error(error)
-
-                    alert(error.message)
-                })
-        } catch (error) {
-            console.error(error)
-
-            alert(error.message)
-        }
-    }, [])
-
-    const handlePostRemoved = () => {
+    const loadPosts = () => {
         try {
             logic.getLikedPosts()
                 .then(posts => {
@@ -47,59 +29,15 @@ export const LikedPosts = () => {
         }
     }
 
-    const handlePostLikeToggled = () => {
-        try {
-            logic.getLikedPosts()
-                .then(posts => {
-                    setPosts(posts)
-                })
-                .catch(error => {
-                    console.error(error)
+    useEffect(() => loadPosts(), [])
 
-                    alert(error.message)
-                })
-        } catch (error) {
-            console.error(error)
+    const handlePostRemoved = () => loadPosts()
 
-            alert(error.message)
-        }
-    }
+    const handlePostLikeToggled = () => loadPosts()
 
-    const handlePostSaveToggled = () => {
-        try {
-            logic.getLikedPosts()
-                .then(posts => {
-                    setPosts(posts)
-                })
-                .catch(error => {
-                    console.error(error)
+    const handlePostSaveToggled = () => loadPosts()
 
-                    alert(error.message)
-                })
-        } catch (error) {
-            console.error(error)
-
-            alert(error.message)
-        }
-    }
-
-    const handlePostArchiveToggled = () => {
-        try {
-            logic.getLikedPosts()
-                .then(posts => {
-                    setPosts(posts)
-                })
-                .catch(error => {
-                    console.error(error)
-
-                    alert(error.message)
-                })
-        } catch (error) {
-            console.error(error)
-
-            alert(error.message)
-        }
-    }
+    const handlePostArchiveToggled = () => loadPosts()
 
     console.debug('LikedPosts -> render')
 

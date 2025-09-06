@@ -11,7 +11,7 @@ export const ArchivedPosts = () => {
 
     const { alert } = useContext()
 
-    useEffect(() => {
+    const loadPosts = () => {
         try {
             logic.getArchivedPosts()
                 .then(posts => {
@@ -27,79 +27,17 @@ export const ArchivedPosts = () => {
 
             alert(error.message)
         }
-    }, [])
-
-    const handlePostRemoved = () => {
-        try {
-            logic.getArchivedPosts()
-                .then((posts) => {
-                    setPosts(posts)
-                })
-                .catch(error => {
-                    console.error(error)
-
-                    alert(error.message)
-                })
-        } catch (error) {
-            console.error(error)
-
-            alert(error.message)
-        }
     }
 
-    const handlePostLikeToggled = () => {
-        try {
-            logic.getArchivedPosts()
-                .then((posts) => {
-                    setPosts(posts)
-                })
-                .catch(error => {
-                    console.error(error)
+    useEffect(() => loadPosts(), [])
 
-                    alert(error.message)
-                })
-        } catch (error) {
-            console.error(error)
+    const handlePostRemoved = () => loadPosts()
 
-            alert(error.message)
-        }
-    }
+    const handlePostLikeToggled = () => loadPosts()
 
-    const handlePostSaveToggled = () => {
-        try {
-            logic.getArchivedPosts()
-                .then((posts) => {
-                    setPosts(posts)
-                })
-                .catch(error => {
-                    console.error(error)
+    const handlePostSaveToggled = () => loadPosts()
 
-                    alert(error.message)
-                })
-        } catch (error) {
-            console.error(error)
-
-            alert(error.message)
-        }
-    }
-
-    const handlePostArchiveToggled = () => {
-        try {
-            logic.getArchivedPosts()
-                .then((posts) => {
-                    setPosts(posts)
-                })
-                .catch(error => {
-                    console.error(error)
-
-                    alert(error.message)
-                })
-        } catch (error) {
-            console.error(error)
-
-            alert(error.message)
-        }
-    }
+    const handlePostArchiveToggled = () => loadPosts()
 
     console.debug('ArchivedPosts -> render')
 
