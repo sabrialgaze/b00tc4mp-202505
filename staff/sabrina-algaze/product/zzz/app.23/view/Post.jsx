@@ -68,23 +68,25 @@ export const Post = ({ post, onPostRemoved, onPostLikeToggled, onPostSaveToggled
     }
 
     const handleToggleArchivePostClick = () => {
-        if (confirm(`${post.archived ? 'Unarchive' : 'Archive'} post?`)) {
-            try {
-                logic.toggleArchivePost(post.id)
-                    .then(() => {
-                        onPostArchiveToggled()
-                    })
-                    .catch(error => {
-                        console.error(error)
+        confirm(`${post.archived ? 'Unarchive' : 'Archive'} post?`)
+            .then(ok => {
+                if (!ok) return
+                try {
+                    logic.toggleArchivePost(post.id)
+                        .then(() => {
+                            onPostArchiveToggled()
+                        })
+                        .catch(error => {
+                            console.error(error)
 
-                        alert(error.message)
-                    })
-            } catch (error) {
-                console.error(error)
+                            alert(error.message)
+                        })
+                } catch (error) {
+                    console.error(error)
 
-                alert(error.message)
-            }
-        }
+                    alert(error.message)
+                }
+            })
     }
 
     console.debug('Post -> render')
