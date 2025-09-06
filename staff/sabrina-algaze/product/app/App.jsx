@@ -15,6 +15,8 @@ import { logic } from './logic'
 export const App = () => {
     const [loggedIn, setLoggedIn] = useState(null)
     const [alertMessage, setAlertMessage] = useState(null)
+    const [confirmMessage, setConfirmMessage] = useState(null)
+    const [confirmResolver, setconfirmResolver] = useState(null)
 
     const navigate = useNavigate()
     const location = useLocation()
@@ -50,8 +52,26 @@ export const App = () => {
         navigate('/login')
     }
 
+    const handleAlert = message => setAlertMessage(message)
+
     const handleAlertAccepted = () => setAlertMessage(null)
 
+    const handleConfirm = message => {
+        setConfirmMessage(message)
+
+        return new Promise((resolve) => setconfirmResolver({ resolve }))
+    }
+
+    const handleConfirmAccepted = () => {
+        setConfirmMessage(null)
+
+        confirmResolver.resolve(true)
+    }
+    const handleConfirmCancelled = () => {
+        setConfirmMessage(null)
+
+        confirmResolver.resolve(false)
+    }
     console.log('App -> render')
 
     return <div className="p-2">
@@ -61,7 +81,7 @@ export const App = () => {
                     <Loading />
                     :
                     loggedIn ?
-                        <Home onUserLoggedOut={handleUserLoggedOut} alert={setAlertMessage} />
+                        <Home onUserLoggedOut={handleUserLoggedOut} alert={handleAlert} confirm={handleConfirm} />
                         :
                         location.pathname === '/' ?
                             <Landing onRegisterClicked={handleRegisterClicked} onLoginClicked={handleLoginClicked} />
@@ -76,7 +96,7 @@ export const App = () => {
                     loggedIn ?
                         <Navigate to="/" />
                         :
-                        <Register onLoginClicked={handleLoginClicked} onUserRegistered={handleUserRegistered} alert={setAlertMessage} />
+                        <Register onLoginClicked={handleLoginClicked} onUserRegistered={handleUserRegistered} alert={handleAlert} />
             } />
 
             <Route path="/login" element={
@@ -86,7 +106,7 @@ export const App = () => {
                     loggedIn ?
                         <Navigate to="/" />
                         :
-                        <Login onRegisterClicked={handleRegisterClicked} onUserLoggedIn={handleUserLoggedIn} alert={setAlertMessage} />
+                        <Login onRegisterClicked={handleRegisterClicked} onUserLoggedIn={handleUserLoggedIn} alert={handleAlert} />
             } />
 
             <Route path="*" element={<Navigate to="/" />} />
@@ -94,6 +114,6 @@ export const App = () => {
 
         {alertMessage && <Alert message={alertMessage} onAccepted={handleAlertAccepted} />}
 
-        {/* <Confirm /> */}
+        {confirmMessage && <Confirm message={confirmMessage} onAccepted={handleConfirmAccepted} onCancelled={handleConfirmCancelled} />}
     </div>
 }

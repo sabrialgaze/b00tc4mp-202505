@@ -1,5 +1,3 @@
-import { useState, useEffect } from 'react'
-
 import { useRole } from '../hooks'
 
 import { logic } from '../logic'
@@ -8,27 +6,29 @@ import { convertISODateToFriendlyFormat } from './helper'
 import { HeartIcon as HeartIconOutline, BookmarkIcon, ArchiveBoxIcon, ArchiveBoxXMarkIcon, TrashIcon } from '@heroicons/react/24/outline'
 import { HeartIcon as HeartIconSolid, BookmarkIcon as BookmarkIconSolid } from '@heroicons/react/24/solid'
 
-export const Post = ({ post, onPostRemoved, onPostLikeToggled, onPostSaveToggled, onPostArchiveToggled }) => {
+export const Post = ({ post, onPostRemoved, onPostLikeToggled, onPostSaveToggled, onPostArchiveToggled, alert, confirm }) => {
     const role = useRole()
 
     const handleDeletePostClick = () => {
-        if (confirm('Delete post?')) {
-            try {
-                logic.removePost(post.id)
-                    .then(() => {
-                        onPostRemoved()
-                    })
-                    .catch(error => {
-                        console.error(error)
+        confirm('Delete post?')
+            .then(ok => {
+                if (!ok) return
+                try {
+                    logic.removePost(post.id)
+                        .then(() => {
+                            onPostRemoved()
+                        })
+                        .catch(error => {
+                            console.error(error)
 
-                        alert(error.message)
-                    })
-            } catch (error) {
-                console.error(error)
+                            alert(error.message)
+                        })
+                } catch (error) {
+                    console.error(error)
 
-                alert(error.message)
-            }
-        }
+                    alert(error.message)
+                }
+            })
     }
 
     const handleToggleLikePostClick = () => {

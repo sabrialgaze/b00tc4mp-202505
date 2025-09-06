@@ -17,7 +17,7 @@ import { MagnifyingGlassIcon, ArrowLeftStartOnRectangleIcon } from '@heroicons/r
 import { HeartIcon as HeartIconSolid, BookmarkIcon as BookmarkIconSolid, ArchiveBoxIcon as ArchiveBoxIconSolid } from '@heroicons/react/24/solid'
 
 
-export const Home = ({ onUserLoggedOut, alert }) => {
+export const Home = ({ onUserLoggedOut, alert, confirm }) => {
     const [name, setName] = useState(null)
 
     const role = useRole()
@@ -75,12 +75,12 @@ export const Home = ({ onUserLoggedOut, alert }) => {
         <div className="py-15">
             <p className="text-l text-center font-semibold mb-4">Hello, {name}! <img src={`/images/avatars/${role}.jpg`} /></p>
             <Routes>
-                <Route path="/" element={<Posts alert={alert} />} />
+                <Route path="/" element={<Posts alert={alert} confirm={confirm} />} />
                 <Route path="/new-post" element={<NewPost onCreated={handleNewPostCreated} onCancelled={handleNewPostCancelClick} alert={alert} />} />
-                <Route path="/saved-posts" element={<SavedPosts alert={alert} />} />
-                <Route path="/archived-posts" element={<ArchivedPosts alert={alert} />} />
-                <Route path="/liked-posts" element={<LikedPosts alert={alert} />} />
-                <Route path="/search-posts" element={<Search alert={alert} />} />
+                <Route path="/saved-posts" element={<SavedPosts alert={alert} confirm={confirm} />} />
+                <Route path="/archived-posts" element={<ArchivedPosts alert={alert} confirm={confirm} />} />
+                <Route path="/liked-posts" element={<LikedPosts alert={alert} confirm={confirm} />} />
+                <Route path="/search-posts" element={<Search alert={alert} confirm={confirm} />} />
             </Routes>
         </div>
 

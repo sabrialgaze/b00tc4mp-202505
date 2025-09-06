@@ -5,7 +5,7 @@ import { Post } from './Post'
 
 import { logic } from '../logic'
 
-export const Search = ({ alert }) => {
+export const Search = ({ alert, confirm }) => {
     const [search, setSearch] = useSearchParams()
     const query = search.get('q') || ''
 
@@ -123,7 +123,7 @@ export const Search = ({ alert }) => {
         </form>
 
         <ul className="list-style-none p-0">
-            {posts.map(post => <Post key={post.id} post={post} onPostRemoved={handlePostRemoved} onPostLikeToggled={handlePostLikeToggled} onPostSaveToggled={handlePostSaveToggled} onPostArchiveToggled={handlePostArchiveToggled} />)}
+            {posts.map(post => <Post key={post.id} post={post} onPostRemoved={handlePostRemoved} onPostLikeToggled={handlePostLikeToggled} onPostSaveToggled={handlePostSaveToggled} onPostArchiveToggled={handlePostArchiveToggled} alert={alert} confirm={confirm} />)}
         </ul>
     </div>
 }
