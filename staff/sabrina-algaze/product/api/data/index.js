@@ -1,34 +1,63 @@
-import { readFile, writeFile } from 'fs/promises'
-import { SystemError } from 'com'
+import mongoose, { Types } from 'mongoose'
+const { ObjectId } = Types
 
-export const data = {
-    loadUsers() {
-        return readFile('./data/users.json', 'utf8')
-            .catch(error => { throw new SystemError('file read error') })
-            .then(json => JSON.parse(json))
-            .catch(error => { throw new SystemError('json parse error') })
+
+export const User = mongoose.model('User', {
+    name: {
+        type: String,
+        required: true
     },
-
-    saveUsers(users) {
-        return writeFile('./data/users.json', JSON.stringify(users))
-            .catch(error => { throw new SystemError('file write error') })
-            .then(() => { })
+    email: {
+        type: String,
+        required: true,
+        unique: true
     },
-
-    loadPosts() {
-        return readFile('./data/posts.json', 'utf8')
-            .catch(error => { throw new SystemError('file read error') })
-            .then(json => JSON.parse(json))
-            .catch(error => { throw new SystemError('json parse error') })
+    username: {
+        type: String,
+        required: true,
+        unique: true
     },
-
-    savePosts(posts) {
-        return writeFile('./data/posts.json', JSON.stringify(posts))
-            .catch(error => { throw new SystemError('file write error') })
-            .then(() => { })
+    password: {
+        type: String,
+        required: true
+    },
+    saved: [{
+        type: ObjectId,
+        ref: 'Post'
+    }],
+    role: {
+        type: String,
+        required: true,
+        enum: ['regular', 'moderator', 'administrator'],
+        default: 'regular'
     }
+})
 
-}
-
-
-
+export const Post = mongoose.model('Post', {
+    author: {
+        type: ObjectId,
+        required: true,
+        ref: 'User'
+    },
+    image: {
+        type: String,
+        required: true
+    },
+    text: {
+        type: String,
+        required: true
+    },
+    date: {
+        type: Date,
+        required: true,
+        default: Date.now
+    },
+    likes: [{
+        type: ObjectId,
+        ref: 'User'
+    }],
+    archived: {
+        type: Boolean,
+        default: false
+    }
+})

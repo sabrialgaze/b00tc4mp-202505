@@ -1,4 +1,4 @@
-import { User, Post } from '../data/models.js'
+import { User, Post } from '../data/index.js'
 import { validate, NotFoundError } from 'com'
 
 export const getArchivedPosts = userId => {

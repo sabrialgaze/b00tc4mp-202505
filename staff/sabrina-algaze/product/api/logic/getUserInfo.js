@@ -1,5 +1,5 @@
 import { validate, NotFoundError, SystemError } from 'com'
-import { User } from '../data/models.js'
+import { User } from '../data/index.js'
 
 export const getUserInfo = userId => {
     validate.userId(userId)

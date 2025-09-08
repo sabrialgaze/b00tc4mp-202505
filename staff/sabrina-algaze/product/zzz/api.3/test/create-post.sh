@@ -1,0 +1,1 @@
+curl  -X POST -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2ODliM2Q5ZDVmOTY4OTFiNjFhOTBiMjMiLCJpYXQiOjE3NTUwMDUwNDR9.5U-O9Eey44CElVK3OJ4ckgLgY-fUg54fZP90CgVtuk4' -H 'Content-Type: application/json' -d '{"image":"https://media.giphy.com/media/v1/giphy/gif", "text": "last test"}' http://localhost:8080/posts -v

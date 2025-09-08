@@ -1,5 +1,5 @@
 import { validate, NotFoundError, SystemError } from 'com'
-import { User, Post } from '../data/models.js'
+import { User, Post } from '../data/index.js'
 
 export const toggleSavePost = (userId, postId) => {
     validate.userId(userId)
