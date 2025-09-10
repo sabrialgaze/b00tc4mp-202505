@@ -18,14 +18,10 @@ describe('authenticateUser', () => {
         const password = 'pepito123'
 
         return bcrypt.hash(password, 10)
-            .then(hash => {
-                return User.create({ name, email, username, password: hash })
-            })
-            .then(() => {
-                return authenticateUser(username, password)
-            })
+            .then(hash => User.create({ name, email, username, password: hash }))
+            .then(() => authenticateUser(username, password))
             .then(({ id }) => {
-                return User.findOne({ username })
+                User.findOne({ username })
                     .then(user => {
                         expect(user).to.exist
 
@@ -38,12 +34,15 @@ describe('authenticateUser', () => {
         const username = 'pepitogrillo'
         const password = 'pepito123'
 
-        return authenticateUser(username, password)
-            .catch(error => {
-                expect(error).to.exist
+        let caughtError = null
 
-                expect(error).to.be.instanceOf(NotFoundError)
-                expect(error.message).to.equal('user not found')
+        return authenticateUser(username, password)
+            .catch(error => caughtError = error)
+            .finally(() => {
+                expect(caughtError).to.exist
+
+                expect(caughtError).to.be.instanceOf(NotFoundError)
+                expect(caughtError.message).to.equal('user not found')
             })
     })
 
@@ -53,14 +52,17 @@ describe('authenticateUser', () => {
         const username = 'pepitogrillo'
         const password = 'pepito123'
 
+        let caughtError = null
+
         return bcrypt.hash(password, 10)
             .then(hash => User.create({ name, email, username, password: hash }))
             .then(() => authenticateUser(username, 'pepito1'))
-            .catch(error => {
-                expect(error).to.exist
+            .catch(error => caughtError = error)
+            .finally(() => {
+                expect(caughtError).to.exist
 
-                expect(error).to.be.instanceOf(CredentialsError)
-                expect(error.message).to.equal('wrong password')
+                expect(caughtError).to.be.instanceOf(CredentialsError)
+                expect(caughtError.message).to.equal('wrong password')
             })
     })
 

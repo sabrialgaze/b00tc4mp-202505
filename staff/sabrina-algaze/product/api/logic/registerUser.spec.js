@@ -37,14 +37,17 @@ describe('registerUser', () => {
         const username = 'pepitogrillo'
         const password = 'pepito123'
 
+        let caughtError = null
+
         return bcrypt.hash(password, 10)
             .then(hash => User.create({ name, email, username, password: hash }))
             .then(() => registerUser(name, email, username, password))
-            .catch(error => {
-                expect(error).to.exist
+            .catch(error => caughtError = error)
+            .finally(() => {
+                expect(caughtError).to.exist
 
-                expect(error).to.be.instanceOf(DuplicityError)
-                expect(error.message).to.equal('user already exists')
+                expect(caughtError).to.be.instanceOf(DuplicityError)
+                expect(caughtError.message).to.equal('user already exists')
             })
     })
 

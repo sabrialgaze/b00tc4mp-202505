@@ -7,7 +7,8 @@
     "start": "node --env-file .env .",
     "inspect": "node --env-file .env --inspect-brk .",
     "watch": "node --env-file .env --watch .",
-    "test": "mocha --node-option env-file=.env logic/*.spec.js"
+    "test": "mocha --node-option env-file=.env logic/*.spec.js",
+    "test-coverage": "c8 --reporter=text --reporter=html --include=logic/*.js --exclude=logic/*.spec.js mocha --node-option env-file=.env logic/*.spec.js"
   },
   "keywords": [],
   "author": "",
@@ -22,6 +23,7 @@
     "mongoose": "^8.17.0"
   },
   "devDependencies": {
+    "c8": "^10.1.3",
     "chai": "^6.0.1",
     "mocha": "^11.7.2"
   }
