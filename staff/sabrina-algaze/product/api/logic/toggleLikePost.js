@@ -11,24 +11,6 @@ export const toggleLikePost = (userId, postId) => {
         .then(user => {
             if (!user) throw new NotFoundError('user not found')
 
-            // return Post.findById(postId)
-            //     .catch(error => { throw new SystemError('mongo error') })
-            //     .then(post => {
-            //         if (!post) throw new NotFoundError('post not found')
-
-            //         const { likes } = post
-
-            //         const index = likes.findIndex(likeUserId => likeUserId.toString() === userId)
-
-            //         if (index < 0) likes.push(userId)
-
-            //         else likes.splice(index, 1)
-
-            //         return post.save()
-            //             .catch(error => { throw new SystemError('mongo error') })
-            //     })
-            //     .then(() => { })
-
             return Post.updateOne(
                 { _id: postId },
                 { $addToSet: { likes: userId } }
