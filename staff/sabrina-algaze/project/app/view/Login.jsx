@@ -37,7 +37,7 @@ export const Login = ({ onRegisterClicked, onUserLoggedIn }) => {
     console.debug('Login -> render')
 
     return <div>
-        <h1 className="text-3xl font-semibold bg-gray-200 p-1 mb-2">App</h1>
+        <h1 className="text-3xl font-semibold bg-gray-200 p-1 mb-2">Count.in</h1>
         <h2 className="text-xl text-center mb-2">Login</h2>
         <form className="flex flex-col gap-1" onSubmit={handleLoginSubmit}>
             <div className="flex flex-col">

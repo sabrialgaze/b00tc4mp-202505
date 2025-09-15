@@ -39,7 +39,7 @@ export const Register = ({ onLoginClicked, onUserRegistered }) => {
     console.debug('Register -> render')
 
     return <div>
-        <h1 className="text-3xl font-semibold bg-gray-200 p-1 mb-2">App</h1>
+        <h1 className="text-3xl font-semibold bg-gray-200 p-1 mb-2">Count.in</h1>
         <h2 className="text-xl text-center mb-2">Register</h2>
         <form className="flex flex-col gap-1" onSubmit={handleRegisterSubmit}>
             <div className="flex flex-col">

@@ -6,9 +6,9 @@ export const Landing = ({ onRegisterClicked, onLoginClicked }) => {
     }
 
     const handleLoginClick = event => {
-        // event.preventDefault()
+        event.preventDefault()
 
-        // onLoginClicked()
+        onLoginClicked()
     }
 
     console.debug('Landing -> render')
