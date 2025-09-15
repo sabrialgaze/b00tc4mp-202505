@@ -72,6 +72,31 @@ describe('toggleSavePost', () => {
                 expect(caughtError.message).to.equal('user not found')
             })
     })
+
+    it('fails to toggle saving a non-existent post', () => {
+        const name = 'Pepito Grillo'
+        const email = 'pepito@grillo.com'
+        const username = 'pepitogrillo'
+        const password = 'pepito123'
+
+        let userId = null
+        let postId = '123123123123123132123123'
+
+        let caughtError = null
+
+        return bcrypt.hash(password, 10)
+            .then(hash => User.create({ name, email, username, password: hash }))
+            .then(user => userId = user.id)
+            .then(() => toggleSavePost(userId, postId))
+            .catch(error => caughtError = error)
+            .finally(() => {
+                expect(caughtError).to.exist
+
+                expect(caughtError).to.be.instanceOf(NotFoundError)
+                expect(caughtError.message).to.equal('post not found')
+            })
+    })
+
     afterEach(() => Promise.all([User.deleteMany(), Post.deleteMany()]))
 
     after(() => disconnect())

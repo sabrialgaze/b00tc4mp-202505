@@ -2,16 +2,16 @@ import { connect, disconnect } from 'mongoose'
 import { expect } from 'chai'
 import bcrypt from 'bcryptjs'
 
-import { getPosts } from './getPosts.js'
+import { searchPosts } from './searchPosts.js'
 import { User, Post } from '../data/index.js'
 import { NotFoundError } from 'com'
 
-describe('getPosts', () => {
+describe('searchPosts', () => {
     before(() => connect(process.env.MONGO_URI_TEST))
 
     beforeEach(() => Promise.all([User.deleteMany(), Post.deleteMany()]))
 
-    it('gets all posts as an existing user', () => {
+    it('searches posts as an existing user', () => {
         const name = 'Pepito Grillo'
         const email = 'pepito@grillo.com'
         const username = 'pepitogrillo'
@@ -19,37 +19,35 @@ describe('getPosts', () => {
 
         let userId = null
         let postId = null
+
         const image = 'https://image.com/123'
         const text = 'hello world'
+
+        const query = 'hello'
 
         return bcrypt.hash(password, 10)
             .then(hash => User.create({ name, email, username, password: hash }))
             .then(user => userId = user.id)
             .then(() => Post.create({ author: userId, image, text }))
             .then(post => postId = post.id)
-            .then(() => getPosts(userId))
+            .then(() => searchPosts(userId, query))
             .then(posts => {
                 expect(posts).to.exist
-                expect(posts).to.be.an('array')
                 expect(posts).to.be.instanceOf(Array)
 
                 const post = posts[0]
 
-                expect(post.id).to.equal(postId)
-                expect(post.own).to.be.true
-                expect(post.liked).to.be.false
-                expect(post.likesCount).to.equal(0)
-                expect(post.saved).to.be.false
-                expect(post.archived).to.be.false
+                expect(post.text).to.include(query)
             })
     })
 
-    it('fails to get posts with non-existing user', () => {
+    it('fails to search posts with a non-existing user', () => {
         const userId = '123123123123123132123123'
+        const query = 'hello'
 
         let caughtError = null
 
-        return getPosts(userId)
+        return searchPosts(userId, query)
             .catch(error => caughtError = error)
             .finally(() => {
                 expect(caughtError).to.exist

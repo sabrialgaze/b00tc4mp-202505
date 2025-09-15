@@ -2,16 +2,17 @@ import { connect, disconnect } from 'mongoose'
 import { expect } from 'chai'
 import bcrypt from 'bcryptjs'
 
-import { getPosts } from './getPosts.js'
+import { toggleArchivePost } from './toggleArchivePost.js'
+import { getArchivedPosts } from './getArchivedPosts.js'
 import { User, Post } from '../data/index.js'
 import { NotFoundError } from 'com'
 
-describe('getPosts', () => {
+describe('getArchivedPosts', () => {
     before(() => connect(process.env.MONGO_URI_TEST))
 
     beforeEach(() => Promise.all([User.deleteMany(), Post.deleteMany()]))
 
-    it('gets all posts as an existing user', () => {
+    it('gets archived posts as an existing user', () => {
         const name = 'Pepito Grillo'
         const email = 'pepito@grillo.com'
         const username = 'pepitogrillo'
@@ -27,10 +28,11 @@ describe('getPosts', () => {
             .then(user => userId = user.id)
             .then(() => Post.create({ author: userId, image, text }))
             .then(post => postId = post.id)
-            .then(() => getPosts(userId))
+            .then(() => toggleArchivePost(userId, postId))
+            .then(result => expect(result).to.not.exist)
+            .then(() => getArchivedPosts(userId))
             .then(posts => {
                 expect(posts).to.exist
-                expect(posts).to.be.an('array')
                 expect(posts).to.be.instanceOf(Array)
 
                 const post = posts[0]
@@ -40,16 +42,16 @@ describe('getPosts', () => {
                 expect(post.liked).to.be.false
                 expect(post.likesCount).to.equal(0)
                 expect(post.saved).to.be.false
-                expect(post.archived).to.be.false
+                expect(post.archived).to.be.true
             })
     })
 
-    it('fails to get posts with non-existing user', () => {
+    it('fails to get archived posts with a non-existing user', () => {
         const userId = '123123123123123132123123'
 
         let caughtError = null
 
-        return getPosts(userId)
+        return getArchivedPosts(userId)
             .catch(error => caughtError = error)
             .finally(() => {
                 expect(caughtError).to.exist
