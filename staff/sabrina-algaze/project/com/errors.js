@@ -40,6 +40,12 @@ export class SessionError extends Error {
     }
 }
 
+export class RolePermissionError extends Error {
+    constructor(message) {
+        super(message)
+    }
+}
+
 export const errors = {
     ValidationError,
     DuplicityError,
@@ -47,5 +53,6 @@ export const errors = {
     CredentialsError,
     OwnershipError,
     SystemError,
-    SessionError
+    SessionError,
+    RolePermissionError
 }

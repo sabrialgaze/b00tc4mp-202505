@@ -13,27 +13,29 @@ Built with real users in mind, the app aims to streamline everyday team manageme
 ### Use Cases
 
 Player
-- register & login & logout
+- register, login and logout
+- declare payment for a month or daily training  
+- view confirmed payments (current and past)
 - view upcoming trainings (by group)
-- confirm attendance to a training (only if monthly payment is up to date)
+- confirm attendance to a training (only if monthly/ daily payment is up to date)
 - confirm attendance to a training outside their main group (as guest) 
 - view list of players' attendance to a training
 - view attendance history
 
 Coach
-- create training session (by date & group)  
+- create, edit and remove group 
+- add / remove players to a group
+- view list of players from a group 
 - edit / remove training session  
 - view attendance list per session  
-- view attendance history per player  
-- mark player as "paid" or "unpaid" for a given month  
-- view all players' payment status (by month / group) 
-- deactivate player (when she is no longer part of the trainings)
+- view all players' payment status
 
 ### Future Features
 
-
 Coach
-- Attendance statistics dashboard (per player / group / month)
+- mark player as "paid" or "unpaid" for a given month 
+- view attendance history per player 
+- attendance statistics dashboard (per player / group / month)
 
 
 ### UI Design
@@ -62,7 +64,6 @@ User
 - id (UUID, required)
 - name (string, required)
 - email (string, required)
-- username (string, required)
 - password (string, required)
 - role (string, required, enum player|coach)
 
@@ -83,7 +84,7 @@ Training
 
 Payment
 - id (UUID, required)
-- player (UUID, User.id)
+- player (UUID, User.id, required)
 - service (string, required, enum monthly|daily)
 - date (Date, required)
 
