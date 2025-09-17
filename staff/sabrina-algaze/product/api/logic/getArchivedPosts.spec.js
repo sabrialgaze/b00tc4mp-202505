@@ -26,10 +26,8 @@ describe('getArchivedPosts', () => {
         return bcrypt.hash(password, 10)
             .then(hash => User.create({ name, email, username, password: hash }))
             .then(user => userId = user.id)
-            .then(() => Post.create({ author: userId, image, text }))
+            .then(() => Post.create({ author: userId, image, text, archived: true }))
             .then(post => postId = post.id)
-            .then(() => toggleArchivePost(userId, postId))
-            .then(result => expect(result).to.not.exist)
             .then(() => getArchivedPosts(userId))
             .then(posts => {
                 expect(posts).to.exist

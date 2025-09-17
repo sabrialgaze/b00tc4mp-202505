@@ -11,7 +11,7 @@ describe('searchPosts', () => {
 
     beforeEach(() => Promise.all([User.deleteMany(), Post.deleteMany()]))
 
-    it('searches posts as an existing user', () => {
+    it('searches posts with an existing user', () => {
         const name = 'Pepito Grillo'
         const email = 'pepito@grillo.com'
         const username = 'pepitogrillo'
@@ -34,10 +34,38 @@ describe('searchPosts', () => {
             .then(posts => {
                 expect(posts).to.exist
                 expect(posts).to.be.instanceOf(Array)
+                expect(posts).to.have.lengthOf(1)
 
                 const post = posts[0]
 
                 expect(post.text).to.include(query)
+            })
+    })
+
+    it('searches posts with an existing user, but not matching results', () => {
+        const name = 'Pepito Grillo'
+        const email = 'pepito@grillo.com'
+        const username = 'pepitogrillo'
+        const password = 'pepito123'
+
+        let userId = null
+        let postId = null
+
+        const image = 'https://image.com/123'
+        const text = 'hello world'
+
+        const query = 'hola'
+
+        return bcrypt.hash(password, 10)
+            .then(hash => User.create({ name, email, username, password: hash }))
+            .then(user => userId = user.id)
+            .then(() => Post.create({ author: userId, image, text }))
+            .then(post => postId = post.id)
+            .then(() => searchPosts(userId, query))
+            .then(posts => {
+                expect(posts).to.exist
+                expect(posts).to.be.instanceOf(Array)
+                expect(posts).to.have.lengthOf(0)
             })
     })
 

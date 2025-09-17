@@ -24,12 +24,18 @@ describe('getSavedPosts', () => {
         const text = 'hello world'
 
         return bcrypt.hash(password, 10)
-            .then(hash => User.create({ name, email, username, password: hash }))
-            .then(user => userId = user.id)
-            .then(() => Post.create({ author: userId, image, text }))
-            .then(post => postId = post.id)
-            .then(() => toggleSavePost(userId, postId))
-            .then(result => expect(result).to.not.exist)
+            .then(hash => {
+                const user = new User({ name, email, username, password: hash })
+                const post = new Post({ author: user.id, image, text })
+
+                user.saved.push(post.id)
+
+                return Promise.all([user.save(), post.save()])
+            })
+            .then(([user, post]) => {
+                userId = user.id
+                postId = post.id
+            })
             .then(() => getSavedPosts(userId))
             .then(posts => {
                 expect(posts).to.exist

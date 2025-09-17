@@ -2,7 +2,6 @@ import { connect, disconnect } from 'mongoose'
 import { expect } from 'chai'
 import bcrypt from 'bcryptjs'
 
-import { toggleLikePost } from './toggleLikePost.js'
 import { getLikedPosts } from './getLikedPosts.js'
 import { User, Post } from '../data/index.js'
 import { NotFoundError } from 'com'
@@ -26,10 +25,8 @@ describe('getLikedPosts', () => {
         return bcrypt.hash(password, 10)
             .then(hash => User.create({ name, email, username, password: hash }))
             .then(user => userId = user.id)
-            .then(() => Post.create({ author: userId, image, text }))
+            .then(() => Post.create({ author: userId, image, text, likes: [userId] }))
             .then(post => postId = post.id)
-            .then(() => toggleLikePost(userId, postId))
-            .then(result => expect(result).to.not.exist)
             .then(() => getLikedPosts(userId))
             .then(posts => {
                 expect(posts).to.exist
