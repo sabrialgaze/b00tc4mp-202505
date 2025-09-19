@@ -2,16 +2,16 @@ import { connect, disconnect } from 'mongoose'
 import { expect } from 'chai'
 import bcrypt from 'bcryptjs'
 
-import { createGroup } from './createGroup.js'
+import { deleteGroup } from './deleteGroup.js'
 import { User, Group } from '../data/index.js'
 import { RoleError, NotFoundError } from 'com'
 
-describe('createPost', () => {
+describe('deleteGroup', () => {
     before(() => connect(process.env.MONGO_URI_TEST))
 
     beforeEach(() => Promise.all([User.deleteMany(), Group.deleteMany()]))
 
-    it('creates a group with a coach role user', () => {
+    it('deletes a group with a coach role user', () => {
         const name = 'Pepito Grillo'
         const email = 'pepito@grillo.com'
         const password = 'pepito123'
@@ -23,30 +23,31 @@ describe('createPost', () => {
         const location = 'Joan Miro'
 
         let userId = null
+        let groupId = null
 
         return bcrypt.hash(password, 10)
             .then(hash => User.create({ name, email, password: hash, role }))
-            .then(user => userId = user.id
-            )
-            .then(() => createGroup(userId, groupName, day, time, location))
+            .then(user => userId = user.id)
+            .then(() => Group.create({ owner: userId, name: groupName, day, time, location }))
+            .then(group => groupId = group.id)
+            .then(() => deleteGroup(userId, groupId))
             .then(result => expect(result).to.not.exist)
             .then(() => Group.findOne())
             .then(group => {
-                expect(group).to.exist
-                expect(group.name).to.equal(groupName)
-                expect(group.day).to.equal(day)
-                expect(group.time).to.equal(time)
-                expect(group.location).to.equal(location)
-                expect(group.owner.toString()).to.equal(userId)
-                expect(group.players).to.be.an('array').that.is.empty
+                expect(group).to.not.exist
             })
     })
 
-    it('fails to create a group with a player role user', () => {
+    it('fails to delete a group with a player role user', () => {
         const name = 'Pepito Grillo'
         const email = 'pepito@grillo.com'
         const password = 'pepito123'
-        const role = 'player'
+        const role = 'coach'
+
+        const playerName = 'Peter Pan'
+        const playerEmail = 'peter@pan.com'
+        const playerPassword = 'peter123'
+        const playerRole = 'player'
 
         const groupName = 'Miercoles'
         const day = 'wednesday'
@@ -54,12 +55,19 @@ describe('createPost', () => {
         const location = 'Joan Miro'
 
         let userId = null
+        let groupId = null
+        let playerId = null
         let caughtError = null
 
         return bcrypt.hash(password, 10)
             .then(hash => User.create({ name, email, password: hash, role }))
             .then(user => userId = user.id)
-            .then(() => createGroup(userId, groupName, day, time, location))
+            .then(() => Group.create({ owner: userId, name: groupName, day, time, location }))
+            .then(group => groupId = group.id)
+            .then(() => bcrypt.hash(playerPassword, 10)
+                .then(hash => User.create({ name: playerName, email: playerEmail, password: hash, role: playerRole })))
+            .then(player => playerId = player.id)
+            .then(() => deleteGroup(playerId, groupId))
             .catch(error => caughtError = error)
             .finally(() => {
                 expect(caughtError).to.exist
@@ -68,17 +76,28 @@ describe('createPost', () => {
             })
     })
 
-    it('fails to create a group with a non-existent user', () => {
+    it('fails to delete a group with a non-existent user', () => {
+        const name = 'Pepito Grillo'
+        const email = 'pepito@grillo.com'
+        const password = 'pepito123'
+        const role = 'coach'
+
         const groupName = 'Miercoles'
         const day = 'wednesday'
         const time = '20:00'
         const location = 'Joan Miro'
 
-        const userId = '123123123123123123123123'
-
+        let userId = null
+        let groupId = null
+        const failedUserId = '123123123123123123123123'
         let caughtError = null
 
-        return createGroup(userId, groupName, day, time, location)
+        return bcrypt.hash(password, 10)
+            .then(hash => User.create({ name, email, password: hash, role }))
+            .then(user => userId = user.id)
+            .then(() => Group.create({ owner: userId, name: groupName, day, time, location }))
+            .then(group => groupId = group.id)
+            .then(() => deleteGroup(failedUserId, groupId))
             .catch(error => caughtError = error)
             .finally(() => {
                 expect(caughtError).to.exist

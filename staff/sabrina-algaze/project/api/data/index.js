@@ -24,6 +24,12 @@ export const User = mongoose.model('User', {
 })
 
 export const Group = mongoose.model('Group', {
+    owner: {
+        type: ObjectId,
+        ref: 'User',
+        required: true
+    },
+
     name: {
         type: String,
         required: true
@@ -32,22 +38,27 @@ export const Group = mongoose.model('Group', {
         type: ObjectId,
         ref: 'User'
     }],
-    schedule: {
-        dayOfWeek: {
-            type: String,
-            required: true,
-            enum: ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
-        },
-        time: {
-            type: String,
-            required: true,
-            format: 'HH:mm'
-        }
+
+    day: {
+        type: String,
+        required: true,
+        enum: ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
     },
+
+    time: {
+        type: String,
+        required: true,
+        format: 'HH:mm'
+    },
+
+    location: {
+        type: String,
+        required: true
+    },
+
     coach: {
         type: ObjectId,
-        ref: 'User',
-        required: true
+        ref: 'User'
     }
 })
 

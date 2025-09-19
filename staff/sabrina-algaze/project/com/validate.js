@@ -32,16 +32,20 @@ export const validate = {
         if (typeof groupId !== 'string') throw new ValidationError('invalid groupId type')
     },
 
-    dayOfWeek(dayOfWeek) {
-        if (typeof dayOfWeek !== 'string') throw new ValidationError('invalid dayOfWeek type')
+    day(day) {
+        if (typeof day !== 'string') throw new ValidationError('invalid dayOfWeek type')
     },
 
     time(time) {
         if (typeof time !== 'string') throw new ValidationError('invalid time type')
     },
 
-    coachId(coachId) {
-        if (typeof coachId !== 'string') throw new ValidationError('invalid coachId type')
+    location(location) {
+        if (typeof location !== 'string') throw new ValidationError('invalid location type')
+    },
+
+    updates(updates) {
+        if (typeof updates !== 'object') throw new ValidationError('invalid updates type')
     },
 
     query(query) {

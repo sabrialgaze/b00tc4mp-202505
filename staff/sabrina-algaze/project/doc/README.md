@@ -71,7 +71,9 @@ Group
 - id (UUID, required)
 - name (string, required)
 - players (UUID, [User.id])
-- date (Date, required)
+- day (string, required, enum monday|tuesday|wednesday|thursday|friday|saturday|sunday)
+- time (string, required, pattern HH:mm)
+- location (string, required)
 - coach (UUID, User.id, required)
 
 Training

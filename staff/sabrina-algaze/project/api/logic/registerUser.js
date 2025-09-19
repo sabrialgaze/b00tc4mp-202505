@@ -1,6 +1,6 @@
 import { validate, DuplicityError, SystemError } from 'com'
 import bcrypt from 'bcryptjs'
-import { User } from '../data/models.js'
+import { User } from '../data/index.js'
 
 export const registerUser = (name, email, password) => {
     validate.name(name)

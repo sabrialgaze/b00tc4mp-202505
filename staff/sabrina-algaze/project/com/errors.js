@@ -40,7 +40,7 @@ export class SessionError extends Error {
     }
 }
 
-export class RolePermissionError extends Error {
+export class RoleError extends Error {
     constructor(message) {
         super(message)
     }
@@ -54,5 +54,5 @@ export const errors = {
     OwnershipError,
     SystemError,
     SessionError,
-    RolePermissionError
+    RoleError
 }

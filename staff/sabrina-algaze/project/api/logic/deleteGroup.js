@@ -1,12 +1,9 @@
 import { validate, NotFoundError, RoleError, SystemError } from 'com'
 import { Group, User } from '../data/index.js'
 
-export const createGroup = (userId, name, day, time, location) => {
+export const deleteGroup = (userId, groupId) => {
     validate.userId(userId)
-    validate.name(name)
-    validate.day(day)
-    validate.time(time)
-    validate.location(location)
+    validate.groupId(groupId)
 
     return User.findById(userId)
         .catch(error => { throw new SystemError('mongo error') })
@@ -14,14 +11,10 @@ export const createGroup = (userId, name, day, time, location) => {
             if (!user) throw new NotFoundError('user not found')
             if (user.role !== 'coach') throw new RoleError('user role is not coach')
 
-            return Group.create({
-                owner: userId,
-                name,
-                day,
-                time,
-                location
-            })
+            return Group.findByIdAndDelete(groupId)
                 .catch(error => { throw new SystemError('mongo error') })
-                .then(group => { })
+                .then(group => {
+                    if (!group) throw new NotFoundError('group not found')
+                })
         })
 }
