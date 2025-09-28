@@ -1,7 +1,7 @@
 import { validate, NotFoundError, RoleError, SystemError } from 'com'
 import { User, Group } from '../data/index.js'
 
-export const getGroupsForCoach = (coachId) => {
+export const getGroupsForCoach = coachId => {
     validate.userId(coachId)
 
     return User.findById(coachId)
