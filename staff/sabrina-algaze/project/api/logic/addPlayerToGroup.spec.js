@@ -22,24 +22,24 @@ describe('addPlayerToGroup', () => {
         const playerPassword = 'peter123'
         const playerRole = 'player'
 
-        const groupName = 'Grupo Miercoles'
+        const groupName = 'Miercoles'
         const day = 'wednesday'
         const time = '20:00'
         const location = 'Joan Miro'
 
-        let userId = null
+        let coachId = null
         let playerUserId = null
         let groupId = null
 
         return bcrypt.hash(password, 10)
             .then(hash => User.create({ name, email, password: hash, role }))
-            .then(user => userId = user.id)
+            .then(coach => coachId = coach.id)
             .then(() => bcrypt.hash(playerPassword, 10)
                 .then(hash => User.create({ name: playerName, email: playerEmail, password: hash, role: playerRole }))
                 .then(player => playerUserId = player.id))
-            .then(() => Group.create({ owner: userId, name: groupName, day, time, location }))
+            .then(() => Group.create({ owner: coachId, name: groupName, day, time, location }))
             .then(group => groupId = group.id)
-            .then(() => addPlayerToGroup(userId, groupId, playerEmail))
+            .then(() => addPlayerToGroup(coachId, groupId, playerEmail))
             .then(result => expect(result).to.not.exist)
             .then(() => Group.findOne())
             .then(group => {
@@ -59,23 +59,23 @@ describe('addPlayerToGroup', () => {
         const playerPassword = 'peter123'
         const playerRole = 'player'
 
-        const groupName = 'Grupo Miercoles'
+        const groupName = 'Miercoles'
         const day = 'wednesday'
         const time = '20:00'
         const location = 'Joan Miro'
 
-        let userId = null
+        let coachId = null
         let playerUserId = null
         let groupId = null
         let caughtError = null
 
         return bcrypt.hash(password, 10)
             .then(hash => User.create({ name, email, password: hash, role }))
-            .then(user => userId = user.id)
+            .then(coach => coachId = coach.id)
             .then(() => bcrypt.hash(playerPassword, 10)
                 .then(hash => User.create({ name: playerName, email: playerEmail, password: hash, role: playerRole }))
                 .then(player => playerUserId = player.id))
-            .then(() => Group.create({ owner: userId, name: groupName, day, time, location }))
+            .then(() => Group.create({ owner: coachId, name: groupName, day, time, location }))
             .then(group => groupId = group.id)
             .then(() => addPlayerToGroup(playerUserId, groupId, playerEmail))
             .catch(error => caughtError = error)
@@ -97,12 +97,12 @@ describe('addPlayerToGroup', () => {
         const playerPassword = 'peter123'
         const playerRole = 'player'
 
-        const groupName = 'Grupo Miercoles'
+        const groupName = 'Miercoles'
         const day = 'wednesday'
         const time = '20:00'
         const location = 'Joan Miro'
 
-        let userId = null
+        let coachId = null
         let playerUserId = null
         let groupId = null
         const failedUserId = '123123123123123123123123'
@@ -110,11 +110,11 @@ describe('addPlayerToGroup', () => {
 
         return bcrypt.hash(password, 10)
             .then(hash => User.create({ name, email, password: hash, role }))
-            .then(user => userId = user.id)
+            .then(coach => coachId = coach.id)
             .then(() => bcrypt.hash(playerPassword, 10)
                 .then(hash => User.create({ name: playerName, email: playerEmail, password: hash, role: playerRole }))
                 .then(player => playerUserId = player.id))
-            .then(() => Group.create({ owner: userId, name: groupName, day, time, location }))
+            .then(() => Group.create({ owner: coachId, name: groupName, day, time, location }))
             .then(group => groupId = group.id)
             .then(() => addPlayerToGroup(failedUserId, groupId, playerEmail))
             .catch(error => caughtError = error)

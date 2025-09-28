@@ -2,43 +2,16 @@ import { connect, disconnect } from 'mongoose'
 import { expect } from 'chai'
 import bcrypt from 'bcryptjs'
 
-import { deleteGroup } from './deleteGroup.js'
+import { removePlayerFromGroup } from './removePlayerFromGroup.js'
 import { User, Group } from '../data/index.js'
-import { RoleError, NotFoundError, OwnershipError } from 'com'
+import { RoleError, NotFoundError } from 'com'
 
-describe('deleteGroup', () => {
+describe('removePlayerFromGroup', () => {
     before(() => connect(process.env.MONGO_URI_TEST))
 
     beforeEach(() => Promise.all([User.deleteMany(), Group.deleteMany()]))
 
-    it('deletes a group with a coach role user and being the owner', () => {
-        const name = 'Pepito Grillo'
-        const email = 'pepito@grillo.com'
-        const password = 'pepito123'
-        const role = 'coach'
-
-        const groupName = 'Miercoles'
-        const day = 'wednesday'
-        const time = '20:00'
-        const location = 'Joan Miro'
-
-        let coachId = null
-        let groupId = null
-
-        return bcrypt.hash(password, 10)
-            .then(hash => User.create({ name, email, password: hash, role }))
-            .then(coach => coachId = coach.id)
-            .then(() => Group.create({ owner: coachId, name: groupName, day, time, location }))
-            .then(group => groupId = group.id)
-            .then(() => deleteGroup(coachId, groupId))
-            .then(result => expect(result).to.not.exist)
-            .then(() => Group.findOne())
-            .then(group => {
-                expect(group).to.not.exist
-            })
-    })
-
-    it('fails to delete a group with a player role user', () => {
+    it('removes a player from a group with a coach role user', () => {
         const name = 'Pepito Grillo'
         const email = 'pepito@grillo.com'
         const password = 'pepito123'
@@ -55,19 +28,55 @@ describe('deleteGroup', () => {
         const location = 'Joan Miro'
 
         let coachId = null
+        let playerUserId = null
         let groupId = null
+
+        return bcrypt.hash(password, 10)
+            .then(hash => User.create({ name, email, password: hash, role }))
+            .then(coach => coachId = coach.id)
+            .then(() => bcrypt.hash(playerPassword, 10)
+                .then(hash => User.create({ name: playerName, email: playerEmail, password: hash, role: playerRole }))
+                .then(player => playerUserId = player.id))
+            .then(() => Group.create({ owner: coachId, name: groupName, day, time, location, players: [playerUserId] }))
+            .then(group => groupId = group.id)
+            .then(() => removePlayerFromGroup(coachId, groupId, playerUserId))
+            .then(result => expect(result).to.not.exist)
+            .then(() => Group.findOne())
+            .then(group => {
+                expect(group.players).to.not.include(playerUserId)
+            })
+    })
+
+    it('fails to remove a player from a group with a player role user', () => {
+        const name = 'Pepito Grillo'
+        const email = 'pepito@grillo.com'
+        const password = 'pepito123'
+        const role = 'coach'
+
+        const playerName = 'Peter Pan'
+        const playerEmail = 'peter@pan.com'
+        const playerPassword = 'peter123'
+        const playerRole = 'player'
+
+        const groupName = 'Miercoles'
+        const day = 'wednesday'
+        const time = '20:00'
+        const location = 'Joan Miro'
+
+        let coachId = null
         let playerId = null
+        let groupId = null
         let caughtError = null
 
         return bcrypt.hash(password, 10)
             .then(hash => User.create({ name, email, password: hash, role }))
             .then(coach => coachId = coach.id)
-            .then(() => Group.create({ owner: coachId, name: groupName, day, time, location }))
-            .then(group => groupId = group.id)
             .then(() => bcrypt.hash(playerPassword, 10)
-                .then(hash => User.create({ name: playerName, email: playerEmail, password: hash, role: playerRole })))
-            .then(player => playerId = player.id)
-            .then(() => deleteGroup(playerId, groupId))
+                .then(hash => User.create({ name: playerName, email: playerEmail, password: hash, role: playerRole }))
+                .then(player => playerId = player.id))
+            .then(() => Group.create({ owner: coachId, name: groupName, day, time, location, players: [playerId] }))
+            .then(group => groupId = group.id)
+            .then(() => removePlayerFromGroup(playerId, groupId, playerId))
             .catch(error => caughtError = error)
             .finally(() => {
                 expect(caughtError).to.exist
@@ -76,16 +85,16 @@ describe('deleteGroup', () => {
             })
     })
 
-    it('fails to delete a group with a coach role user and not being the owner', () => {
+    it('fails to remove a player from a group with a non-existent user', () => {
         const name = 'Pepito Grillo'
         const email = 'pepito@grillo.com'
         const password = 'pepito123'
         const role = 'coach'
 
-        const notOwnerName = 'Peter Pan'
-        const notOwnerEmail = 'peter@pan.com'
-        const notOwnerPassword = 'peter123'
-        const notOwnerRole = 'coach'
+        const playerName = 'Peter Pan'
+        const playerEmail = 'peter@pan.com'
+        const playerPassword = 'peter123'
+        const playerRole = 'player'
 
         const groupName = 'Miercoles'
         const day = 'wednesday'
@@ -93,39 +102,7 @@ describe('deleteGroup', () => {
         const location = 'Joan Miro'
 
         let coachId = null
-        let groupId = null
-        let notOwnerCoachId = null
-        let caughtError = null
-
-        return bcrypt.hash(password, 10)
-            .then(hash => User.create({ name, email, password: hash, role }))
-            .then(coach => coachId = coach.id)
-            .then(() => Group.create({ owner: coachId, name: groupName, day, time, location }))
-            .then(group => groupId = group.id)
-            .then(() => bcrypt.hash(notOwnerPassword, 10)
-                .then(hash => User.create({ name: notOwnerName, email: notOwnerEmail, password: hash, role: notOwnerRole })))
-            .then(notOwnerCoach => notOwnerCoachId = notOwnerCoach.id)
-            .then(() => deleteGroup(notOwnerCoachId, groupId))
-            .catch(error => caughtError = error)
-            .finally(() => {
-                expect(caughtError).to.exist
-                expect(caughtError).to.be.an.instanceOf(OwnershipError)
-                expect(caughtError.message).to.equal('user is not the owner')
-            })
-    })
-
-    it('fails to delete a group with a non-existent user', () => {
-        const name = 'Pepito Grillo'
-        const email = 'pepito@grillo.com'
-        const password = 'pepito123'
-        const role = 'coach'
-
-        const groupName = 'Miercoles'
-        const day = 'wednesday'
-        const time = '20:00'
-        const location = 'Joan Miro'
-
-        let coachId = null
+        let playerId = null
         let groupId = null
         const failedUserId = '123123123123123123123123'
         let caughtError = null
@@ -133,9 +110,12 @@ describe('deleteGroup', () => {
         return bcrypt.hash(password, 10)
             .then(hash => User.create({ name, email, password: hash, role }))
             .then(coach => coachId = coach.id)
-            .then(() => Group.create({ owner: coachId, name: groupName, day, time, location }))
+            .then(() => bcrypt.hash(playerPassword, 10)
+                .then(hash => User.create({ name: playerName, email: playerEmail, password: hash, role: playerRole }))
+                .then(player => playerId = player.id))
+            .then(() => Group.create({ owner: coachId, name: groupName, day, time, location, players: [playerId] }))
             .then(group => groupId = group.id)
-            .then(() => deleteGroup(failedUserId, groupId))
+            .then(() => removePlayerFromGroup(failedUserId, groupId, playerId))
             .catch(error => caughtError = error)
             .finally(() => {
                 expect(caughtError).to.exist

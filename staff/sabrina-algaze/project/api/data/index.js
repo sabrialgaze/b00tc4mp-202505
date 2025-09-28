@@ -84,7 +84,13 @@ export const Training = mongoose.model('Training', {
     invited: [{
         type: ObjectId,
         ref: 'User'
-    }]
+    }],
+    status: {
+        type: String,
+        required: true,
+        enum: ['confirmed', 'cancelled'],
+        default: 'confirmed'
+    }
 })
 
 export const Payment = mongoose.model('Payment', {
@@ -102,5 +108,10 @@ export const Payment = mongoose.model('Payment', {
         type: Date,
         required: true,
         default: Date.now
+    },
+    group: {
+        type: ObjectId,
+        ref: 'Group',
+        required: true
     }
 })

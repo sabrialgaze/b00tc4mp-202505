@@ -28,6 +28,10 @@ export const validate = {
         if (typeof userId !== 'string') throw new ValidationError('invalid userId type')
     },
 
+    playerId(playerId) {
+        if (typeof playerId !== 'string') throw new ValidationError('invalid playerId type')
+    },
+
     groupId(groupId) {
         if (typeof groupId !== 'string') throw new ValidationError('invalid groupId type')
     },
@@ -40,12 +44,26 @@ export const validate = {
         if (typeof time !== 'string') throw new ValidationError('invalid time type')
     },
 
+    month(month) {
+        if (typeof month !== 'number') throw new ValidationError('invalid month type')
+    },
+
+    year(year) {
+        if (typeof year !== 'number') throw new ValidationError('invalid year type')
+    },
+
     location(location) {
         if (typeof location !== 'string') throw new ValidationError('invalid location type')
     },
 
     updates(updates) {
         if (typeof updates !== 'object') throw new ValidationError('invalid updates type')
+        if (!Object.keys(updates).length) throw new ValidationError('invalid updates properties length')
+        if (updates.name && typeof updates.name !== 'string') throw new ValidationError('invalid name type')
+        if (updates.day && typeof updates.day !== 'string') throw new ValidationError('invalid day type')
+        if (updates.time && typeof updates.time !== 'string') throw new ValidationError('invalid time type')
+        if (updates.location && typeof updates.location !== 'string') throw new ValidationError('invalid location type')
+        if (updates.group && typeof updates.group !== 'string') throw new ValidationError('invalid group type')
     },
 
     query(query) {

@@ -22,13 +22,13 @@ describe('createPost', () => {
         const time = '20:00'
         const location = 'Joan Miro'
 
-        let userId = null
+        let coachId = null
 
         return bcrypt.hash(password, 10)
             .then(hash => User.create({ name, email, password: hash, role }))
-            .then(user => userId = user.id
+            .then(coach => coachId = coach.id
             )
-            .then(() => createGroup(userId, groupName, day, time, location))
+            .then(() => createGroup(coachId, groupName, day, time, location))
             .then(result => expect(result).to.not.exist)
             .then(() => Group.findOne())
             .then(group => {
@@ -37,7 +37,7 @@ describe('createPost', () => {
                 expect(group.day).to.equal(day)
                 expect(group.time).to.equal(time)
                 expect(group.location).to.equal(location)
-                expect(group.owner.toString()).to.equal(userId)
+                expect(group.owner.toString()).to.equal(coachId)
                 expect(group.players).to.be.an('array').that.is.empty
             })
     })
@@ -53,13 +53,13 @@ describe('createPost', () => {
         const time = '20:00'
         const location = 'Joan Miro'
 
-        let userId = null
+        let playerId = null
         let caughtError = null
 
         return bcrypt.hash(password, 10)
             .then(hash => User.create({ name, email, password: hash, role }))
-            .then(user => userId = user.id)
-            .then(() => createGroup(userId, groupName, day, time, location))
+            .then(player => playerId = player.id)
+            .then(() => createGroup(playerId, groupName, day, time, location))
             .catch(error => caughtError = error)
             .finally(() => {
                 expect(caughtError).to.exist

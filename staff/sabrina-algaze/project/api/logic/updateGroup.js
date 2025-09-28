@@ -1,12 +1,12 @@
 import { validate, NotFoundError, RoleError, SystemError } from 'com'
 import { Group, User } from '../data/index.js'
 
-export const editGroup = (userId, groupId, updates) => {
-    validate.userId(userId)
+export const updateGroup = (coachId, groupId, updates) => {
+    validate.userId(coachId)
     validate.groupId(groupId)
     validate.updates(updates)
 
-    return User.findById(userId)
+    return User.findById(coachId)
         .catch(error => { throw new SystemError('mongo error') })
         .then(user => {
             if (!user) throw new NotFoundError('user not found')
