@@ -36,6 +36,10 @@ export const validate = {
         if (typeof groupId !== 'string') throw new ValidationError('invalid groupId type')
     },
 
+    trainingId(trainingId) {
+        if (typeof trainingId !== 'string') throw new ValidationError('invalid trainingId type')
+    },
+
     day(day) {
         if (typeof day !== 'string') throw new ValidationError('invalid dayOfWeek type')
     },
