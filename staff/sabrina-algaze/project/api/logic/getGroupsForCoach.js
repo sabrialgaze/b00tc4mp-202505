@@ -11,11 +11,17 @@ export const getGroupsForCoach = coachId => {
             if (user.role !== 'coach') throw new RoleError('user is not a coach')
 
             return Group.find({ coach: coachId })
-                .populate('players', 'name email')
+                .lean()
                 .catch(error => { throw new SystemError('mongo error') })
                 .then(groups => {
-                    if (!groups) throw new NotFoundError('groups not found')
-                    return groups
+                    if (groups.length === 0) throw new NotFoundError('groups not found')
+
+                    return groups.map(group => {
+                        group.id = group._id.toString()
+                        delete group._id
+
+                        return group
+                    })
                 })
         })
 }

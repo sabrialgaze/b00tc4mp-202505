@@ -58,7 +58,8 @@ export const Group = mongoose.model('Group', {
 
     coach: {
         type: ObjectId,
-        ref: 'User'
+        ref: 'User',
+        required: true
     }
 })
 

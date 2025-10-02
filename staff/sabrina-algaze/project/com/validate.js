@@ -70,8 +70,8 @@ export const validate = {
         if (updates.group && typeof updates.group !== 'string') throw new ValidationError('invalid group type')
     },
 
-    query(query) {
-        if (typeof query !== 'string') throw new ValidationError('invalid query type')
-        if (!query.length) throw new ValidationError('invalid query length')
-    }
+    service(service) {
+        if (typeof service !== 'string') throw new ValidationError('invalid service type')
+        if (!['monthly', 'daily'].includes(service)) throw new ValidationError('invalid service')
+    },
 }

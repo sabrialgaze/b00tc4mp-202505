@@ -1,7 +1,7 @@
 import { validate, NotFoundError, RoleError, SystemError } from 'com'
 import { User, Group, Training } from '../data/index.js'
 
-export const getPastTrainingsForPlayer = playerId => {
+export const getTrainingsForPlayer = playerId => {
     validate.userId(playerId)
 
     return User.findById(playerId)
@@ -16,15 +16,30 @@ export const getPastTrainingsForPlayer = playerId => {
                     if (groups.length === 0) throw new NotFoundError('no groups found')
 
                     return Training.find({
-                        group: { $in: groups.map(group => group.id) },
-                        date: { $lt: new Date() }
+                        $or: [
+                            {
+                                group: { $in: groups.map(group => group.id) },
+                                date: { $gte: new Date() }
+                            },
+                            {
+                                group: { $in: groups.map(group => group.id) },
+                                date: { $lt: new Date() },
+                                joined: playerId
+                            }
+                        ]
                     })
-                        .sort({ date: -1 })
+                        .sort({ date: 1 })
+                        .lean()
                         .catch(error => { throw new SystemError('mongo error') })
                         .then(trainings => {
                             if (!trainings) throw new NotFoundError('no training found')
 
-                            return trainings
+                            return trainings.map(training => {
+                                training.id = training._id.toString()
+                                delete training._id
+
+                                return training
+                            })
                         })
                 })
         })

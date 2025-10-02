@@ -8,7 +8,8 @@
     "start": "node --env-file .env .",
     "inspect": "node --env-file .env --inspect-brk .",
     "watch": "node --env-file .env --watch .",
-    "test": "mocha --node-option env-file=.env logic/*.spec.js"
+    "test": "mocha --node-option env-file=.env logic/*.spec.js",
+    "test-inspect": "mocha --node-option env-file=.env --node-option inspect-brk logic/*.spec.js"
   },
   "keywords": [],
   "author": "",

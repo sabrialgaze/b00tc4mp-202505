@@ -2,16 +2,18 @@ import { connect, disconnect } from 'mongoose'
 import { expect } from 'chai'
 import bcrypt from 'bcryptjs'
 
-import { getJoinedPlayersFromTraining } from './getJoinedPlayersFromTraining.js'
+import { getTrainingsForPlayer } from './getTrainingsForPlayer.js'
 import { User, Group, Training } from '../data/index.js'
-import { NotFoundError } from 'com'
+import { NotFoundError, RoleError } from 'com'
+import { calculateNextTrainingDate } from './helpers/calculateNextTrainingDate.js'
+import { getDayOfWeekNumber } from './helpers/getDayOfWeekNumber.js'
 
-describe('getJoinedPlayersFromTraining', () => {
+describe('getTrainingsForPlayer', () => {
     before(() => connect(process.env.MONGO_URI_TEST))
 
     beforeEach(() => Promise.all([User.deleteMany(), Group.deleteMany(), Training.deleteMany()]))
 
-    it('gets the joined players from a training for a player role user', () => {
+    it('gets the trainings for a player with a future training', () => {
         const name = 'Pepito Grillo'
         const email = 'pepito@grillo.com'
         const password = 'pepito123'
@@ -30,7 +32,8 @@ describe('getJoinedPlayersFromTraining', () => {
         let coachId = null
         let groupId = null
         let playerId = null
-        let trainingId = null
+
+        let trainingDate = null
 
         return bcrypt.hash(password, 10)
             .then(hash => User.create({ name, email, password: hash, role }))
@@ -39,19 +42,22 @@ describe('getJoinedPlayersFromTraining', () => {
             .then(player => playerId = player.id)
             .then(() => Group.create({ owner: coachId, name: groupName, players: [playerId], day, time, location, coach: coachId }))
             .then(group => groupId = group.id)
-            .then(() => Training.create({ group: groupId, date: new Date(), joined: [playerId], coach: coachId }))
-            .then(training => trainingId = training.id)
-            .then(() => getJoinedPlayersFromTraining(playerId, trainingId))
-            .then(players => {
-                debugger
-                expect(players).to.exist
-                expect(players).to.be.an.instanceOf(Array)
-                expect(players.length).to.equal(1)
-                expect(players[0].name).to.equal(playerName)
+            .then(() => trainingDate = calculateNextTrainingDate(getDayOfWeekNumber(day)))
+            .then(() => Training.create({ group: groupId, date: trainingDate, coach: coachId }))
+            .then(() => getTrainingsForPlayer(playerId))
+            .then(trainings => {
+                expect(trainings).to.exist.and.to.be.an.instanceOf(Array)
+                expect(trainings.length).to.equal(1)
+                expect(trainings[0].group.toString()).to.equal(groupId)
+                expect(trainings[0].date.toString()).to.equal(trainingDate.toString())
+                expect(trainings[0].coach.toString()).to.equal(coachId)
+                expect(trainings[0].joined).to.exist.and.to.be.an.instanceOf(Array)
+                expect(trainings[0].invited).to.exist.and.to.be.an.instanceOf(Array)
+                expect(trainings[0].status).to.equal('confirmed')
             })
     })
 
-    it('gets the joined players from a training for a coach role user', () => {
+    it('gets the trainings for a player with a past training', () => {
         const name = 'Pepito Grillo'
         const email = 'pepito@grillo.com'
         const password = 'pepito123'
@@ -70,7 +76,8 @@ describe('getJoinedPlayersFromTraining', () => {
         let coachId = null
         let groupId = null
         let playerId = null
-        let trainingId = null
+
+        let trainingDate = null
 
         return bcrypt.hash(password, 10)
             .then(hash => User.create({ name, email, password: hash, role }))
@@ -79,18 +86,25 @@ describe('getJoinedPlayersFromTraining', () => {
             .then(player => playerId = player.id)
             .then(() => Group.create({ owner: coachId, name: groupName, players: [playerId], day, time, location, coach: coachId }))
             .then(group => groupId = group.id)
-            .then(() => Training.create({ group: groupId, date: new Date(), joined: [playerId], coach: coachId }))
-            .then(training => trainingId = training.id)
-            .then(() => getJoinedPlayersFromTraining(coachId, trainingId))
-            .then(players => {
-                expect(players).to.exist
-                expect(players).to.be.an.instanceOf(Array)
-                expect(players.length).to.equal(1)
-                expect(players[0].name).to.equal(playerName)
+            .then(() => {
+                trainingDate = new Date()
+                trainingDate.setDate(trainingDate.getDate() - 1)
+            })
+            .then(() => Training.create({ group: groupId, date: trainingDate, coach: coachId, joined: [playerId] }))
+            .then(() => getTrainingsForPlayer(playerId))
+            .then(trainings => {
+                expect(trainings).to.exist.and.to.be.an.instanceOf(Array)
+                expect(trainings.length).to.equal(1)
+                expect(trainings[0].group.toString()).to.equal(groupId)
+                expect(trainings[0].date.toString()).to.equal(trainingDate.toString())
+                expect(trainings[0].coach.toString()).to.equal(coachId)
+                expect(trainings[0].joined).to.exist.and.to.be.an.instanceOf(Array)
+                expect(trainings[0].invited).to.exist.and.to.be.an.instanceOf(Array)
+                expect(trainings[0].status).to.equal('confirmed')
             })
     })
 
-    it('fails to get the joined players for a player role user from a non-existent training', () => {
+    it('gets the trainings for a player with not joined past training', () => {
         const name = 'Pepito Grillo'
         const email = 'pepito@grillo.com'
         const password = 'pepito123'
@@ -109,7 +123,48 @@ describe('getJoinedPlayersFromTraining', () => {
         let coachId = null
         let groupId = null
         let playerId = null
-        const failedTrainingId = '123123123123123123123123'
+
+        let trainingDate = null
+
+        return bcrypt.hash(password, 10)
+            .then(hash => User.create({ name, email, password: hash, role }))
+            .then(coach => coachId = coach.id)
+            .then(() => User.create({ name: playerName, email: playerEmail, password: playerPassword, role: playerRole }))
+            .then(player => playerId = player.id)
+            .then(() => Group.create({ owner: coachId, name: groupName, players: [playerId], day, time, location, coach: coachId }))
+            .then(group => groupId = group.id)
+            .then(() => {
+                trainingDate = new Date()
+                trainingDate.setDate(trainingDate.getDate() - 1)
+            })
+            .then(() => Training.create({ group: groupId, date: trainingDate, coach: coachId }))
+            .then(() => getTrainingsForPlayer(playerId))
+            .then(trainings => {
+                expect(trainings).to.exist.and.to.be.an.instanceOf(Array)
+                expect(trainings.length).to.equal(0)
+            })
+    })
+
+    it('fails to get the trainings with a non-existent user', () => {
+        const name = 'Pepito Grillo'
+        const email = 'pepito@grillo.com'
+        const password = 'pepito123'
+        const role = 'coach'
+
+        const playerName = 'Peter Pan'
+        const playerEmail = 'peter@pan.com'
+        const playerPassword = 'peter123'
+        const playerRole = 'player'
+
+        const groupName = 'Miercoles'
+        const day = 'wednesday'
+        const time = '20:00'
+        const location = 'Joan Miro'
+
+        let coachId = null
+        let groupId = null
+        let playerId = null
+        const failedPlayerId = '123123123123123123123123'
         let caughtError = null
 
         return bcrypt.hash(password, 10)
@@ -119,48 +174,8 @@ describe('getJoinedPlayersFromTraining', () => {
             .then(player => playerId = player.id)
             .then(() => Group.create({ owner: coachId, name: groupName, players: [playerId], day, time, location, coach: coachId }))
             .then(group => groupId = group.id)
-            .then(() => getJoinedPlayersFromTraining(playerId, failedTrainingId))
-            .catch(error => caughtError = error)
-            .finally(() => {
-                expect(caughtError).to.exist
-                expect(caughtError).to.be.an.instanceOf(NotFoundError)
-                expect(caughtError.message).to.equal('training not found')
-            })
-    })
-
-    it('fails to get the joined players with a non-existent user', () => {
-        const name = 'Pepito Grillo'
-        const email = 'pepito@grillo.com'
-        const password = 'pepito123'
-        const role = 'coach'
-
-        const playerName = 'Peter Pan'
-        const playerEmail = 'peter@pan.com'
-        const playerPassword = 'peter123'
-        const playerRole = 'player'
-
-        const groupName = 'Miercoles'
-        const day = 'wednesday'
-        const time = '20:00'
-        const location = 'Joan Miro'
-
-        let coachId = null
-        let groupId = null
-        let playerId = null
-        let trainingId = null
-        const failedUserId = '123123123123123123123123'
-        let caughtError = null
-
-        return bcrypt.hash(password, 10)
-            .then(hash => User.create({ name, email, password: hash, role }))
-            .then(coach => coachId = coach.id)
-            .then(() => User.create({ name: playerName, email: playerEmail, password: playerPassword, role: playerRole }))
-            .then(player => playerId = player.id)
-            .then(() => Group.create({ owner: coachId, name: groupName, players: [playerId], day, time, location, coach: coachId }))
-            .then(group => groupId = group.id)
-            .then(() => Training.create({ group: groupId, date: new Date(), joined: [playerId], coach: coachId }))
-            .then(training => trainingId = training.id)
-            .then(() => getJoinedPlayersFromTraining(failedUserId, trainingId))
+            .then(() => Training.create({ group: groupId, date: new Date(), coach: coachId }))
+            .then(() => getTrainingsForPlayer(failedPlayerId))
             .catch(error => caughtError = error)
             .finally(() => {
                 expect(caughtError).to.exist
@@ -169,7 +184,45 @@ describe('getJoinedPlayersFromTraining', () => {
             })
     })
 
+    it('fails to get the trainings with a coach role user', () => {
+        const name = 'Pepito Grillo'
+        const email = 'pepito@grillo.com'
+        const password = 'pepito123'
+        const role = 'coach'
+
+        const playerName = 'Peter Pan'
+        const playerEmail = 'peter@pan.com'
+        const playerPassword = 'peter123'
+        const playerRole = 'player'
+
+        const groupName = 'Miercoles'
+        const day = 'wednesday'
+        const time = '20:00'
+        const location = 'Joan Miro'
+
+        let coachId = null
+        let groupId = null
+        let playerId = null
+        let caughtError = null
+
+        return bcrypt.hash(password, 10)
+            .then(hash => User.create({ name, email, password: hash, role }))
+            .then(coach => coachId = coach.id)
+            .then(() => User.create({ name: playerName, email: playerEmail, password: playerPassword, role: playerRole }))
+            .then(player => playerId = player.id)
+            .then(() => Group.create({ owner: coachId, name: groupName, players: [playerId], day, time, location, coach: coachId }))
+            .then(group => groupId = group.id)
+            .then(() => Training.create({ group: groupId, date: new Date(), coach: coachId }))
+            .then(() => getTrainingsForPlayer(coachId))
+            .catch(error => caughtError = error)
+            .finally(() => {
+                expect(caughtError).to.exist
+                expect(caughtError).to.be.an.instanceOf(RoleError)
+                expect(caughtError.message).to.equal('user is not a player')
+            })
+    })
+
     afterEach(() => Promise.all([User.deleteMany(), Group.deleteMany(), Training.deleteMany()]))
 
     after(() => disconnect())
-})  
+})

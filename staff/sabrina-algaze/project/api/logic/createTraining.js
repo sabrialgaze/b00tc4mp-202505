@@ -17,7 +17,6 @@ export const createTraining = (coachId, groupId) => {
                 .catch(error => { throw new SystemError('mongo error') })
                 .then(group => {
                     if (!group) throw new NotFoundError('group not found')
-                    if (!group.coach) throw new NotFoundError('coach not found')
 
                     const { day, time, coach } = group
 

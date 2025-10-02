@@ -1,9 +1,9 @@
 import { validate, NotFoundError, RoleError, SystemError } from 'com'
 import { User, Group, Training } from '../data/index.js'
 
-export const toggleJoinTraining = (trainingId, playerId) => {
-    validate.trainingId(trainingId)
+export const toggleJoinTraining = (playerId, trainingId) => {
     validate.userId(playerId)
+    validate.trainingId(trainingId)
 
     return User.findById(playerId)
         .catch(error => { throw new SystemError('mongo error') })
