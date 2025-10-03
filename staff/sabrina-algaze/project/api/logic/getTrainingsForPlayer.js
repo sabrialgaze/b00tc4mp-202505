@@ -27,7 +27,7 @@ export const getTrainingsForPlayer = playerId => {
                                 joined: playerId
                             }
                         ]
-                    })
+                    }, { __v: 0 })
                         .sort({ date: 1 })
                         .lean()
                         .catch(error => { throw new SystemError('mongo error') })
