@@ -1,0 +1,21 @@
+import express, { Router } from 'express'
+import { logic } from '../logic/index.js'
+import jwt from 'jsonwebtoken'
+
+export const trainings = Router()
+
+const jsonBodyParser = express.json()
+
+trainings.get('/player', jsonBodyParser, (req, res, next) => {
+    try {
+        const token = req.headers.authorization.slice(7)
+        const payload = jwt.verify(token, process.env.JWT_SECRET)
+        const { sub: playerId } = payload
+
+        logic.getTrainingsForPlayer(playerId)
+            .then(trainings => res.status(200).json(trainings))
+            .catch(error => next(error))
+    } catch (error) {
+        next(error)
+    }
+})

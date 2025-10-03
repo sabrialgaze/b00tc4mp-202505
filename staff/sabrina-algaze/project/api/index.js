@@ -1,7 +1,7 @@
 import express from 'express'
 import cors from 'cors'
 import { DuplicityError, ValidationError, NotFoundError, OwnershipError, CredentialsError } from 'com'
-import { users } from './routes/index.js'
+import { users, trainings } from './routes/index.js'
 import mongoose from 'mongoose'
 
 const { PORT = 8080 } = process.env
@@ -15,6 +15,8 @@ mongoose.connect('mongodb://127.0.0.1:27017/project')
         api.get('/', (req, res) => res.send('Hello API'))
 
         api.use('/users', users)
+
+        api.use('/trainings', trainings)
 
         api.use((error, req, res, next) => {
             console.error(error)
