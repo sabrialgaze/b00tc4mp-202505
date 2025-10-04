@@ -53,6 +53,9 @@ mongoose.connect('mongodb://127.0.0.1:27017/project')
 
         const nextTrainingDate = calculateNextTrainingDate(getDayOfWeekNumber('wednesday'))
 
+        const [hours, minutes] = group.time.split(':').map(Number)
+        nextTrainingDate.setHours(hours, minutes, 0, 0)
+
         const nextTraining = new Training({
             group: group.id,
             date: nextTrainingDate,
@@ -60,8 +63,10 @@ mongoose.connect('mongodb://127.0.0.1:27017/project')
             joined: [player.id]
         })
 
-        const pastTrainingDate = new Date()
+        const pastTrainingDate = new Date(nextTrainingDate)
         pastTrainingDate.setDate(pastTrainingDate.getDate() - 7)
+        pastTrainingDate.setHours(hours, minutes, 0, 0)
+
 
         const pastTraining = new Training({
             group: group.id,
@@ -73,7 +78,7 @@ mongoose.connect('mongodb://127.0.0.1:27017/project')
         return Promise.all([nextTraining.save(), pastTraining.save()])
     })
     .then(() => {
-        console.log('Next training created')
+        console.log('Next and past training created')
 
     })
     .catch(error => {

@@ -28,7 +28,11 @@ export const getTrainingsForPlayer = playerId => {
                             }
                         ]
                     }, { __v: 0 })
-                        .sort({ date: 1 })
+                        .sort({ date: -1 })
+                        .populate({
+                            path: 'group',
+                            select: 'name location players'
+                        })
                         .lean()
                         .catch(error => { throw new SystemError('mongo error') })
                         .then(trainings => {
@@ -37,6 +41,19 @@ export const getTrainingsForPlayer = playerId => {
                             return trainings.map(training => {
                                 training.id = training._id.toString()
                                 delete training._id
+
+                                if (training.group && training.group._id) {
+                                    training.group.id = training.group._id.toString()
+                                    delete training.group._id
+                                }
+
+                                if (training.group.players) {
+                                    training.group.playersCount = training.group.players.length
+                                } else {
+                                    training.group.playersCount = 0
+                                }
+
+                                delete training.group.players
 
                                 return training
                             })
