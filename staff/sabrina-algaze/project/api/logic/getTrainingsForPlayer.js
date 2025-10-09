@@ -14,15 +14,18 @@ export const getTrainingsForPlayer = playerId => {
                 .catch(error => { throw new SystemError('mongo error') })
                 .then(groups => {
                     if (groups.length === 0) throw new NotFoundError('no groups found')
+                    //TODO: optimize this, we are doing two queries to the database
+
+                    const groupIds = groups.map(group => group.id)
 
                     return Training.find({
                         $or: [
                             {
-                                group: { $in: groups.map(group => group.id) },
+                                group: { $in: groupIds },
                                 date: { $gte: new Date() }
                             },
                             {
-                                group: { $in: groups.map(group => group.id) },
+                                group: { $in: groupIds },
                                 date: { $lt: new Date() },
                                 joined: playerId
                             }
@@ -38,25 +41,22 @@ export const getTrainingsForPlayer = playerId => {
                         .then(trainings => {
                             if (!trainings) throw new NotFoundError('no training found')
 
-                            return trainings.map(training => {
+                            trainings.forEach(training => {
                                 training.id = training._id.toString()
                                 delete training._id
 
-                                if (training.group && training.group._id) {
-                                    training.group.id = training.group._id.toString()
-                                    delete training.group._id
-                                }
-
-                                if (training.group.players) {
-                                    training.group.playersCount = training.group.players.length
-                                } else {
-                                    training.group.playersCount = 0
-                                }
-
-                                delete training.group.players
+                                training.group.playersCount = training.group.players.length
 
                                 return training
                             })
+
+                            trainings.forEach(training => {
+                                delete training.group._id
+
+                                delete training.group.players
+                            })
+
+                            return trainings
                         })
                 })
         })

@@ -1,22 +1,24 @@
 import { data } from '../data'
-import { errors, SystemError } from 'com'
+import { validate, errors, SystemError } from 'com'
 
 /**
- * Gets the trainings for the current player.
+ * Gets the joined players from a training.
  * @example
- ```js
+    ```js
 // demo
 
-getTrainingsForPlayer()
-    .then(trainings => console.log(trainings))
+getJoinedPlayersFromTraining('68df91556d15402089312e9f')
+    .then(players => console.log(players))
     .catch(error => console.error(error))
- ```
- *     
+```
+
+ * @param {string} trainingId The training id.
  */
 
-export const getTrainingsForPlayer = () => {
+export const getJoinedPlayersFromTraining = (trainingId) => {
+    validate.trainingId(trainingId)
 
-    return fetch(`${import.meta.env.VITE_API_URL}/trainings`, {
+    return fetch(`${import.meta.env.VITE_API_URL}/trainings/${trainingId}/players`, {
         method: 'GET',
         headers: {
             Authorization: `Bearer ${data.loadToken()}`
@@ -29,7 +31,7 @@ export const getTrainingsForPlayer = () => {
             if (status === 200)
                 return res.json()
                     .catch(error => { throw new Error('json error') })
-
+                    .then(players => players)
             return res.json()
                 .catch(error => { throw new Error('json error') })
                 .then(body => {

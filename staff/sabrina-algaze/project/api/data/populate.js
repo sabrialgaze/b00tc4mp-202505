@@ -31,9 +31,23 @@ mongoose.connect('mongodb://127.0.0.1:27017/project')
             role: 'player'
         })
 
-        return Promise.all([coach.save(), player.save()])
+        const player2 = new User({
+            name: 'James Hook',
+            email: 'james@hook.com',
+            password: hash,
+            role: 'player'
+        })
+
+        const player3 = new User({
+            name: 'Wendy Darling',
+            email: 'wendy@darling.com',
+            password: hash,
+            role: 'player'
+        })
+
+        return Promise.all([coach.save(), player.save(), player2.save(), player3.save()])
     })
-    .then(([coach, player]) => {
+    .then(([coach, player, player2, player3]) => {
         console.log('Users created')
 
         const group = new Group({
@@ -43,12 +57,12 @@ mongoose.connect('mongodb://127.0.0.1:27017/project')
             location: 'Joan Miro',
             owner: coach.id,
             coach: coach.id,
-            players: [player.id]
+            players: [player.id, player2.id, player3.id]
         })
 
-        return group.save().then(group => ({ group, player }))
+        return group.save().then(group => ({ group, player, player2, player3 }))
     })
-    .then(({ group, player }) => {
+    .then(({ group, player, player2, player3 }) => {
         console.log('Group created')
 
         const nextTrainingDate = calculateNextTrainingDate(getDayOfWeekNumber('wednesday'))
@@ -60,7 +74,7 @@ mongoose.connect('mongodb://127.0.0.1:27017/project')
             group: group.id,
             date: nextTrainingDate,
             coach: group.coach,
-            joined: [player.id]
+            joined: [player.id, player2.id, player3.id]
         })
 
         const pastTrainingDate = new Date(nextTrainingDate)
@@ -72,7 +86,7 @@ mongoose.connect('mongodb://127.0.0.1:27017/project')
             group: group.id,
             date: pastTrainingDate,
             coach: group.coach,
-            joined: [player.id]
+            joined: [player.id, player2.id]
         })
 
         return Promise.all([nextTraining.save(), pastTraining.save()])

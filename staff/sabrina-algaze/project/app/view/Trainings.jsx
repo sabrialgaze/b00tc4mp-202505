@@ -1,15 +1,13 @@
 import { useState, useEffect } from 'react'
 import { Training } from './Training'
 import { logic } from '../logic'
-import { helper } from './helper'
 
-export const Trainings = () => {
+export const Trainings = ({ onTrainingClicked }) => {
     const [trainings, setTrainings] = useState([])
 
     const loadTrainings = () => {
         try {
-            const playerId = helper.getUserId()
-            logic.getTrainingsForPlayer(playerId)
+            logic.getTrainingsForPlayer()
                 .then(trainings => {
                     setTrainings(trainings)
                 })
@@ -31,7 +29,9 @@ export const Trainings = () => {
 
     return <div>
         <ul>
-            {trainings.map(training => <Training key={training.id} training={training} />)}
+            <li className="py-2">
+                {trainings.map(training => <Training key={training.id} training={training} onTrainingClicked={onTrainingClicked} />)}
+            </li>
         </ul>
     </div>
 }

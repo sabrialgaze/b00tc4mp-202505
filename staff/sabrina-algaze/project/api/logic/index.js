@@ -8,9 +8,10 @@ import { removePlayerFromGroup } from './removePlayerFromGroup.js'
 import { createTraining } from './createTraining.js'
 import { toggleJoinTraining } from './toggleJoinTraining.js'
 import { getTrainingsForPlayer } from './getTrainingsForPlayer.js'
+import { getTrainingById } from './getTrainingById.js'
 import { getJoinedPlayersFromTraining } from './getJoinedPlayersFromTraining.js'
-import { getGroupsForCoach } from './getGroupsForCoach.js'
 import { createPayment } from './createPayment.js'
+import { getGroupsForCoach } from './getGroupsForCoach.js'
 
 export const logic = {
     registerUser,
@@ -22,6 +23,7 @@ export const logic = {
     removePlayerFromGroup,
     createTraining,
     getTrainingsForPlayer,
+    getTrainingById,
     toggleJoinTraining,
     getJoinedPlayersFromTraining,
     createPayment,

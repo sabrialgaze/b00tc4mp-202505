@@ -51,7 +51,7 @@ export const App = () => {
 
     return <div className="p-2">
         <Routes>
-            <Route path="/*" element={
+            {/* <Route path="/*" element={
                 loggedIn === null ?
                     <Loading />
                     :
@@ -60,6 +60,18 @@ export const App = () => {
                             <Home onUserLoggedOut={handleUserLoggedOut} />
                             :
                             <Navigate to="/" />
+                        :
+                        location.pathname === '/' ?
+                            <Landing onRegisterClicked={handleRegisterClicked} onLoginClicked={handleLoginClicked} />
+                            :
+                            <Navigate to="/" />
+            } /> */}
+            <Route path="/*" element={
+                loggedIn === null ?
+                    <Loading />
+                    :
+                    loggedIn ?
+                        <Home onUserLoggedOut={handleUserLoggedOut} />
                         :
                         location.pathname === '/' ?
                             <Landing onRegisterClicked={handleRegisterClicked} onLoginClicked={handleLoginClicked} />

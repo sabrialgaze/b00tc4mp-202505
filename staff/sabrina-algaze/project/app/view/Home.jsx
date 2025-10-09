@@ -5,8 +5,11 @@ import { ArrowRightStartOnRectangleIcon, CalendarIcon, BanknotesIcon } from '@he
 
 import { logic } from '../logic'
 import { Trainings } from './Trainings'
+import { TrainingDetail } from './TrainingDetail'
 
 export const Home = ({ onUserLoggedOut }) => {
+    const navigate = useNavigate()
+
     const handleLogoutClick = () => {
         try {
             logic.logoutUser()
@@ -18,6 +21,10 @@ export const Home = ({ onUserLoggedOut }) => {
             alert(error.message
             )
         }
+    }
+
+    const handleTrainingClicked = trainingId => {
+        navigate(`/training/${trainingId}`)
     }
 
     console.debug('Home -> render')
@@ -32,7 +39,8 @@ export const Home = ({ onUserLoggedOut }) => {
 
         <div className="py-20">
             <Routes>
-                <Route path="/" element={<Trainings />} />
+                <Route path="/" element={<Trainings onTrainingClicked={handleTrainingClicked} />} />
+                <Route path="/training/:trainingId" element={<TrainingDetail />} />
             </Routes>
         </div>
 
