@@ -1,0 +1,1 @@
+curl -X PATCH -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2OGU2ZTkyOTc4YmQ3MWQzM2RkMTJjNzAiLCJyb2xlIjoicGxheWVyIiwiaWF0IjoxNzYwMDk5MDEzLCJleHAiOjE3NjAxMDI2MTN9.HTMrFTriw2VqvVSbyUVZNF49NzOK1TBnZG5KvWJZTOM' http://localhost:9090/trainings/68e6e92978bd71d33dd12c79/join -v

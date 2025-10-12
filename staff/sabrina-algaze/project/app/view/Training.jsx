@@ -10,8 +10,8 @@ export const Training = ({ training, onTrainingClicked }) => {
     const isPastTraining = new Date(training.date) < new Date()
 
     const cardClases = isPastTraining
-        ? "border-2 rounded-xl border-black-600 bg-gray-100 p-4"
-        : "border-2 rounded-xl border-black-600 bg-green-100 p-4"
+        ? "border-2 rounded-xl border-black-600 bg-gray-100 p-4 mt-2"
+        : "border-2 rounded-xl border-black-600 bg-green-100 p-4 mt-2"
 
     return <div onClick={handleTrainingClick} className={cardClases}>
         <div className="flex justify-between items-start">

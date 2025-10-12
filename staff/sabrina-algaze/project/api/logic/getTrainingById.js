@@ -23,6 +23,8 @@ export const getTrainingById = (userId, trainingId) => {
                     training.group.playersCount = training.group.players.length
                     delete training.group.players
 
+                    training.isJoined = training.joined.some(joinedPlayer => joinedPlayer.toString() === userId)
+
                     return training
                 })
         })

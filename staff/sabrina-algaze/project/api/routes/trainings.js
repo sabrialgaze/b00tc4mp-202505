@@ -50,3 +50,18 @@ trainings.get('/:trainingId', jsonBodyParser, (req, res, next) => {
         next(error)
     }
 })
+
+trainings.patch('/:trainingId/join', jsonBodyParser, (req, res, next) => {
+    try {
+        const token = req.headers.authorization.slice(7)
+        const payload = jwt.verify(token, process.env.JWT_SECRET)
+        const { sub: userId } = payload
+        const { trainingId } = req.params
+
+        logic.toggleJoinTraining(userId, trainingId)
+            .then(() => res.status(204).send())
+            .catch(error => next(error))
+    } catch (error) {
+        next(error)
+    }
+})

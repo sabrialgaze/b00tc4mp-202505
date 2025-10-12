@@ -1,4 +1,4 @@
-import { validate, NotFoundError, RoleError, SystemError } from 'com'
+import { validate, NotFoundError, RoleError, SystemError, ValidationError } from 'com'
 import { User, Group, Training } from '../data/index.js'
 
 export const toggleJoinTraining = (playerId, trainingId) => {
@@ -15,6 +15,8 @@ export const toggleJoinTraining = (playerId, trainingId) => {
                 .catch(error => { throw new SystemError('mongo error') })
                 .then(training => {
                     if (!training) throw new NotFoundError('training not found')
+
+                    if (training.date < new Date()) throw new ValidationError('cannot join/unjoin past training')
 
                     return Group.findById(training.group)
                         .catch(error => { throw new SystemError('mongo error') })

@@ -5,6 +5,7 @@ import { isUserLoggedIn } from './isUserLoggedIn'
 import { getTrainingsForPlayer } from './getTrainingsForPlayer'
 import { getTrainingById } from './getTrainingById'
 import { getJoinedPlayersFromTraining } from './getJoinedPlayersFromTraining'
+import { toggleJoinTraining } from './toggleJoinTraining'
 
 export const logic = {
     registerUser,
@@ -13,5 +14,6 @@ export const logic = {
     isUserLoggedIn,
     getTrainingsForPlayer,
     getTrainingById,
-    getJoinedPlayersFromTraining
+    getJoinedPlayersFromTraining,
+    toggleJoinTraining
 }
