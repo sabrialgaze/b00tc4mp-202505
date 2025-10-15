@@ -1,0 +1,1 @@
+curl -X GET -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2OGU5MTUwZjQ2YjgzMmZkMTM2MGZjMmMiLCJyb2xlIjoicGxheWVyIiwiaWF0IjoxNzYwMzAwNjY0LCJleHAiOjE3NjAzMDQyNjR9.ktfXGHJ1QaYvp4UDCBWTeB0KvNy9SNXgnln1sCQlWow' http://localhost:9090/groups -v

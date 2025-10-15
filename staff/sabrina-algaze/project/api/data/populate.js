@@ -1,5 +1,5 @@
 import mongoose from 'mongoose'
-import { User, Group, Training } from './index.js'
+import { User, Group, Training, Payment } from './index.js'
 import { getDayOfWeekNumber } from '../logic/helpers/getDayOfWeekNumber.js'
 import { calculateNextTrainingDate } from '../logic/helpers/calculateNextTrainingDate.js'
 import bcrypt from 'bcryptjs'
@@ -10,7 +10,8 @@ mongoose.connect('mongodb://127.0.0.1:27017/project')
         return Promise.all([
             User.deleteMany(),
             Group.deleteMany(),
-            Training.deleteMany()
+            Training.deleteMany(),
+            Payment.deleteMany()
         ])
     })
     .then(() => {

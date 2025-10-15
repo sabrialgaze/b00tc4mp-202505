@@ -2,20 +2,20 @@ import { data } from '../data'
 import { errors, SystemError } from 'com'
 
 /**
- * Gets the trainings for the current player.
+ * Gets the groups for the current player.
  * @example
  ```js
 // demo
 
-getTrainingsForPlayer()
-    .then(trainings => console.log(trainings))
+getGroupsForPlayer()
+    .then(groups => console.log(groups))
     .catch(error => console.error(error))
  ```
  *     
  */
 
-export const getTrainingsForPlayer = () => {
-    return fetch(`${import.meta.env.VITE_API_URL}/trainings`, {
+export const getGroupsForPlayer = () => {
+    return fetch(`${import.meta.env.VITE_API_URL}/groups`, {
         method: 'GET',
         headers: {
             Authorization: `Bearer ${data.loadToken()}`

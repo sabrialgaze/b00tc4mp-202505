@@ -4,7 +4,7 @@ import bcrypt from 'bcryptjs'
 
 import { toggleJoinTraining } from './toggleJoinTraining.js'
 import { User, Group, Training } from '../data/index.js'
-import { NotFoundError, RoleError } from 'com'
+import { NotFoundError, RoleError, ValidationError } from 'com'
 
 describe('toggleJoinTraining', () => {
     before(() => connect(process.env.MONGO_URI_TEST))
@@ -27,6 +27,8 @@ describe('toggleJoinTraining', () => {
         const time = '20:00'
         const location = 'Joan Miro'
 
+        const futureDate = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
+
         let coachId = null
         let groupId = null
         let playerId = null
@@ -39,7 +41,7 @@ describe('toggleJoinTraining', () => {
             .then(player => playerId = player.id)
             .then(() => Group.create({ owner: coachId, name: groupName, players: [playerId], day, time, location, coach: coachId }))
             .then(group => groupId = group.id)
-            .then(() => Training.create({ group: groupId, date: new Date(), coach: coachId }))
+            .then(() => Training.create({ group: groupId, date: futureDate, coach: coachId }))
             .then(training => trainingId = training.id)
             .then(() => toggleJoinTraining(playerId, trainingId))
             .then(result => expect(result).to.not.exist)
@@ -68,6 +70,8 @@ describe('toggleJoinTraining', () => {
         const time = '20:00'
         const location = 'Joan Miro'
 
+        const futureDate = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
+
         let coachId = null
         let groupId = null
         let playerId = null
@@ -80,7 +84,7 @@ describe('toggleJoinTraining', () => {
             .then(player => playerId = player.id)
             .then(() => Group.create({ owner: coachId, name: groupName, players: [playerId], day, time, location, coach: coachId }))
             .then(group => groupId = group.id)
-            .then(() => Training.create({ group: groupId, date: new Date(), coach: coachId, joined: [playerId] }))
+            .then(() => Training.create({ group: groupId, date: futureDate, coach: coachId, joined: [playerId] }))
             .then(training => trainingId = training.id)
             .then(() => toggleJoinTraining(playerId, trainingId))
             .then(result => expect(result).to.not.exist)
@@ -89,6 +93,48 @@ describe('toggleJoinTraining', () => {
                 expect(training).to.exist
                 expect(training.joined).to.exist.and.to.be.an.instanceOf(Array)
                 expect(training.joined.length).to.equal(0)
+            })
+    })
+
+    it('fails to toggle the join status for a past training', () => {
+        const name = 'Pepito Grillo'
+        const email = 'pepito@grillo.com'
+        const password = 'pepito123'
+        const role = 'coach'
+
+        const playerName = 'Peter Pan'
+        const playerEmail = 'peter@pan.com'
+        const playerPassword = 'peter123'
+        const playerRole = 'player'
+
+        const groupName = 'Miercoles'
+        const day = 'wednesday'
+        const time = '20:00'
+        const location = 'Joan Miro'
+
+        const pastDate = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)
+
+        let coachId = null
+        let groupId = null
+        let playerId = null
+        let trainingId = null
+        let caughtError = null
+
+        return bcrypt.hash(password, 10)
+            .then(hash => User.create({ name, email, password: hash, role }))
+            .then(coach => coachId = coach.id)
+            .then(() => User.create({ name: playerName, email: playerEmail, password: playerPassword, role: playerRole }))
+            .then(player => playerId = player.id)
+            .then(() => Group.create({ owner: coachId, name: groupName, players: [playerId], day, time, location, coach: coachId }))
+            .then(group => groupId = group.id)
+            .then(() => Training.create({ group: groupId, date: pastDate, coach: coachId, joined: [playerId] }))
+            .then(training => trainingId = training.id)
+            .then(() => toggleJoinTraining(playerId, trainingId))
+            .catch(error => caughtError = error)
+            .finally(() => {
+                expect(caughtError).to.exist
+                expect(caughtError).to.be.an.instanceOf(ValidationError)
+                expect(caughtError.message).to.equal('cannot join/unjoin past training')
             })
     })
 

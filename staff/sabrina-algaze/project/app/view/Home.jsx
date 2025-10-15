@@ -6,6 +6,8 @@ import { ArrowRightStartOnRectangleIcon, CalendarIcon, BanknotesIcon } from '@he
 import { logic } from '../logic'
 import { Trainings } from './Trainings'
 import { TrainingDetail } from './TrainingDetail'
+import { Payments } from './Payments'
+import { NewPayment } from './NewPayment'
 
 export const Home = ({ onUserLoggedOut }) => {
     const navigate = useNavigate()
@@ -41,15 +43,16 @@ export const Home = ({ onUserLoggedOut }) => {
             <Routes>
                 <Route path="/" element={<Trainings onTrainingClicked={handleTrainingClicked} />} />
                 <Route path="/training/:trainingId" element={<TrainingDetail />} />
+                <Route path="/payments" element={<Payments />} />
+                <Route path="/new-payment" element={<NewPayment />} />
             </Routes>
         </div>
 
         <footer className="fixed bottom-0 left-0 right-0 py-6 bg-gray-300">
             <div className="flex justify-center space-x-4">
-                <button type="button"><CalendarIcon className="w-10 h-10 text-gray-700" /></button>
-                <button type="button"><BanknotesIcon className="w-10 h-10 text-gray-700" /></button>
+                <button type="button"><Link to="/"><CalendarIcon className="w-10 h-10 text-gray-700" /></Link></button>
+                <button type="button"><Link to="/payments"><BanknotesIcon className="w-10 h-10 text-gray-700" /></Link></button>
             </div>
-
         </footer>
     </div>
 }
