@@ -73,8 +73,8 @@ export const NewPayment = () => {
                     <option value="" disabled>
                         Select a service
                     </option>
-                    <option value="monthly">Monthly</option>
-                    <option value="daily">Daily</option>
+                    <option value="month">Month</option>
+                    <option value="day">Day</option>
                 </select>
             </div>
 

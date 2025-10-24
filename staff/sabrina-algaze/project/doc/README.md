@@ -14,10 +14,10 @@ Built with real users in mind, the app aims to streamline everyday team manageme
 
 Player
 - register, login and logout
-- declare payment for a month or daily training  
+- declare payment for a month or day training  
 - view confirmed payments (current and past)
 - view upcoming trainings (by group)
-- confirm attendance to a training (only if monthly/ daily payment is up to date)
+- confirm attendance to a training (only if month/ day payment is up to date)
 - confirm attendance to a training outside their main group (as guest) 
 - view list of players' attendance to a training
 - view attendance history
@@ -87,7 +87,7 @@ Training
 Payment
 - id (UUID, required)
 - player (UUID, User.id, required)
-- service (string, required, enum monthly|daily)
+- service (string, required, enum month|day)
 - date (Date, required)
 
 ### Technologies

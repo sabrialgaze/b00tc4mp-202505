@@ -1,1 +1,1 @@
-curl -X GET -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2OGU5MTUwZjQ2YjgzMmZkMTM2MGZjMmMiLCJyb2xlIjoicGxheWVyIiwiaWF0IjoxNzYwMzAwNjY0LCJleHAiOjE3NjAzMDQyNjR9.ktfXGHJ1QaYvp4UDCBWTeB0KvNy9SNXgnln1sCQlWow' http://localhost:9090/trainings -v
+curl -X GET -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2OGY4ZjZlMjNmNDdjNDZkMzUzMDFiNjciLCJyb2xlIjoicGxheWVyIiwiaWF0IjoxNzYxMTQ3MTgxLCJleHAiOjE3NjExNTA3ODF9.ThEbrIIjqL7T9tHYr19aDJJLljuimtgZbAJfPW75r6Q' http://localhost:9090/trainings -v

@@ -1,5 +1,5 @@
 import { validate, NotFoundError, RoleError, SystemError } from 'com'
-import { User, Group, Training } from '../data/index.js'
+import { User, Group, Training, Payment } from '../data/index.js'
 
 export const getTrainingsForPlayer = playerId => {
     validate.userId(playerId)
@@ -19,17 +19,7 @@ export const getTrainingsForPlayer = playerId => {
                     const groupIds = groups.map(group => group.id)
 
                     return Training.find({
-                        $or: [
-                            {
-                                group: { $in: groupIds },
-                                date: { $gte: new Date() }
-                            },
-                            {
-                                group: { $in: groupIds },
-                                date: { $lt: new Date() },
-                                joined: playerId
-                            }
-                        ]
+                        group: { $in: groupIds }
                     }, { __v: 0 })
                         .sort({ date: -1 })
                         .populate({
@@ -41,22 +31,59 @@ export const getTrainingsForPlayer = playerId => {
                         .then(trainings => {
                             if (!trainings) throw new NotFoundError('no training found')
 
-                            trainings.forEach(training => {
-                                training.id = training._id.toString()
-                                delete training._id
+                            return Promise.all(trainings.map(training => {
+                                return Payment.findOne({
+                                    player: playerId,
+                                    group: training.group._id,
+                                    service: 'month',
+                                    $expr: {
+                                        $eq: [
+                                            { $dateToString: { format: "%Y-%m", date: "$trainingDate" } },
+                                            { $dateToString: { format: "%Y-%m", date: training.date } }
+                                        ]
+                                    }
+                                })
+                                    .then(monthPayment => {
+                                        if (monthPayment) {
+                                            training.isPaid = true
+                                        } else {
+                                            return Payment.findOne({
+                                                player: playerId,
+                                                group: training.group._id,
+                                                service: 'day',
+                                                trainingDate: training.date
+                                            })
+                                                .then(dayPayment => {
+                                                    console.log('=== DEBUG PAYMENT ===')
+                                                    console.log('Player ID:', playerId)
+                                                    console.log('Group ID:', training.group._id)
+                                                    console.log('Training date:', training.date)
+                                                    console.log('Payment found:', dayPayment)
+                                                    console.log('====================')
 
-                                training.group.playersCount = training.group.players.length
+                                                    training.isPaid = !!dayPayment
+                                                })
+                                        }
+                                    })
+                                    .then(() => {
+                                        training.id = training._id.toString()
 
-                                return training
-                            })
+                                        delete training._id
 
-                            trainings.forEach(training => {
-                                delete training.group._id
+                                        training.group.playersCount = training.group.players.length
 
-                                delete training.group.players
-                            })
+                                        return training
+                                    })
+                            }))
+                                .then(trainings => {
+                                    trainings.forEach(training => {
+                                        delete training.group._id
 
-                            return trainings
+                                        delete training.group.players
+                                    })
+
+                                    return trainings
+                                })
                         })
                 })
         })

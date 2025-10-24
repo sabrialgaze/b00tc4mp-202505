@@ -18,63 +18,62 @@ export const createPayment = (playerId, groupId, service) => {
                     if (!group) throw new NotFoundError('group not found')
                     if (!group.players.includes(playerId)) throw new NotFoundError('user is not in the group')
 
-                    // ya he pagado algun daily? si es así, lanzo error y no puedo pagar otro daily
-                    if (service === 'daily') {
-                        return Promise.all([
-
-                            Training.findOne({
-                                group: groupId,
-                                date: { $lt: new Date() }
-                            }).sort({ date: -1 }),
-
-                            Training.findOne({
-                                group: groupId,
-                                date: { $gte: new Date() }
-                            }).sort({ date: 1 }),
-                        ])
+                    // ya he pagado algun day? si es así, lanzo error y no puedo pagar otro day
+                    if (service === 'day') {
+                        return Training.findOne({
+                            group: groupId,
+                            date: { $gte: new Date() }
+                        })
                             .catch(error => { throw new SystemError('mongo error') })
-                            .then(([lastTraining, nextTraining]) => {
-                                const startDate = lastTraining.date
-                                const endDate = nextTraining.date
+                            .then(nextTraining => {
+                                if (!nextTraining) throw new NotFoundError('no next training found')
 
                                 return Payment.findOne({
                                     player: playerId,
-                                    service: 'daily',
+                                    service: 'day',
                                     group: groupId,
-                                    date: { $gte: startDate, $lt: endDate }
+                                    trainingDate: nextTraining.date
                                 })
                                     .catch(error => { throw new SystemError('mongo error') })
                                     .then(existingPayment => {
-                                        if (existingPayment) throw new DuplicityError('you have already paid a daily service')
+                                        if (existingPayment) throw new DuplicityError('you have already paid a day service')
 
-                                        return Payment.create({ player: playerId, group: groupId, service })
+                                        return Payment.create({ player: playerId, group: groupId, service, trainingDate: nextTraining.date })
                                             .catch(error => { throw new SystemError('mongo error') })
                                             .then(() => { })
                                     })
-
                             })
                     }
 
                     // ya he pagado algun month? si es así, lanzo error y no puedo pagar otro month (tiene que finalizar el ultimo entrenamiento del mes anterior)
-                    if (service === 'monthly') {
-                        return Payment.findOne({
-                            player: playerId,
-                            service: 'monthly',
+                    if (service === 'month') {
+                        return Training.findOne({
                             group: groupId,
-                            $expr: {
-                                $eq: [
-                                    { $dateToString: { format: '%Y-%m', date: '$date' } },
-                                    { $dateToString: { format: '%Y-%m', date: new Date() } }
-                                ]
-                            }
+                            date: { $gte: new Date() }
                         })
                             .catch(error => { throw new SystemError('mongo error') })
-                            .then(existingPayment => {
-                                if (existingPayment) throw new DuplicityError('you have already paid a monthly service')
+                            .then(nextTraining => {
+                                if (!nextTraining) throw new NotFoundError('no next training found')
 
-                                return Payment.create({ player: playerId, group: groupId, service })
+                                return Payment.findOne({
+                                    player: playerId,
+                                    service: 'month',
+                                    group: groupId,
+                                    $expr: {
+                                        $eq: [
+                                            { $dateToString: { format: "%Y-%m", date: "$trainingDate" } },
+                                            { $dateToString: { format: "%Y-%m", date: nextTraining.date } }
+                                        ]
+                                    }
+                                })
                                     .catch(error => { throw new SystemError('mongo error') })
-                                    .then(() => { })
+                                    .then(existingPayment => {
+                                        if (existingPayment) throw new DuplicityError('you have already paid a month service')
+
+                                        return Payment.create({ player: playerId, group: groupId, service, trainingDate: nextTraining.date })
+                                            .catch(error => { throw new SystemError('mongo error') })
+                                            .then(() => { })
+                                    })
                             })
                     }
                 })

@@ -39,13 +39,13 @@ describe('createPayment', () => {
                 .then(player => playerId = player.id))
             .then(() => Group.create({ owner: coachId, name: groupName, players: [playerId], day, time, location, coach: coachId }))
             .then(group => groupId = group.id)
-            .then(() => createPayment(playerId, groupId, 'monthly'))
+            .then(() => createPayment(playerId, groupId, 'month'))
             .then(() => Payment.findOne())
             .then(payment => {
                 expect(payment).to.exist
                 expect(payment.player.toString()).to.equal(playerId)
                 expect(payment.group.toString()).to.equal(groupId)
-                expect(payment.service).to.equal('monthly')
+                expect(payment.service).to.equal('month')
             })
     })
 
@@ -78,7 +78,7 @@ describe('createPayment', () => {
                 .then(player => playerId = player.id))
             .then(() => Group.create({ owner: coachId, name: groupName, players: [playerId], day, time, location, coach: coachId }))
             .then(group => groupId = group.id)
-            .then(() => createPayment(coachId, groupId, 'monthly'))
+            .then(() => createPayment(coachId, groupId, 'month'))
             .catch(error => caughtError = error)
             .finally(() => {
                 expect(caughtError).to.exist
@@ -116,7 +116,7 @@ describe('createPayment', () => {
                 .then(player => playerId = player.id))
             .then(() => Group.create({ owner: coachId, name: groupName, day, time, location, coach: coachId }))
             .then(group => groupId = group.id)
-            .then(() => createPayment(playerId, groupId, 'monthly'))
+            .then(() => createPayment(playerId, groupId, 'month'))
             .catch(error => caughtError = error)
             .finally(() => {
                 expect(caughtError).to.exist
@@ -146,7 +146,7 @@ describe('createPayment', () => {
             .then(coach => coachId = coach.id)
             .then(() => Group.create({ owner: coachId, name: groupName, players: [], day, time, location, coach: coachId }))
             .then(group => groupId = group.id)
-            .then(() => createPayment(failedPlayerId, groupId, 'monthly'))
+            .then(() => createPayment(failedPlayerId, groupId, 'month'))
             .catch(error => caughtError = error)
             .finally(() => {
                 expect(caughtError).to.exist
@@ -168,7 +168,7 @@ describe('createPayment', () => {
         return bcrypt.hash(password, 10)
             .then(hash => User.create({ name, email, password: hash, role }))
             .then(player => playerId = player.id)
-            .then(() => createPayment(playerId, failedGroupId, 'monthly'))
+            .then(() => createPayment(playerId, failedGroupId, 'month'))
             .catch(error => caughtError = error)
             .finally(() => {
                 expect(caughtError).to.exist

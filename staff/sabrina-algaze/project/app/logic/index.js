@@ -8,6 +8,7 @@ import { getJoinedPlayersFromTraining } from './getJoinedPlayersFromTraining'
 import { toggleJoinTraining } from './toggleJoinTraining'
 import { getGroupsForPlayer } from './getGroupsForPlayer'
 import { createPayment } from './createPayment'
+import { getPaymentsForPlayer } from './getPaymentsForPlayer'
 
 export const logic = {
     registerUser,
@@ -19,5 +20,6 @@ export const logic = {
     getJoinedPlayersFromTraining,
     toggleJoinTraining,
     getGroupsForPlayer,
-    createPayment
+    createPayment,
+    getPaymentsForPlayer
 }

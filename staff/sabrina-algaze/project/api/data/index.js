@@ -103,12 +103,16 @@ export const Payment = mongoose.model('Payment', {
     service: {
         type: String,
         required: true,
-        enum: ['monthly', 'daily']
+        enum: ['month', 'day']
     },
     date: {
         type: Date,
         required: true,
         default: Date.now
+    },
+    trainingDate: {
+        type: Date,
+        required: true,
     },
     group: {
         type: ObjectId,

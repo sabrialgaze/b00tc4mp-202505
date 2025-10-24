@@ -25,7 +25,7 @@ mongoose.connect('mongodb://127.0.0.1:27017/project')
             role: 'coach'
         })
 
-        const player = new User({
+        const player1 = new User({
             name: 'Peter Pan',
             email: 'peter@pan.com',
             password: hash,
@@ -46,9 +46,9 @@ mongoose.connect('mongodb://127.0.0.1:27017/project')
             role: 'player'
         })
 
-        return Promise.all([coach.save(), player.save(), player2.save(), player3.save()])
+        return Promise.all([coach.save(), player1.save(), player2.save(), player3.save()])
     })
-    .then(([coach, player, player2, player3]) => {
+    .then(([coach, player1, player2, player3]) => {
         console.log('Users created')
 
         const group = new Group({
@@ -58,12 +58,12 @@ mongoose.connect('mongodb://127.0.0.1:27017/project')
             location: 'Joan Miro',
             owner: coach.id,
             coach: coach.id,
-            players: [player.id, player2.id, player3.id]
+            players: [player1.id, player2.id, player3.id]
         })
 
-        return group.save().then(group => ({ group, player, player2, player3 }))
+        return group.save().then(group => ({ group, player1, player2, player3 }))
     })
-    .then(({ group, player, player2, player3 }) => {
+    .then(({ group, player1, player2, player3 }) => {
         console.log('Group created')
 
         const nextTrainingDate = calculateNextTrainingDate(getDayOfWeekNumber('wednesday'))
@@ -75,7 +75,7 @@ mongoose.connect('mongodb://127.0.0.1:27017/project')
             group: group.id,
             date: nextTrainingDate,
             coach: group.coach,
-            joined: [player.id, player2.id, player3.id]
+            joined: [player2.id, player3.id]
         })
 
         const pastTrainingDate = new Date(nextTrainingDate)
@@ -87,18 +87,45 @@ mongoose.connect('mongodb://127.0.0.1:27017/project')
             group: group.id,
             date: pastTrainingDate,
             coach: group.coach,
-            joined: [player.id, player2.id]
+            joined: [player1.id, player2.id, player3.id]
         })
 
-        return Promise.all([nextTraining.save(), pastTraining.save()])
-    })
-    .then(() => {
-        console.log('Next and past training created')
+        const notJoinedPastTraining = new Training({
+            group: group.id,
+            date: new Date(2025, 7, 27, 20, 0, 0, 0),
+            coach: group.coach,
+            joined: [player2.id]
+        })
 
+        return Promise.all([nextTraining.save(), pastTraining.save(), notJoinedPastTraining.save()]).then(([nextTraining, pastTraining, notJoinedPastTraining]) => ({ player1, group }))
+    })
+    .then(({ player1, group }) => {
+        console.log('Next, past and not joined past training created')
+
+        const payment1 = new Payment({
+            player: player1.id,
+            group: group.id,
+            service: 'month',
+            date: new Date(2025, 8, 1),
+            trainingDate: new Date(2025, 8, 1, 20, 0, 0, 0)
+        })
+
+        const payment2 = new Payment({
+            player: player1.id,
+            group: group.id,
+            service: 'day',
+            date: new Date(2025, 9, 14),
+            trainingDate: new Date(2025, 9, 15, 20, 0, 0, 0)
+        })
+
+        return Promise.all([payment1.save(), payment2.save()])
+    })
+    .then(([payment1, payment2]) => {
+        console.log('Payments created')
+
+        return mongoose.disconnect()
     })
     .catch(error => {
         console.error(error)
-    })
-    .finally(() => {
         return mongoose.disconnect()
     })

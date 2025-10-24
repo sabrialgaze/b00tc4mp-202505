@@ -2,37 +2,31 @@ import { data } from '../data'
 import { errors, SystemError } from 'com'
 
 /**
- * Creates a payment for a player in a group.
+ * Gets the payments for the current player.
  * @example
- * ```js
- * // demo
- * 
- * createPayment("68e6e92978bd71d33dd12c70", "month")
- *     .then(payment => console.log(payment))
- *     .catch(error => console.error(error))
- * ```
- * @param {*} groupId The group id. 
- * @param {*} service The service to create the payment for.
- * 
+ ```js
+ // demo
+
+getPaymentsForPlayer()
+     .then(payments => console.log(payments))
+     .catch(error => console.error(error))
+```
  */
 
-export const createPayment = (groupId, service) => {
+export const getPaymentsForPlayer = () => {
     return fetch(`${import.meta.env.VITE_API_URL}/payments`, {
-        method: 'POST',
+        method: 'GET',
         headers: {
-            'Content-Type': 'application/json',
             Authorization: `Bearer ${data.loadToken()}`
-        },
-        body: JSON.stringify({
-            groupId,
-            service
-        })
+        }
     })
         .catch(error => { throw new Error('connection error') })
         .then(res => {
             const { status } = res
 
-            if (status === 201) return
+            if (status === 200)
+                return res.json()
+                    .catch(error => { throw new Error('json error') })
 
             return res.json()
                 .catch(error => { throw new Error('json error') })

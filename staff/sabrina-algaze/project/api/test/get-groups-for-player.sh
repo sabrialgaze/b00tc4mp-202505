@@ -1,1 +1,1 @@
-curl -X GET -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2OGU5MTUwZjQ2YjgzMmZkMTM2MGZjMmMiLCJyb2xlIjoicGxheWVyIiwiaWF0IjoxNzYwMzAwNjY0LCJleHAiOjE3NjAzMDQyNjR9.ktfXGHJ1QaYvp4UDCBWTeB0KvNy9SNXgnln1sCQlWow' http://localhost:9090/groups -v
+curl -X GET -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2OGY4ZmZjNzU5NGQ0MzhmZWUwNTVkNjciLCJyb2xlIjoicGxheWVyIiwiaWF0IjoxNzYxMTQ4OTE5LCJleHAiOjE3NjExNTI1MTl9.2a5EqjTZdyegrxK881KZbA8T_8-tWfP2sNhkveqc9pw' http://localhost:9090/groups -v

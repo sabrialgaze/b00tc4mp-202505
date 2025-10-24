@@ -72,6 +72,6 @@ export const validate = {
 
     service(service) {
         if (typeof service !== 'string') throw new ValidationError('invalid service type')
-        if (!['monthly', 'daily'].includes(service)) throw new ValidationError('invalid service')
+        if (!['month', 'day'].includes(service)) throw new ValidationError('invalid service')
     },
 }
