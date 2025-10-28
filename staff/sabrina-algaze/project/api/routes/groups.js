@@ -6,7 +6,7 @@ export const groups = Router()
 
 const jsonBodyParser = express.json()
 
-groups.get('/', jsonBodyParser, (req, res, next) => {
+groups.get('/player', jsonBodyParser, (req, res, next) => {
     try {
         const token = req.headers.authorization.slice(7)
         const payload = jwt.verify(token, process.env.JWT_SECRET)
@@ -14,6 +14,36 @@ groups.get('/', jsonBodyParser, (req, res, next) => {
 
         logic.getGroupsForPlayer(playerId)
             .then(groups => res.status(200).json(groups))
+            .catch(error => next(error))
+    } catch (error) {
+        next(error)
+    }
+})
+
+groups.get('/coach', jsonBodyParser, (req, res, next) => {
+    try {
+        const token = req.headers.authorization.slice(7)
+        const payload = jwt.verify(token, process.env.JWT_SECRET)
+        const { sub: coachId } = payload
+
+        logic.getGroupsForCoach(coachId)
+            .then(groups => res.status(200).json(groups))
+            .catch(error => next(error))
+    } catch (error) {
+        next(error)
+    }
+})
+
+groups.get('/:groupId/info', jsonBodyParser, (req, res, next) => {
+    try {
+        const token = req.headers.authorization.slice(7)
+        const payload = jwt.verify(token, process.env.JWT_SECRET)
+        const { sub: coachId } = payload
+
+        const { groupId } = req.params
+
+        logic.getGroupInfoForCoach(coachId, groupId)
+            .then(players => res.status(200).json(players))
             .catch(error => next(error))
     } catch (error) {
         next(error)

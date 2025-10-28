@@ -97,9 +97,9 @@ mongoose.connect('mongodb://127.0.0.1:27017/project')
             joined: [player2.id]
         })
 
-        return Promise.all([nextTraining.save(), pastTraining.save(), notJoinedPastTraining.save()]).then(([nextTraining, pastTraining, notJoinedPastTraining]) => ({ player1, group }))
+        return Promise.all([nextTraining.save(), pastTraining.save(), notJoinedPastTraining.save()]).then(([nextTraining, pastTraining, notJoinedPastTraining]) => ({ player1, group, pastTrainingDate }))
     })
-    .then(({ player1, group }) => {
+    .then(({ player1, group, pastTrainingDate }) => {
         console.log('Next, past and not joined past training created')
 
         const payment1 = new Payment({
@@ -115,7 +115,7 @@ mongoose.connect('mongodb://127.0.0.1:27017/project')
             group: group.id,
             service: 'day',
             date: new Date(2025, 9, 14),
-            trainingDate: new Date(2025, 9, 15, 20, 0, 0, 0)
+            trainingDate: pastTrainingDate
         })
 
         return Promise.all([payment1.save(), payment2.save()])

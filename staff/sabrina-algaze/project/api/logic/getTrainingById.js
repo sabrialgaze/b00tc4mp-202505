@@ -12,6 +12,7 @@ export const getTrainingById = (userId, trainingId) => {
 
             return Training.findById(trainingId)
                 .populate('group', 'name location players')
+                // hacer populate de joined
                 .lean()
                 .catch(error => { throw new SystemError('mongo error') })
                 .then(training => {

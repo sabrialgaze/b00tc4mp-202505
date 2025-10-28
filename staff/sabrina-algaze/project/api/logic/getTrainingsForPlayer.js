@@ -54,13 +54,6 @@ export const getTrainingsForPlayer = playerId => {
                                                 trainingDate: training.date
                                             })
                                                 .then(dayPayment => {
-                                                    console.log('=== DEBUG PAYMENT ===')
-                                                    console.log('Player ID:', playerId)
-                                                    console.log('Group ID:', training.group._id)
-                                                    console.log('Training date:', training.date)
-                                                    console.log('Payment found:', dayPayment)
-                                                    console.log('====================')
-
                                                     training.isPaid = !!dayPayment
                                                 })
                                         }
