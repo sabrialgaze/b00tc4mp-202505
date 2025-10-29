@@ -6,7 +6,7 @@ import { getGroupInfoForCoach } from './getGroupInfoForCoach.js'
 import { User, Group } from '../data/index.js'
 import { RoleError } from 'com'
 
-describe.only('getGroupInfoForCoach', () => {
+describe('getGroupInfoForCoach', () => {
     before(() => connect(process.env.MONGO_URI_TEST))
 
     beforeEach(() => Promise.all([User.deleteMany(), Group.deleteMany()]))

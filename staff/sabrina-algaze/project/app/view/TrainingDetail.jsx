@@ -12,22 +12,21 @@ export const TrainingDetail = () => {
 
     const loadTrainingData = () => {
         try {
-            Promise.all([
-                logic.getTrainingById(trainingId),
-                logic.getJoinedPlayersFromTraining(trainingId)
-            ])
-                .then(([training, joinedPlayers]) => {
+            logic.getTrainingInfo(trainingId)
+                .then(training => {
                     setTraining(training)
-                    setJoinedPlayers(joinedPlayers)
+                    setJoinedPlayers(training.joined)
                 })
                 .catch(error => {
                     console.error(error)
+
+                    alert(error.message)
                 })
         } catch (error) {
             console.error(error)
+
             alert(error.message)
         }
-
     }
 
     const handleToggleJoinTrainingClick = () => {

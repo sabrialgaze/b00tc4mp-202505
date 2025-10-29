@@ -1,7 +1,7 @@
 import { validate, NotFoundError, SystemError } from 'com'
 import { Training, User } from '../data/index.js'
 
-export const getTrainingById = (userId, trainingId) => {
+export const getTrainingInfo = (userId, trainingId) => {
     validate.userId(userId)
     validate.trainingId(trainingId)
 
@@ -12,7 +12,7 @@ export const getTrainingById = (userId, trainingId) => {
 
             return Training.findById(trainingId)
                 .populate('group', 'name location players')
-                // hacer populate de joined
+                .populate('joined', 'name')
                 .lean()
                 .catch(error => { throw new SystemError('mongo error') })
                 .then(training => {
@@ -21,10 +21,19 @@ export const getTrainingById = (userId, trainingId) => {
                     training.id = training._id.toString()
                     delete training._id
 
+                    training.group.id = training.group._id.toString()
+                    delete training.group._id
+                    delete training.group.__v
+
                     training.group.playersCount = training.group.players.length
                     delete training.group.players
 
-                    training.isJoined = training.joined.some(joinedPlayer => joinedPlayer.toString() === userId)
+                    training.joined.forEach(joinedPlayer => {
+                        joinedPlayer.id = joinedPlayer._id.toString()
+                        delete joinedPlayer._id
+                    })
+
+                    training.isJoined = training.joined.some(joinedPlayer => joinedPlayer.id === userId)
 
                     return training
                 })

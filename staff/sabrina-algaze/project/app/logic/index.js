@@ -3,8 +3,7 @@ import { loginUser } from './loginUser'
 import { logoutUser } from './logoutUser'
 import { isUserLoggedIn } from './isUserLoggedIn'
 import { getTrainingsForPlayer } from './getTrainingsForPlayer'
-import { getTrainingById } from './getTrainingById'
-import { getJoinedPlayersFromTraining } from './getJoinedPlayersFromTraining'
+import { getTrainingInfo } from './getTrainingInfo.js'
 import { toggleJoinTraining } from './toggleJoinTraining'
 import { getGroupsForPlayer } from './getGroupsForPlayer'
 import { getGroupsForCoach } from './getGroupsForCoach'
@@ -19,8 +18,7 @@ export const logic = {
     logoutUser,
     isUserLoggedIn,
     getTrainingsForPlayer,
-    getTrainingById,
-    getJoinedPlayersFromTraining,
+    getTrainingInfo,
     toggleJoinTraining,
     getGroupsForPlayer,
     getGroupsForCoach,

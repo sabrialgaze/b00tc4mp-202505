@@ -20,22 +20,6 @@ trainings.get('/', jsonBodyParser, (req, res, next) => {
     }
 })
 
-trainings.get('/:trainingId/players', jsonBodyParser, (req, res, next) => {
-    try {
-        const token = req.headers.authorization.slice(7)
-        const payload = jwt.verify(token, process.env.JWT_SECRET)
-        const { sub: playerId } = payload
-
-        const { trainingId } = req.params
-
-        logic.getJoinedPlayersFromTraining(playerId, trainingId)
-            .then(players => res.status(200).json(players))
-            .catch(error => next(error))
-    } catch (error) {
-        next(error)
-    }
-})
-
 trainings.get('/:trainingId', jsonBodyParser, (req, res, next) => {
     try {
         const token = req.headers.authorization.slice(7)
@@ -43,7 +27,7 @@ trainings.get('/:trainingId', jsonBodyParser, (req, res, next) => {
         const { sub: userId } = payload
         const { trainingId } = req.params
 
-        logic.getTrainingById(userId, trainingId)
+        logic.getTrainingInfo(userId, trainingId)
             .then(training => res.status(200).json(training))
             .catch(error => next(error))
     } catch (error) {

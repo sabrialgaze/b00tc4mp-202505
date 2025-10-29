@@ -8,8 +8,7 @@ import { removePlayerFromGroup } from './removePlayerFromGroup.js'
 import { createTraining } from './createTraining.js'
 import { toggleJoinTraining } from './toggleJoinTraining.js'
 import { getTrainingsForPlayer } from './getTrainingsForPlayer.js'
-import { getTrainingById } from './getTrainingById.js'
-import { getJoinedPlayersFromTraining } from './getJoinedPlayersFromTraining.js'
+import { getTrainingInfo } from './getTrainingInfo.js'
 import { createPayment } from './createPayment.js'
 import { getGroupsForCoach } from './getGroupsForCoach.js'
 import { getGroupsForPlayer } from './getGroupsForPlayer.js'
@@ -26,9 +25,8 @@ export const logic = {
     removePlayerFromGroup,
     createTraining,
     getTrainingsForPlayer,
-    getTrainingById,
+    getTrainingInfo,
     toggleJoinTraining,
-    getJoinedPlayersFromTraining,
     createPayment,
     getGroupsForCoach,
     getGroupsForPlayer,

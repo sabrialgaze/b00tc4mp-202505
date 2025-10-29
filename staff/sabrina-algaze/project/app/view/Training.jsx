@@ -20,8 +20,11 @@ export const Training = ({ training, onTrainingClicked }) => {
             <div>
                 <div className="text-lg font-semibold text-left">{helper.friendlyISODate(training.date)} - Group: {training.group.name}</div>
                 <div className="text-sm text-left mt-1">{training.group.location} {!training.isPaid && (
-                    <span className="px-2 py-1 text-xs bg-red-200 text-red-800 rounded-full"> {isPastTraining ? 'not joined' : 'pending payment'}</span>
+                    <span className="px-2 py-1 text-xs bg-red-200 text-red-800 rounded-full"> {isPastTraining ? 'not paid' : 'pending payment'}</span>
                 )}
+                    {isPastTraining && training.isPaid && (
+                        <span className="px-2 py-1 text-xs bg-orange-200 text-orange-800 rounded-full">not joined</span>
+                    )}
                 </div>
             </div>
             <div className="text-right">

@@ -2,16 +2,16 @@ import { connect, disconnect } from 'mongoose'
 import { expect } from 'chai'
 import bcrypt from 'bcryptjs'
 
-import { getTrainingById } from './getTrainingById.js'
+import { getTrainingInfo } from './getTrainingInfo.js'
 import { User, Group, Training } from '../data/index.js'
 import { NotFoundError } from 'com'
 
-describe('getTrainingById', () => {
+describe('getTrainingInfo', () => {
     before(() => connect(process.env.MONGO_URI_TEST))
 
     beforeEach(() => Promise.all([User.deleteMany(), Group.deleteMany(), Training.deleteMany()]))
 
-    it('gets a training by id for a coach role user', () => {
+    it('gets a training info for a coach role user', () => {
         const name = 'Pepito Grillo'
         const email = 'pepito@grillo.com'
         const password = 'pepito123'
@@ -33,7 +33,7 @@ describe('getTrainingById', () => {
             .then(group => groupId = group.id)
             .then(() => Training.create({ group: groupId, date: new Date(), coach: coachId }))
             .then(training => trainingId = training.id)
-            .then(() => getTrainingById(coachId, trainingId))
+            .then(() => getTrainingInfo(coachId, trainingId))
             .then(training => {
                 expect(training).to.exist
                 expect(training.coach.toString()).to.equal(coachId)
@@ -47,7 +47,7 @@ describe('getTrainingById', () => {
             })
     })
 
-    it('gets a training by id for a player role user', () => {
+    it('gets a training info for a player role user', () => {
         const name = 'Pepito Grillo'
         const email = 'pepito@grillo.com'
         const password = 'pepito123'
@@ -78,7 +78,7 @@ describe('getTrainingById', () => {
             .then(group => groupId = group.id)
             .then(() => Training.create({ group: groupId, date: new Date(), coach: coachId }))
             .then(training => trainingId = training.id)
-            .then(() => getTrainingById(playerId, trainingId))
+            .then(() => getTrainingInfo(playerId, trainingId))
             .then(training => {
                 expect(training).to.exist
                 expect(training.coach.toString()).to.equal(coachId)
@@ -92,7 +92,7 @@ describe('getTrainingById', () => {
             })
     })
 
-    it('fails to get a training by id for a non-existent user', () => {
+    it('fails to get a training info for a non-existent user', () => {
         const name = 'Pepito Grillo'
         const email = 'pepito@grillo.com'
         const password = 'pepito123'
@@ -116,7 +116,7 @@ describe('getTrainingById', () => {
             .then(group => groupId = group.id)
             .then(() => Training.create({ group: groupId, date: new Date(), coach: coachId }))
             .then(training => trainingId = training.id)
-            .then(() => getTrainingById(failedUserId, trainingId))
+            .then(() => getTrainingInfo(failedUserId, trainingId))
             .catch(error => caughtError = error)
             .finally(() => {
                 expect(caughtError).to.exist
@@ -125,7 +125,7 @@ describe('getTrainingById', () => {
             })
     })
 
-    it('fails to get a training with a non-existent id', () => {
+    it('fails to get a training info with a non-existent id', () => {
         const name = 'Pepito Grillo'
         const email = 'pepito@grillo.com'
         const password = 'pepito123'
@@ -138,7 +138,7 @@ describe('getTrainingById', () => {
         return bcrypt.hash(password, 10)
             .then(hash => User.create({ name, email, password: hash, role }))
             .then(coach => coachId = coach.id)
-            .then(() => getTrainingById(coachId, failedTrainingId))
+            .then(() => getTrainingInfo(coachId, failedTrainingId))
             .catch(error => caughtError = error)
             .finally(() => {
                 expect(caughtError).to.exist

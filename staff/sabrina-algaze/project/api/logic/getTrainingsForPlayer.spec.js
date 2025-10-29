@@ -13,7 +13,7 @@ describe('getTrainingsForPlayer', () => {
 
     beforeEach(() => Promise.all([User.deleteMany(), Group.deleteMany(), Training.deleteMany()]))
 
-    it('gets the trainings for a player with a future training', () => {
+    it('gets the future trainings for a player', () => {
         const name = 'Pepito Grillo'
         const email = 'pepito@grillo.com'
         const password = 'pepito123'
@@ -60,7 +60,7 @@ describe('getTrainingsForPlayer', () => {
             })
     })
 
-    it('gets the trainings for a player with a past training', () => {
+    it('gets the past trainings for a player', () => {
         const name = 'Pepito Grillo'
         const email = 'pepito@grillo.com'
         const password = 'pepito123'
@@ -108,7 +108,7 @@ describe('getTrainingsForPlayer', () => {
             })
     })
 
-    it('gets the trainings for a player with not joined past training', () => {
+    it('gets the past not joined trainings for a player', () => {
         const name = 'Pepito Grillo'
         const email = 'pepito@grillo.com'
         const password = 'pepito123'
@@ -146,7 +146,9 @@ describe('getTrainingsForPlayer', () => {
             .then(() => getTrainingsForPlayer(playerId))
             .then(trainings => {
                 expect(trainings).to.exist.and.to.be.an.instanceOf(Array)
-                expect(trainings.length).to.equal(0)
+                expect(trainings.length).to.equal(1)
+                expect(trainings[0].joined).to.exist.and.to.be.an.instanceOf(Array)
+                expect(trainings[0].joined.length).to.equal(0)
             })
     })
 

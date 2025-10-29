@@ -87,7 +87,7 @@ mongoose.connect('mongodb://127.0.0.1:27017/project')
             group: group.id,
             date: pastTrainingDate,
             coach: group.coach,
-            joined: [player1.id, player2.id, player3.id]
+            joined: [player2.id, player3.id]
         })
 
         const notJoinedPastTraining = new Training({
