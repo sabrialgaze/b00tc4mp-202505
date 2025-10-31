@@ -28,13 +28,14 @@ export const getTrainingInfo = (userId, trainingId) => {
                     training.group.playersCount = training.group.players.length
                     delete training.group.players
 
+                    training.isPast = training.date < new Date()
+
+                    training.isJoined = training.joined.some(joinedPlayer => joinedPlayer.id === userId)
+
                     training.joined.forEach(joinedPlayer => {
                         joinedPlayer.id = joinedPlayer._id.toString()
                         delete joinedPlayer._id
                     })
-
-                    training.isJoined = training.joined.some(joinedPlayer => joinedPlayer.id === userId)
-
                     return training
                 })
         })

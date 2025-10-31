@@ -6,7 +6,7 @@ export const trainings = Router()
 
 const jsonBodyParser = express.json()
 
-trainings.get('/', jsonBodyParser, (req, res, next) => {
+trainings.get('/player', jsonBodyParser, (req, res, next) => {
     try {
         const token = req.headers.authorization.slice(7)
         const payload = jwt.verify(token, process.env.JWT_SECRET)
@@ -20,6 +20,19 @@ trainings.get('/', jsonBodyParser, (req, res, next) => {
     }
 })
 
+trainings.get('/coach', jsonBodyParser, (req, res, next) => {
+    try {
+        const token = req.headers.authorization.slice(7)
+        const payload = jwt.verify(token, process.env.JWT_SECRET)
+        const { sub: coachId } = payload
+
+        logic.getTrainingsForCoach(coachId)
+            .then(trainings => res.status(200).json(trainings))
+            .catch(error => next(error))
+    } catch (error) {
+        next(error)
+    }
+})
 trainings.get('/:trainingId', jsonBodyParser, (req, res, next) => {
     try {
         const token = req.headers.authorization.slice(7)

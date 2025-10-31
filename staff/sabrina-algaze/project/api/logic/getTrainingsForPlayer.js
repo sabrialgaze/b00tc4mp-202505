@@ -22,10 +22,7 @@ export const getTrainingsForPlayer = playerId => {
                         group: { $in: groupIds }
                     }, { __v: 0 })
                         .sort({ date: -1 })
-                        .populate({
-                            path: 'group',
-                            select: 'name location players'
-                        })
+                        .populate('group', 'name location players')
                         .lean()
                         .catch(error => { throw new SystemError('mongo error') })
                         .then(trainings => {
@@ -64,6 +61,10 @@ export const getTrainingsForPlayer = playerId => {
                                         delete training._id
 
                                         training.group.playersCount = training.group.players.length
+
+                                        training.isPast = training.date < new Date()
+
+                                        training.isJoined = training.joined.some(joinedPlayer => joinedPlayer.toString() === playerId)
 
                                         return training
                                     })

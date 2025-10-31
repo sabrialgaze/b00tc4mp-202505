@@ -61,6 +61,10 @@ export const Home = ({ onUserLoggedOut }) => {
                     <>
                         <Route path="/" element={<Groups onGroupClicked={handleGroupClicked} />} />
                         <Route path="/group/:groupId" element={<GroupDetail />} />
+                        <Route path="/trainings" element={<Trainings onTrainingClicked={handleTrainingClicked} />} />
+                        <Route path="/training/:trainingId" element={<TrainingDetail />} />
+
+
                     </>
                 )}
             </Routes>
@@ -68,15 +72,16 @@ export const Home = ({ onUserLoggedOut }) => {
 
         <footer className="fixed bottom-0 left-0 right-0 py-6 bg-gray-300">
             <div className="flex justify-center space-x-4">
-                {role === 'player' ? (
+                {role === 'player' && (
                     <>
                         <button type="button"><Link to="/"><CalendarIcon className="w-10 h-10 text-gray-700" /></Link></button>
                         <button type="button"><Link to="/payments"><BanknotesIcon className="w-10 h-10 text-gray-700" /></Link></button>
                     </>
-                ) : (
+                )}
+                {role === 'coach' && (
                     <>
                         <button type="button"><Link to="/"><UserGroupIcon className="w-10 h-10 text-gray-700" /></Link></button>
-                        <button type="button"><Link to="/"><CalendarIcon className="w-10 h-10 text-gray-700" /></Link></button>
+                        <button type="button"><Link to="/trainings"><CalendarIcon className="w-10 h-10 text-gray-700" /></Link></button>
                     </>
                 )}
             </div>

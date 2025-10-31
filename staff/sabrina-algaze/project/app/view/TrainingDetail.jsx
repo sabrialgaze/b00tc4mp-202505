@@ -2,15 +2,20 @@ import { useState, useEffect } from 'react'
 import { useParams } from 'react-router'
 import { logic } from '../logic'
 import { helper } from './helper'
+import { useRole } from '../hooks'
 
 export const TrainingDetail = () => {
     const { trainingId } = useParams()
     const [training, setTraining] = useState(null)
     const [joinedPlayers, setJoinedPlayers] = useState([])
 
+    const role = useRole()
+
     const isPastTraining = training && new Date(training.date) < new Date()
 
     const loadTrainingData = () => {
+        if (!role) return
+
         try {
             logic.getTrainingInfo(trainingId)
                 .then(training => {
@@ -31,14 +36,16 @@ export const TrainingDetail = () => {
 
     const handleToggleJoinTrainingClick = () => {
         try {
-            logic.toggleJoinTraining(trainingId)
-                .then(() => {
-                    loadTrainingData()
-                })
-                .catch(error => {
-                    console.error(error)
-                    alert(error.message)
-                })
+            if (role === 'player') {
+                logic.toggleJoinTraining(trainingId)
+                    .then(() => {
+                        loadTrainingData()
+                    })
+                    .catch(error => {
+                        console.error(error)
+                        alert(error.message)
+                    })
+            }
         } catch (error) {
             console.error(error)
             alert(error.message)
@@ -47,7 +54,7 @@ export const TrainingDetail = () => {
 
     useEffect(() => {
         loadTrainingData()
-    }, [])
+    }, [role])
 
     console.debug('TrainingDetail -> render')
 
@@ -61,7 +68,7 @@ export const TrainingDetail = () => {
                     {training.group.location}
                 </h2>
             </div>
-            {!isPastTraining && (<button onClick={handleToggleJoinTrainingClick} className="border-2 rounded-xl border-black-600 px-4 py-2 hover:bg-gray-100">
+            {role === 'player' && !isPastTraining && (<button onClick={handleToggleJoinTrainingClick} className="border-2 rounded-xl border-black-600 px-4 py-2 hover:bg-gray-100">
                 {training.isJoined ? 'Unjoin' : 'Join'}
             </button>)}
         </div>

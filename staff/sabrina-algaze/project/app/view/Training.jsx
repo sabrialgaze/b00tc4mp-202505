@@ -1,17 +1,18 @@
 import { helper } from './helper'
+import { useRole } from '../hooks'
 
 export const Training = ({ training, onTrainingClicked }) => {
     console.debug('Training -> render')
 
+    const role = useRole()
+
     const handleTrainingClick = () => {
-        if (!training.isPaid) return
+        if (role === 'player' && !training.isPaid) return
 
         onTrainingClicked(training.id)
     }
 
-    const isPastTraining = new Date(training.date) < new Date()
-
-    const cardClases = isPastTraining
+    const cardClases = training.isPast
         ? "border-2 rounded-xl border-black-600 bg-gray-100 p-4 mt-2"
         : "border-2 rounded-xl border-black-600 bg-green-100 p-4 mt-2"
 
@@ -19,10 +20,10 @@ export const Training = ({ training, onTrainingClicked }) => {
         <div className="flex justify-between items-start">
             <div>
                 <div className="text-lg font-semibold text-left">{helper.friendlyISODate(training.date)} - Group: {training.group.name}</div>
-                <div className="text-sm text-left mt-1">{training.group.location} {!training.isPaid && (
-                    <span className="px-2 py-1 text-xs bg-red-200 text-red-800 rounded-full"> {isPastTraining ? 'not paid' : 'pending payment'}</span>
+                <div className="text-sm text-left mt-1">{training.group.location} {role === 'player' && !training.isPaid && (
+                    <span className="px-2 py-1 text-xs bg-red-200 text-red-800 rounded-full"> {training.isPast ? 'not paid' : 'pending payment'}</span>
                 )}
-                    {isPastTraining && training.isPaid && (
+                    {role === 'player' && training.isPast && training.isPaid && !training.isJoined && (
                         <span className="px-2 py-1 text-xs bg-orange-200 text-orange-800 rounded-full">not joined</span>
                     )}
                 </div>

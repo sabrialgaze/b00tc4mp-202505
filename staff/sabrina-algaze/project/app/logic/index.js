@@ -3,6 +3,7 @@ import { loginUser } from './loginUser'
 import { logoutUser } from './logoutUser'
 import { isUserLoggedIn } from './isUserLoggedIn'
 import { getTrainingsForPlayer } from './getTrainingsForPlayer'
+import { getTrainingsForCoach } from './getTrainingsForCoach'
 import { getTrainingInfo } from './getTrainingInfo.js'
 import { toggleJoinTraining } from './toggleJoinTraining'
 import { getGroupsForPlayer } from './getGroupsForPlayer'
@@ -18,6 +19,7 @@ export const logic = {
     logoutUser,
     isUserLoggedIn,
     getTrainingsForPlayer,
+    getTrainingsForCoach,
     getTrainingInfo,
     toggleJoinTraining,
     getGroupsForPlayer,

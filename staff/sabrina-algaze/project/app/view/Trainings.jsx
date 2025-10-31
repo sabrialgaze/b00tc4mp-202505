@@ -1,21 +1,37 @@
 import { useState, useEffect } from 'react'
 import { Training } from './Training'
 import { logic } from '../logic'
+import { useRole } from '../hooks'
 
 export const Trainings = ({ onTrainingClicked }) => {
     const [trainings, setTrainings] = useState([])
 
-    const loadTrainings = () => {
-        try {
-            logic.getTrainingsForPlayer()
-                .then(trainings => {
-                    setTrainings(trainings)
-                })
-                .catch(error => {
-                    console.error(error)
+    const role = useRole()
 
-                    alert(error.message)
-                })
+    const loadTrainings = () => {
+        if (!role) return
+
+        try {
+            if (role === 'player') {
+                logic.getTrainingsForPlayer()
+                    .then(trainings => {
+                        setTrainings(trainings)
+                    })
+                    .catch(error => {
+                        console.error(error)
+                        alert(error.message)
+                    })
+            } else if (role === 'coach') {
+                logic.getTrainingsForCoach()
+                    .then(trainings => {
+                        setTrainings(trainings)
+                    })
+                    .catch(error => {
+                        console.error(error)
+
+                        alert(error.message)
+                    })
+            }
         } catch (error) {
             console.error(error)
 
@@ -23,7 +39,7 @@ export const Trainings = ({ onTrainingClicked }) => {
         }
     }
 
-    useEffect(() => loadTrainings(), [])
+    useEffect(() => loadTrainings(), [role])
 
     console.debug('Trainings -> render')
 

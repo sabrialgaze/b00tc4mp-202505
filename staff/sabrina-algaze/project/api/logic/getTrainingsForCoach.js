@@ -5,6 +5,7 @@ export const getTrainingsForCoach = coachId => {
     validate.userId(coachId)
 
     return User.findById(coachId)
+        .lean()
         .catch(error => { throw new SystemError('mongo error') })
         .then(user => {
             if (!user) throw new NotFoundError('user not found')

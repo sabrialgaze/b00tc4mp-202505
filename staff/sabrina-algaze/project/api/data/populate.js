@@ -87,20 +87,27 @@ mongoose.connect('mongodb://127.0.0.1:27017/project')
             group: group.id,
             date: pastTrainingDate,
             coach: group.coach,
-            joined: [player2.id, player3.id]
+            joined: [player1.id, player2.id, player3.id]
         })
 
         const notJoinedPastTraining = new Training({
+            group: group.id,
+            date: new Date(pastTrainingDate.getTime() - 7 * 24 * 60 * 60 * 1000),
+            coach: group.coach,
+            joined: [player2.id]
+        })
+
+        const notPaidPastTraining = new Training({
             group: group.id,
             date: new Date(2025, 7, 27, 20, 0, 0, 0),
             coach: group.coach,
             joined: [player2.id]
         })
 
-        return Promise.all([nextTraining.save(), pastTraining.save(), notJoinedPastTraining.save()]).then(([nextTraining, pastTraining, notJoinedPastTraining]) => ({ player1, group, pastTrainingDate }))
+        return Promise.all([nextTraining.save(), pastTraining.save(), notJoinedPastTraining.save(), notPaidPastTraining.save()]).then(([nextTraining, pastTraining, notJoinedPastTraining, notPaidPastTraining]) => ({ player1, group, pastTrainingDate }))
     })
     .then(({ player1, group, pastTrainingDate }) => {
-        console.log('Next, past and not joined past training created')
+        console.log('Trainings created')
 
         const payment1 = new Payment({
             player: player1.id,
@@ -118,9 +125,17 @@ mongoose.connect('mongodb://127.0.0.1:27017/project')
             trainingDate: pastTrainingDate
         })
 
-        return Promise.all([payment1.save(), payment2.save()])
+        const payment3 = new Payment({
+            player: player1.id,
+            group: group.id,
+            service: 'day',
+            date: new Date(pastTrainingDate.getTime() - 8 * 24 * 60 * 60 * 1000),
+            trainingDate: new Date(pastTrainingDate.getTime() - 7 * 24 * 60 * 60 * 1000)
+        })
+
+        return Promise.all([payment1.save(), payment2.save(), payment3.save()])
     })
-    .then(([payment1, payment2]) => {
+    .then(([payment1, payment2, payment3]) => {
         console.log('Payments created')
 
         return mongoose.disconnect()
