@@ -13,12 +13,14 @@ import { createPayment } from './createPayment'
 import { getPaymentsForPlayer } from './getPaymentsForPlayer'
 import { getUserRole } from './getUserRole'
 import { addPlayerToGroup } from './addPlayerToGroup'
+import { createGroup } from './createGroup'
 
 export const logic = {
     registerUser,
     loginUser,
     logoutUser,
     isUserLoggedIn,
+    createGroup,
     getTrainingsForPlayer,
     getTrainingsForCoach,
     getTrainingInfo,

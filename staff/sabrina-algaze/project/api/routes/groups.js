@@ -6,6 +6,22 @@ export const groups = Router()
 
 const jsonBodyParser = express.json()
 
+groups.post('/', jsonBodyParser, (req, res, next) => {
+    try {
+        const token = req.headers.authorization.slice(7)
+        const payload = jwt.verify(token, process.env.JWT_SECRET)
+        const { sub: ownerId } = payload
+
+        const { name, day, time, location, coachEmail } = req.body
+
+        logic.createGroup(ownerId, name, day, time, location, coachEmail)
+            .then(() => res.status(201).send())
+            .catch(error => next(error))
+    } catch (error) {
+        next(error)
+    }
+})
+
 groups.get('/player', jsonBodyParser, (req, res, next) => {
     try {
         const token = req.headers.authorization.slice(7)
@@ -66,3 +82,4 @@ groups.patch('/:groupId/players/add', jsonBodyParser, (req, res, next) => {
         next(error)
     }
 })
+

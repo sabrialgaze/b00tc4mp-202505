@@ -10,12 +10,14 @@ export const createGroup = (ownerId, name, day, time, location, coachEmail) => {
     validate.email(coachEmail)
 
     return User.findById(ownerId)
+        .lean()
         .catch(error => { throw new SystemError('mongo error') })
         .then(user => {
             if (!user) throw new NotFoundError('user not found')
             if (user.role !== 'coach') throw new RoleError('user role is not coach')
 
             return User.findOne({ email: coachEmail })
+                .lean()
                 .catch(error => { throw new SystemError('mongo error') })
                 .then(coach => {
                     if (!coach) throw new NotFoundError('coach not found')
@@ -26,7 +28,7 @@ export const createGroup = (ownerId, name, day, time, location, coachEmail) => {
                         day,
                         time,
                         location,
-                        coach: coach.id,
+                        coach: coach._id,
                     })
                         .catch(error => { throw new SystemError('mongo error') })
                         .then(group => { })

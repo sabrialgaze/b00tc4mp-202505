@@ -58,6 +58,7 @@ export const validate = {
 
     location(location) {
         if (typeof location !== 'string') throw new ValidationError('invalid location type')
+        if (!location.length) throw new ValidationError('invalid location length')
     },
 
     updates(updates) {
