@@ -27,6 +27,8 @@ export const getTrainingsForCoach = coachId => {
                         training.group.id = training.group._id.toString()
 
                         training.group.playersCount = training.group.players.length
+
+                        training.isPast = training.date < new Date()
                     })
                     trainings.forEach(training => {
                         delete training.group._id

@@ -24,6 +24,8 @@ export const toggleJoinTraining = (playerId, trainingId) => {
                             if (!group) throw new NotFoundError('group not found')
                             if (!group.players.includes(playerId)) throw new NotFoundError('player not found in group')
 
+                            //TODO: check if the player has paid for the training
+
                             return Training.updateOne(
                                 { _id: trainingId },
                                 { $addToSet: { joined: playerId } }

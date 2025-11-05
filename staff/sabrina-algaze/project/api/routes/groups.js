@@ -49,3 +49,20 @@ groups.get('/:groupId/info', jsonBodyParser, (req, res, next) => {
         next(error)
     }
 })
+
+groups.patch('/:groupId/players/add', jsonBodyParser, (req, res, next) => {
+    try {
+        const token = req.headers.authorization.slice(7)
+        const payload = jwt.verify(token, process.env.JWT_SECRET)
+        const { sub: coachId } = payload
+
+        const { groupId } = req.params
+        const { playerEmail } = req.body
+
+        logic.addPlayerToGroup(coachId, groupId, playerEmail)
+            .then(() => res.status(204).send())
+            .catch(error => next(error))
+    } catch (error) {
+        next(error)
+    }
+})

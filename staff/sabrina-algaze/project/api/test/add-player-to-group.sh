@@ -1,0 +1,1 @@
+curl -X PATCH -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2OTA2MDc5M2ExOWFhZmQ1NmMzZDc4NzMiLCJyb2xlIjoiY29hY2giLCJpYXQiOjE3NjIwMDMzODMsImV4cCI6MTc2MjAwNjk4M30.6Ng6u86bI5g39VPPTiJT9Zg7zkLxfnfBgXwrdytUM4U' -H 'Content-Type: application/json' -d '{"playerEmail": "campa@nita.com"}' http://localhost:9090/groups/69060794a19aafd56c3d787d/add-player -v

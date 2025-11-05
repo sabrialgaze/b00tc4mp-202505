@@ -12,6 +12,7 @@ import { getGroupInfoForCoach } from './getGroupInfoForCoach.js'
 import { createPayment } from './createPayment'
 import { getPaymentsForPlayer } from './getPaymentsForPlayer'
 import { getUserRole } from './getUserRole'
+import { addPlayerToGroup } from './addPlayerToGroup'
 
 export const logic = {
     registerUser,
@@ -27,5 +28,6 @@ export const logic = {
     getGroupInfoForCoach,
     createPayment,
     getPaymentsForPlayer,
-    getUserRole
+    getUserRole,
+    addPlayerToGroup
 }

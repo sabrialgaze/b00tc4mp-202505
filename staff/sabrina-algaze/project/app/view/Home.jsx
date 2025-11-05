@@ -10,6 +10,7 @@ import { Payments } from './Payments'
 import { NewPayment } from './NewPayment'
 import { Groups } from './Groups'
 import { GroupDetail } from './GroupDetail'
+import { AddPlayer } from './AddPlayer'
 
 export const Home = ({ onUserLoggedOut }) => {
     const navigate = useNavigate()
@@ -63,8 +64,7 @@ export const Home = ({ onUserLoggedOut }) => {
                         <Route path="/group/:groupId" element={<GroupDetail />} />
                         <Route path="/trainings" element={<Trainings onTrainingClicked={handleTrainingClicked} />} />
                         <Route path="/training/:trainingId" element={<TrainingDetail />} />
-
-
+                        <Route path="/group/:groupId/add-player" element={<AddPlayer />} />
                     </>
                 )}
             </Routes>

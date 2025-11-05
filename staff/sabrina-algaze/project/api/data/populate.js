@@ -46,7 +46,14 @@ mongoose.connect('mongodb://127.0.0.1:27017/project')
             role: 'player'
         })
 
-        return Promise.all([coach.save(), player1.save(), player2.save(), player3.save()])
+        const player4 = new User({
+            name: 'Campanita',
+            email: 'campa@nita.com',
+            password: hash,
+            role: 'player'
+        })
+
+        return Promise.all([coach.save(), player1.save(), player2.save(), player3.save(), player4.save()])
     })
     .then(([coach, player1, player2, player3]) => {
         console.log('Users created')

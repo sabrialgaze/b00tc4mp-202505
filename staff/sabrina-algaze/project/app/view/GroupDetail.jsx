@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react'
 import { useParams } from 'react-router'
 import { logic } from '../logic'
+import { useNavigate } from 'react-router'
 
 export const GroupDetail = () => {
+    const navigate = useNavigate()
     const { groupId } = useParams()
     const [group, setGroup] = useState(null)
     const [players, setPlayers] = useState([])
@@ -27,6 +29,10 @@ export const GroupDetail = () => {
         loadGroupData()
     }, [])
 
+    const handleAddPlayerClick = () => {
+        navigate(`/group/${groupId}/add-player`)
+    }
+
     console.debug('GroupDetail -> render')
 
     return group ? <div>
@@ -39,6 +45,10 @@ export const GroupDetail = () => {
                     {group.location}
                 </h2>
             </div>
+        </div>
+        <div className="flex">
+            <h1 className="text-xl font-normal text-left pr-2">Players</h1>
+            <button onClick={handleAddPlayerClick} className="border-2 rounded-xl border-black-600 px-2 py-0.5 hover:bg-gray-100 font-bold">+</button>
         </div>
         <div>
             {group.players.length === 0 ? (
