@@ -1,5 +1,5 @@
 import { validate, NotFoundError, RoleError, SystemError, ValidationError } from 'com'
-import { User, Group, Training } from '../data/index.js'
+import { User, Group, Training, Payment } from '../data/index.js'
 
 export const toggleJoinTraining = (playerId, trainingId) => {
     validate.userId(playerId)
@@ -25,21 +25,51 @@ export const toggleJoinTraining = (playerId, trainingId) => {
                             if (!group.players.includes(playerId)) throw new NotFoundError('player not found in group')
 
                             //TODO: check if the player has paid for the training
-
-                            return Training.updateOne(
-                                { _id: trainingId },
-                                { $addToSet: { joined: playerId } }
-                            )
-                                .catch(error => { throw new SystemError('mongo error') })
-                                .then(result => {
-                                    if (result.modifiedCount === 0) {
-                                        return Training.updateOne(
-                                            { _id: trainingId, joined: playerId },
-                                            { $pull: { joined: playerId } }
-                                        )
-                                            .catch(error => { throw new SystemError('mongo error') })
-                                            .then(() => { })
+                            return Payment.findOne({
+                                player: playerId,
+                                group: training.group._id,
+                                service: 'month',
+                                $expr: {
+                                    $eq: [
+                                        { $dateToString: { format: "%Y-%m", date: "$trainingDate" } },
+                                        { $dateToString: { format: "%Y-%m", date: training.date } }
+                                    ]
+                                }
+                            })
+                                .then(monthPayment => {
+                                    if (monthPayment) {
+                                        return true
+                                    } else {
+                                        return Payment.findOne({
+                                            player: playerId,
+                                            group: training.group._id,
+                                            service: 'day',
+                                            trainingDate: training.date
+                                        })
+                                            .then(dayPayment => {
+                                                if (!dayPayment) {
+                                                    throw new ValidationError('training is not paid')
+                                                }
+                                                return true
+                                            })
                                     }
+                                })
+                                .then(() => {
+                                    return Training.updateOne(
+                                        { _id: trainingId },
+                                        { $addToSet: { joined: playerId } }
+                                    )
+                                        .catch(error => { throw new SystemError('mongo error') })
+                                        .then(result => {
+                                            if (result.modifiedCount === 0) {
+                                                return Training.updateOne(
+                                                    { _id: trainingId, joined: playerId },
+                                                    { $pull: { joined: playerId } }
+                                                )
+                                                    .catch(error => { throw new SystemError('mongo error') })
+                                                    .then(() => { })
+                                            }
+                                        })
                                 })
                         })
                 })

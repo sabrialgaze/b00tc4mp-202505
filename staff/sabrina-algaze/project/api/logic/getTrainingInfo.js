@@ -30,7 +30,7 @@ export const getTrainingInfo = (userId, trainingId) => {
 
                     training.isPast = training.date < new Date()
 
-                    training.isJoined = training.joined.some(joinedPlayer => joinedPlayer.id === userId)
+                    training.isJoined = training.joined.some(joinedPlayer => joinedPlayer._id.toString() === userId)
 
                     training.joined.forEach(joinedPlayer => {
                         joinedPlayer.id = joinedPlayer._id.toString()
