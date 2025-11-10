@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from 'react-router'
+import { useNavigate, useParams, Link } from 'react-router'
 import { logic } from '../logic'
 
 export const AddPlayer = () => {
@@ -34,9 +34,12 @@ export const AddPlayer = () => {
                 <label htmlFor="playerEmail"></label>
                 <input className="border rounded-full px-3 py-1 bg-gray-100 text-gray-900" type="email" id="playerEmail" placeholder="Enter player's email" required />
             </div>
-            <div className="flex justify-end gap-1">
-                <button type="reset" className="rounded-full px-3 py-1 border text-gray-700 hover:bg-gray-100 transition" >Clear</button>
-                <button type="submit" className="rounded-full px-3 py-1 bg-gray-900 text-white hover:bg-gray-700 transition" >Add</button>
+            <div className="flex justify-between items-center gap-1">
+                <Link className="text-m text-gray-600 hover:underline" to={`/group/${groupId}`}>Back</Link>
+                <div className="flex gap-1">
+                    <button type="reset" className="rounded-full px-3 py-1 border text-gray-700 hover:bg-gray-100 transition" >Clear</button>
+                    <button type="submit" className="rounded-full px-3 py-1 bg-gray-900 text-white hover:bg-gray-700 transition" >Add</button>
+                </div>
             </div>
         </form>
     </div>

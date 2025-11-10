@@ -1,0 +1,1 @@
+curl -X POST -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2OTBjODc1ODI0OWVkYzA3MjEyZjc1ZDYiLCJyb2xlIjoiY29hY2giLCJpYXQiOjE3NjI3NzU2ODcsImV4cCI6MTc2Mjc3OTI4N30.5hGbgkymrSs-oqA2EHmi4nfZFpO-pI_pxoA31_Q7mNY' -H 'Content-Type: application/json' -d '{"groupId": "690c88a63381c2d7da8165a4"}' http://localhost:9090/trainings -v

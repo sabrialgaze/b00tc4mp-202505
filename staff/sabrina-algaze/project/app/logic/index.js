@@ -2,6 +2,8 @@ import { registerUser } from './registerUser'
 import { loginUser } from './loginUser'
 import { logoutUser } from './logoutUser'
 import { isUserLoggedIn } from './isUserLoggedIn'
+import { createGroup } from './createGroup'
+import { createTraining } from './createTraining'
 import { getTrainingsForPlayer } from './getTrainingsForPlayer'
 import { getTrainingsForCoach } from './getTrainingsForCoach'
 import { getTrainingInfo } from './getTrainingInfo.js'
@@ -13,7 +15,6 @@ import { createPayment } from './createPayment'
 import { getPaymentsForPlayer } from './getPaymentsForPlayer'
 import { getUserRole } from './getUserRole'
 import { addPlayerToGroup } from './addPlayerToGroup'
-import { createGroup } from './createGroup'
 
 export const logic = {
     registerUser,
@@ -21,6 +22,7 @@ export const logic = {
     logoutUser,
     isUserLoggedIn,
     createGroup,
+    createTraining,
     getTrainingsForPlayer,
     getTrainingsForCoach,
     getTrainingInfo,

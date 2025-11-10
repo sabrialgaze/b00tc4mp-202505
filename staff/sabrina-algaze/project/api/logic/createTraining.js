@@ -18,11 +18,16 @@ export const createTraining = (coachId, groupId) => {
                 .then(group => {
                     if (!group) throw new NotFoundError('group not found')
 
+                    if (group.coach.toString() !== coachId) throw new RoleError('user is not the coach of the group')
+
                     const { day, time, coach } = group
 
                     const groupDayNumber = getDayOfWeekNumber(day)
 
                     const nextTrainingDate = calculateNextTrainingDate(groupDayNumber)
+
+                    const [hours, minutes] = time.split(':').map(Number)
+                    nextTrainingDate.setHours(hours, minutes, 0, 0)
 
                     return Training.findOne({
                         group: groupId,
@@ -32,9 +37,6 @@ export const createTraining = (coachId, groupId) => {
                             if (training) {
                                 throw new DuplicityError('training already exists')
                             }
-
-                            const [hours, minutes] = time.split(':').map(Number)
-                            nextTrainingDate.setHours(hours, minutes)
 
                             return Training.create({
                                 group: group.id,

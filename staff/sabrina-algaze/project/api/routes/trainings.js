@@ -6,6 +6,21 @@ export const trainings = Router()
 
 const jsonBodyParser = express.json()
 
+trainings.post('/', jsonBodyParser, (req, res, next) => {
+    try {
+        const token = req.headers.authorization.slice(7)
+        const payload = jwt.verify(token, process.env.JWT_SECRET)
+        const { sub: coachId } = payload
+        const { groupId } = req.body
+
+        logic.createTraining(coachId, groupId)
+            .then(() => res.status(201).send())
+            .catch(error => next(error))
+    } catch (error) {
+        next(error)
+    }
+})
+
 trainings.get('/player', jsonBodyParser, (req, res, next) => {
     try {
         const token = req.headers.authorization.slice(7)
