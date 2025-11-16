@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { useParams } from 'react-router'
 import { logic } from '../logic'
 import { useNavigate } from 'react-router'
+import { XMarkIcon, PlusIcon } from '@heroicons/react/24/outline'
 
 export const GroupDetail = () => {
     const navigate = useNavigate()
@@ -33,6 +34,22 @@ export const GroupDetail = () => {
         navigate(`/group/${groupId}/add-player`)
     }
 
+    const handleRemovePlayerClick = playerId => {
+        if (confirm('Remove player?')) {
+            try {
+                logic.removePlayerFromGroup(groupId, playerId)
+                    .then(() => loadGroupData())
+                    .catch(error => {
+                        console.error(error)
+                        alert(error.message)
+                    })
+            } catch (error) {
+                console.error(error)
+                alert(error.message)
+            }
+        }
+    }
+
     console.debug('GroupDetail -> render')
 
     return group ? <div>
@@ -48,7 +65,7 @@ export const GroupDetail = () => {
         </div>
         <div className="flex">
             <h1 className="text-xl font-normal text-left pr-2">Players</h1>
-            <button onClick={handleAddPlayerClick} className="border-2 rounded-xl border-black-600 px-2 py-0.5 hover:bg-gray-100 font-bold">+</button>
+            <button onClick={handleAddPlayerClick} className="border-2 rounded-xl border-black-600 px-1 py-1 hover:bg-gray-100 font-bold"><PlusIcon className="w-4 h-4" /></button>
         </div>
         <div>
             {group.players.length === 0 ? (
@@ -56,7 +73,12 @@ export const GroupDetail = () => {
             ) : (
                 <ul>
                     {group.players.map(player => (
-                        <li className="border-2 rounded-xl border-black-600 p-4 mt-2" key={player.id}>{player.name}</li>
+                        <li className="border-2 rounded-xl border-black-600 p-4 mt-2 flex justify-between items-center" key={player.id}>
+                            <span>{player.name}</span>
+                            <button onClick={() => handleRemovePlayerClick(player.id)} className="rounded-full p-1 hover:bg-gray-200 transition">
+                                <XMarkIcon className="w-4 h-4" />
+                            </button>
+                        </li>
                     ))}
                 </ul>
             )}

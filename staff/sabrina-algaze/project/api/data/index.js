@@ -118,5 +118,10 @@ export const Payment = mongoose.model('Payment', {
         type: ObjectId,
         ref: 'Group',
         required: true
+    },
+    confirmed: {
+        type: Boolean,
+        required: true,
+        default: false
     }
-})
+})  

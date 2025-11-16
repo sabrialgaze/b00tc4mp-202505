@@ -15,6 +15,8 @@ import { createPayment } from './createPayment'
 import { getPaymentsForPlayer } from './getPaymentsForPlayer'
 import { getUserRole } from './getUserRole'
 import { addPlayerToGroup } from './addPlayerToGroup'
+import { removePlayerFromGroup } from './removePlayerFromGroup.js'
+
 
 export const logic = {
     registerUser,
@@ -33,5 +35,6 @@ export const logic = {
     createPayment,
     getPaymentsForPlayer,
     getUserRole,
-    addPlayerToGroup
+    addPlayerToGroup,
+    removePlayerFromGroup
 }
