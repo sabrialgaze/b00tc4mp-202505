@@ -8,7 +8,7 @@ import { calculateNextTrainingDate } from './helpers/calculateNextTrainingDate.j
 import { getDayOfWeekNumber } from './helpers/getDayOfWeekNumber.js'
 import { NotFoundError, RoleError } from 'com'
 
-describe.only('getTrainingsForCoach', () => {
+describe('getTrainingsForCoach', () => {
     before(() => connect(process.env.MONGO_URI_TEST))
 
     beforeEach(() => Promise.all([User.deleteMany(), Training.deleteMany()]))

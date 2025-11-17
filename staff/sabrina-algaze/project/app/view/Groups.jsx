@@ -35,7 +35,7 @@ export const Groups = ({ onGroupClicked }) => {
     return <div>
         <div className="flex">
             <h1 className="text-xl font-normal text-left pr-2">Groups</h1>
-            <button onClick={handleCreateGroupClick} className="border-2 rounded-xl border-black-600 px-1 py-1 hover:bg-gray-100 font-bold"><PlusIcon className="w-4 h-4" /></button>
+            <button onClick={handleCreateGroupClick} className="border-1 rounded-xl border-black-600 px-1 py-1 hover:bg-gray-100 font-bold"><PlusIcon className="w-4 h-4" /></button>
         </div>
         <ul>
             <li className="py-2">

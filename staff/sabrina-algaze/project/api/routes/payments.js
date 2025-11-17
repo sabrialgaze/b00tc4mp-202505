@@ -21,13 +21,27 @@ payments.post('/', jsonBodyParser, (req, res, next) => {
     }
 })
 
-payments.get('/', (req, res, next) => {
+payments.get('/player', (req, res, next) => {
     try {
         const token = req.headers.authorization.slice(7)
         const payload = jwt.verify(token, process.env.JWT_SECRET)
         const { sub: playerId } = payload
 
         logic.getPaymentsForPlayer(playerId)
+            .then(payments => res.status(200).json(payments))
+            .catch(error => next(error))
+    } catch (error) {
+        next(error)
+    }
+})
+
+payments.get('/coach', (req, res, next) => {
+    try {
+        const token = req.headers.authorization.slice(7)
+        const payload = jwt.verify(token, process.env.JWT_SECRET)
+        const { sub: coachId } = payload
+
+        logic.getPaymentsForCoach(coachId)
             .then(payments => res.status(200).json(payments))
             .catch(error => next(error))
     } catch (error) {

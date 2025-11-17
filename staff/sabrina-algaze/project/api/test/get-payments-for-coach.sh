@@ -1,0 +1,1 @@
+curl -X GET -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2OTExZWVmZTcwYjFkZDQwMTgyNzIxM2YiLCJyb2xlIjoiY29hY2giLCJpYXQiOjE3NjMzODM0MzAsImV4cCI6MTc2MzM4NzAzMH0.ubxiHRb4jF7OGsdFwoYE7wd36gpxghwBUcjjhBdlU9o' http://localhost:9090/payments/coach -v

@@ -69,6 +69,7 @@ export const Home = ({ onUserLoggedOut }) => {
                         <Route path="/group/:groupId/add-player" element={<AddPlayer />} />
                         <Route path="/new-group" element={<NewGroup />} />
                         <Route path="/new-training" element={<NewTraining />} />
+                        <Route path="/payments" element={<Payments />} />
                     </>
                 )}
             </Routes>
@@ -86,6 +87,7 @@ export const Home = ({ onUserLoggedOut }) => {
                     <>
                         <button type="button"><Link to="/"><UserGroupIcon className="w-10 h-10 text-gray-700" /></Link></button>
                         <button type="button"><Link to="/trainings"><CalendarIcon className="w-10 h-10 text-gray-700" /></Link></button>
+                        <button type="button"><Link to="/payments"><BanknotesIcon className="w-10 h-10 text-gray-700" /></Link></button>
                     </>
                 )}
             </div>

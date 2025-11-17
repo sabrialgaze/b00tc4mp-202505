@@ -2,19 +2,19 @@ import { data } from '../data'
 import { errors, SystemError } from 'com'
 
 /**
- * Gets the payments for the current player.
+ * Gets the payments for the current coach.
  * @example
  ```js
  // demo
 
-getPaymentsForPlayer()
+getPaymentsForCoach()  
      .then(payments => console.log(payments))
      .catch(error => console.error(error))
 ```
  */
 
-export const getPaymentsForPlayer = () => {
-    return fetch(`${import.meta.env.VITE_API_URL}/payments/player`, {
+export const getPaymentsForCoach = () => {
+    return fetch(`${import.meta.env.VITE_API_URL}/payments/coach`, {
         method: 'GET',
         headers: {
             Authorization: `Bearer ${data.loadToken()}`
