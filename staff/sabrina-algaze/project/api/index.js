@@ -4,9 +4,10 @@ import { DuplicityError, ValidationError, NotFoundError, OwnershipError, Credent
 import { users, trainings, groups, payments } from './routes/index.js'
 import mongoose from 'mongoose'
 
+
 const { PORT = 8080 } = process.env
 
-mongoose.connect('mongodb://127.0.0.1:27017/project')
+mongoose.connect(process.env.MONGO_URI)
     .then(() => {
         const api = express()
 
