@@ -6,7 +6,7 @@ import { getPaymentsForCoach } from './getPaymentsForCoach.js'
 import { User, Payment, Group } from '../data/index.js'
 import { RoleError, NotFoundError } from 'com'
 
-describe.only('getPaymentsForCoach', () => {
+describe('getPaymentsForCoach', () => {
     before(() => connect(process.env.MONGO_URI_TEST))
 
     beforeEach(() => Promise.all([User.deleteMany(), Group.deleteMany(), Payment.deleteMany()]))

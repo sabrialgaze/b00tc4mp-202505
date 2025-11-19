@@ -75,4 +75,8 @@ export const validate = {
         if (typeof service !== 'string') throw new ValidationError('invalid service type')
         if (!['month', 'day'].includes(service)) throw new ValidationError('invalid service')
     },
+
+    paymentId(paymentId) {
+        if (typeof paymentId !== 'string') throw new ValidationError('invalid paymentId type')
+    },
 }

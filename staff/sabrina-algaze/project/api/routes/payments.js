@@ -48,3 +48,18 @@ payments.get('/coach', (req, res, next) => {
         next(error)
     }
 })
+
+payments.patch('/:paymentId/confirm', jsonBodyParser, (req, res, next) => {
+    try {
+        const token = req.headers.authorization.slice(7)
+        const payload = jwt.verify(token, process.env.JWT_SECRET)
+        const { sub: coachId } = payload
+        const { paymentId } = req.params
+
+        logic.toggleConfirmPayment(coachId, paymentId)
+            .then(() => res.status(204).send())
+            .catch(error => next(error))
+    } catch (error) {
+        next(error)
+    }
+})

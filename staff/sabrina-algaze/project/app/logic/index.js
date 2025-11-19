@@ -17,6 +17,7 @@ import { getPaymentsForCoach } from './getPaymentsForCoach'
 import { getUserRole } from './getUserRole'
 import { addPlayerToGroup } from './addPlayerToGroup'
 import { removePlayerFromGroup } from './removePlayerFromGroup.js'
+import { toggleConfirmPayment } from './toggleConfirmPayment'
 
 
 export const logic = {
@@ -38,5 +39,6 @@ export const logic = {
     getPaymentsForCoach,
     getUserRole,
     addPlayerToGroup,
-    removePlayerFromGroup
+    removePlayerFromGroup,
+    toggleConfirmPayment
 }

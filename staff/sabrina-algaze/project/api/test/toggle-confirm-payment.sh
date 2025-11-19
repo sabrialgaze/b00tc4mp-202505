@@ -1,0 +1,1 @@
+curl -X PATCH -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2OTExZWVmZTcwYjFkZDQwMTgyNzIxM2YiLCJyb2xlIjoiY29hY2giLCJpYXQiOjE3NjMzOTkxNzUsImV4cCI6MTc2MzQwMjc3NX0.bYbWQ6mnCA2db6JCeBsY4w9XKDJHrDq3quGOCdhsAY8' http://localhost:9090/payments/691b4032cc0cea552b8d0c84/confirm -v
