@@ -11,7 +11,13 @@ mongoose.connect(process.env.MONGO_URI)
     .then(() => {
         const api = express()
 
-        api.use(cors())
+        const corsOptions = {
+            origin: '*',
+            methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+            preflightContinue: false,
+            optionsSuccessStatus: 204
+        }
+        api.use(cors(corsOptions))
 
         api.get('/', (req, res) => res.send('Hello API'))
 
