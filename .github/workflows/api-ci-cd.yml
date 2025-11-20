@@ -1,0 +1,43 @@
+name: Deploy App
+
+on:
+  push:
+    branches:
+      - feature/project
+
+jobs:
+  deployment:
+    runs-on: ubuntu-latest
+
+    services:
+      mongodb:
+        image: mongo:latest
+        ports:
+          - 27017:27017
+        
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'pnpm'
+      - name: install & test
+        env:
+          PORT: 9090
+          MONGO_URI: mongodb://127.0.0.1:27017/project
+          JWT_SECRET: i love cookies
+          JWT_EXPIRATION: 1h
+        run: |
+          cd staff/sabrina-algaze/project/api
+          pnpm install
+          pnpm run test
+
+      - name: deploy api
+        run: |
+          curl --request POST \
+     --url https://api.render.com/v1/services/${{ secrets.RENDER_ID }}/deploys \
+     --header 'accept: application/json' \
+     --header 'authorization: Bearer ${{ secrets.RENDER_TOKEN }}' \
+     --header 'content-type: application/json' \
+
+          
