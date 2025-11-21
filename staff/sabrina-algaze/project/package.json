@@ -1,0 +1,13 @@
+{
+  "name": "project",
+  "version": "0.0.0",
+  "description": "",
+  "type": "module",
+  "scripts": {
+    "deploy": "cd api && npm install",
+    "start": "cd api && npm run start-prod"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
