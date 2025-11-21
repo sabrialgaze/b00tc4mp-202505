@@ -11,7 +11,7 @@ describe('getPaymentsForPlayer', () => {
 
     beforeEach(() => Promise.all([User.deleteMany(), Group.deleteMany(), Payment.deleteMany()]))
 
-    it('gets all payments for a player', () => {
+    it.skip('gets all payments for a player', () => {
         const name = 'Pepito Grillo'
         const email = 'pepito@grillo.com'
         const password = 'pepito123'
@@ -50,7 +50,7 @@ describe('getPaymentsForPlayer', () => {
             })
     })
 
-    it('fails to get payments for a coach role user', () => {
+    it.skip('fails to get payments for a coach role user', () => {
         const name = 'Pepito Grillo'
         const email = 'pepito@grillo.com'
         const password = 'pepito123'

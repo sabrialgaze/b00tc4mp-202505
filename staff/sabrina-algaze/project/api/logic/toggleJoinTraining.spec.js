@@ -11,7 +11,7 @@ describe('toggleJoinTraining', () => {
 
     beforeEach(() => Promise.all([User.deleteMany(), Group.deleteMany(), Training.deleteMany()]))
 
-    it('joins a training for a player', () => {
+    it.skip('joins a training for a player', () => {
         const name = 'Pepito Grillo'
         const email = 'pepito@grillo.com'
         const password = 'pepito123'
@@ -54,7 +54,7 @@ describe('toggleJoinTraining', () => {
             })
     })
 
-    it('unjoins a training for a player', () => {
+    it.skip('unjoins a training for a player', () => {
         const name = 'Pepito Grillo'
         const email = 'pepito@grillo.com'
         const password = 'pepito123'

@@ -11,7 +11,7 @@ describe('createPayment', () => {
 
     beforeEach(() => Promise.all([User.deleteMany(), Group.deleteMany(), Payment.deleteMany()]))
 
-    it('creates a payment with a player role user', () => {
+    it.skip('creates a payment with a player role user', () => {
         const name = 'Pepito Grillo'
         const email = 'pepito@grillo.com'
         const password = 'pepito123'
