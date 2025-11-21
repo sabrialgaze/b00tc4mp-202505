@@ -4,7 +4,7 @@
   "description": "",
   "type": "module",
   "scripts": {
-    "deploy": "cd api && npm install",
+    "build": "cd api && npm install",
     "start": "cd api && npm run start-prod"
   },
   "keywords": [],
