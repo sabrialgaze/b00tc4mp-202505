@@ -28,8 +28,8 @@ jobs:
           JWT_EXPIRATION: 1h
         run: |
           cd staff/sabrina-algaze/project/api
-          pnpm install
-          pnpm run test
+          npm install
+          npm run test
 
       - name: deploy api
         run: |
