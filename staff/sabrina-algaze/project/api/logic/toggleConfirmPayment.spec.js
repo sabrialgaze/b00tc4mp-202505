@@ -6,7 +6,7 @@ import { toggleConfirmPayment } from './toggleConfirmPayment.js'
 import { User, Group, Payment } from '../data/index.js'
 import { NotFoundError, RoleError, ValidationError } from 'com'
 
-describe.only('toggleConfirmPayment', () => {
+describe('toggleConfirmPayment', () => {
     before(() => connect(process.env.MONGO_URI_TEST))
 
     beforeEach(() => Promise.all([User.deleteMany(), Payment.deleteMany()]))
