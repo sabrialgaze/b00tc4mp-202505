@@ -6,6 +6,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node --env-file .env .",
+    "start-prod": "node .",
     "inspect": "node --env-file .env --inspect-brk .",
     "watch": "node --env-file .env --watch .",
     "test": "mocha --node-option env-file=.env logic/*.spec.js",
