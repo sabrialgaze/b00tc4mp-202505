@@ -47,7 +47,7 @@ export const Register = ({ onLoginClicked, onUserRegistered }) => {
                 <input className="border-1 rounded-full px-3 bg-gray-100 text-gray-900" type="text" id="name" />
             </div>
             <div className="flex flex-col">
-                <label htmlFor="email">E-mail</label>
+                <label htmlFor="email">Email</label>
                 <input className="border-1 rounded-full px-3 bg-gray-100 text-gray-900" type="email" id="email" />
             </div>
             <div className="flex flex-col">

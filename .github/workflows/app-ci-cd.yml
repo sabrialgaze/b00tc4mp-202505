@@ -1,0 +1,36 @@
+name: Deploy App
+
+on:
+  push:
+    branches:
+      - feature/project
+
+jobs:
+  deployment:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'pnpm'
+      - name: install / test / build
+        run: |
+          cd staff/sabrina-algaze/project/app 
+          npm install
+          npm run test
+          npm run build
+
+      - name: deploy app
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+        run: |
+          pnpm add -g netlify-cli
+          cd staff/sabrina-algaze/project/app
+          touch netlify.toml
+          echo '[build.environment]' > netlify.toml
+          echo '  VITE_API_URL = "https://b00tc4mp-202505.onrender.com"' 
+          netlify build
+          netlify deploy --dir=./dist --prod
+          rm netlify.toml
