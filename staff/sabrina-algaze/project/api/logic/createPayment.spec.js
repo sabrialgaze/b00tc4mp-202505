@@ -3,15 +3,17 @@ import { expect } from 'chai'
 import bcrypt from 'bcryptjs'
 
 import { createPayment } from './createPayment.js'
-import { User, Group, Payment } from '../data/index.js'
+import { User, Group, Payment, Training } from '../data/index.js'
 import { NotFoundError, RoleError, ValidationError } from 'com'
+import { calculateNextTrainingDate } from './helpers/calculateNextTrainingDate.js'
+import { getDayOfWeekNumber } from './helpers/getDayOfWeekNumber.js'
 
 describe('createPayment', () => {
     before(() => connect(process.env.MONGO_URI_TEST))
 
-    beforeEach(() => Promise.all([User.deleteMany(), Group.deleteMany(), Payment.deleteMany()]))
+    beforeEach(() => Promise.all([User.deleteMany(), Group.deleteMany(), Payment.deleteMany(), Training.deleteMany()]))
 
-    it.skip('creates a payment with a player role user', () => {
+    it('creates a payment with a player role user', () => {
         const name = 'Pepito Grillo'
         const email = 'pepito@grillo.com'
         const password = 'pepito123'
@@ -39,6 +41,15 @@ describe('createPayment', () => {
                 .then(player => playerId = player.id))
             .then(() => Group.create({ owner: coachId, name: groupName, players: [playerId], day, time, location, coach: coachId }))
             .then(group => groupId = group.id)
+            .then(() => {
+                const groupDayNumber = getDayOfWeekNumber(day)
+                const nextTrainingDate = calculateNextTrainingDate(groupDayNumber)
+
+                const [hours, minutes] = time.split(':').map(Number)
+                nextTrainingDate.setHours(hours, minutes, 0, 0)
+
+                return Training.create({ group: groupId, date: nextTrainingDate, coach: coachId })
+            })
             .then(() => createPayment(playerId, groupId, 'month'))
             .then(() => Payment.findOne())
             .then(payment => {

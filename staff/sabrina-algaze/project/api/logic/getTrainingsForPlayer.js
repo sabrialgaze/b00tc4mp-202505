@@ -13,7 +13,6 @@ export const getTrainingsForPlayer = playerId => {
             return Group.find({ players: playerId })
                 .catch(error => { throw new SystemError('mongo error') })
                 .then(groups => {
-                    if (groups.length === 0) throw new NotFoundError('no groups found')
                     //TODO: optimize this, we are doing two queries to the database
 
                     const groupIds = groups.map(group => group.id)

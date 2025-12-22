@@ -17,8 +17,6 @@ export const getTrainingsForCoach = coachId => {
                 .lean()
                 .catch(error => { throw new SystemError('mongo error') })
                 .then(trainings => {
-                    if (!trainings) throw new NotFoundError('no training found')
-
                     trainings.forEach(training => {
                         training.id = training._id.toString()
 

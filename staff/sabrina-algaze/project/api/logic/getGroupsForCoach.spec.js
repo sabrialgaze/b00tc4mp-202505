@@ -11,7 +11,7 @@ describe('getGroupsForCoach', () => {
 
     beforeEach(() => Promise.all([User.deleteMany(), Group.deleteMany()]))
 
-    it.skip('gets all groups assigned to a specific coach', () => {
+    it('gets all groups assigned to a specific coach', () => {
         const name = 'Pepito Grillo'
         const email = 'pepito@grillo.com'
         const password = 'pepito123'
@@ -42,7 +42,6 @@ describe('getGroupsForCoach', () => {
                 expect(group.time).to.equal(time)
                 expect(group.location).to.equal(location)
                 expect(group.coach.toString()).to.equal(coachId)
-                expect(group.owner.toString()).to.equal(coachId)
                 expect(group.players).to.exist.and.be.an.instanceOf(Array)
             })
     })

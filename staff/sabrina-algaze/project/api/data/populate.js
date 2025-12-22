@@ -4,7 +4,7 @@ import { getDayOfWeekNumber } from '../logic/helpers/getDayOfWeekNumber.js'
 import { calculateNextTrainingDate } from '../logic/helpers/calculateNextTrainingDate.js'
 import bcrypt from 'bcryptjs'
 
-mongoose.connect('mongodb://127.0.0.1:27017/project')
+mongoose.connect('mongodb+srv://sabrialgaze:EquXPtxn4EmSv3O6@cluster0.dozd2ew.mongodb.net/?appName=Cluster0')
     .then(() => console.log('Connected'))
     .then(() => {
         return Promise.all([

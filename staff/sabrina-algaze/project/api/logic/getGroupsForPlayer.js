@@ -14,8 +14,6 @@ export const getGroupsForPlayer = playerId => {
                 .lean()
                 .catch(error => { throw new SystemError('mongo error') })
                 .then(groups => {
-                    if (groups.length === 0) throw new NotFoundError('groups not found')
-
                     return groups.map(group => {
                         group.id = group._id.toString()
                         delete group._id

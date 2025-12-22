@@ -3,7 +3,7 @@ import { expect } from 'chai'
 import bcrypt from 'bcryptjs'
 
 import { toggleJoinTraining } from './toggleJoinTraining.js'
-import { User, Group, Training } from '../data/index.js'
+import { User, Group, Training, Payment } from '../data/index.js'
 import { NotFoundError, RoleError, ValidationError } from 'com'
 
 describe('toggleJoinTraining', () => {
@@ -11,7 +11,7 @@ describe('toggleJoinTraining', () => {
 
     beforeEach(() => Promise.all([User.deleteMany(), Group.deleteMany(), Training.deleteMany()]))
 
-    it.skip('joins a training for a player', () => {
+    it('joins a training for a player', () => {
         const name = 'Pepito Grillo'
         const email = 'pepito@grillo.com'
         const password = 'pepito123'
@@ -43,6 +43,7 @@ describe('toggleJoinTraining', () => {
             .then(group => groupId = group.id)
             .then(() => Training.create({ group: groupId, date: futureDate, coach: coachId }))
             .then(training => trainingId = training.id)
+            .then(() => Payment.create({ player: playerId, group: groupId, service: 'month', trainingDate: futureDate }))
             .then(() => toggleJoinTraining(playerId, trainingId))
             .then(result => expect(result).to.not.exist)
             .then(() => Training.findOne())
@@ -54,7 +55,7 @@ describe('toggleJoinTraining', () => {
             })
     })
 
-    it.skip('unjoins a training for a player', () => {
+    it('unjoins a training for a player', () => {
         const name = 'Pepito Grillo'
         const email = 'pepito@grillo.com'
         const password = 'pepito123'
@@ -86,6 +87,7 @@ describe('toggleJoinTraining', () => {
             .then(group => groupId = group.id)
             .then(() => Training.create({ group: groupId, date: futureDate, coach: coachId, joined: [playerId] }))
             .then(training => trainingId = training.id)
+            .then(() => Payment.create({ player: playerId, group: groupId, service: 'month', trainingDate: futureDate }))
             .then(() => toggleJoinTraining(playerId, trainingId))
             .then(result => expect(result).to.not.exist)
             .then(() => Training.findOne())

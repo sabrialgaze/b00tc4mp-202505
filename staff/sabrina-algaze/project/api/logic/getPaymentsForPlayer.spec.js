@@ -11,7 +11,7 @@ describe('getPaymentsForPlayer', () => {
 
     beforeEach(() => Promise.all([User.deleteMany(), Group.deleteMany(), Payment.deleteMany()]))
 
-    it.skip('gets all payments for a player', () => {
+    it('gets all payments for a player', () => {
         const name = 'Pepito Grillo'
         const email = 'pepito@grillo.com'
         const password = 'pepito123'
@@ -40,7 +40,7 @@ describe('getPaymentsForPlayer', () => {
             .then(user => playerId = user.id)
             .then(() => Group.create({ owner: coachId, name: groupName, day, time, location, coach: coachId, players: [playerId] }))
             .then(group => groupId = group.id)
-            .then(() => Payment.create({ player: playerId, group: groupId, service: 'day' }))
+            .then(() => Payment.create({ player: playerId, group: groupId, service: 'day', trainingDate: new Date(2025, 8, 1, 20, 0, 0, 0) }))
             .then(payment => paymentId = payment.id)
             .then(() => getPaymentsForPlayer(playerId))
             .then(payments => {
@@ -50,7 +50,7 @@ describe('getPaymentsForPlayer', () => {
             })
     })
 
-    it.skip('fails to get payments for a coach role user', () => {
+    it('fails to get payments for a coach role user', () => {
         const name = 'Pepito Grillo'
         const email = 'pepito@grillo.com'
         const password = 'pepito123'
@@ -80,7 +80,7 @@ describe('getPaymentsForPlayer', () => {
             .then(user => playerId = user.id)
             .then(() => Group.create({ owner: coachId, name: groupName, day, time, location, coach: coachId, players: [playerId] }))
             .then(group => groupId = group.id)
-            .then(() => Payment.create({ player: playerId, group: groupId, service: 'day' }))
+            .then(() => Payment.create({ player: playerId, group: groupId, service: 'day', trainingDate: new Date(2025, 8, 1, 20, 0, 0, 0) }))
             .then(payment => paymentId = payment.id)
             .then(() => getPaymentsForPlayer(coachId))
             .catch(error => caughtError = error)

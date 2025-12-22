@@ -16,8 +16,6 @@ export const getPaymentsForPlayer = playerId => {
                 .lean()
                 .catch(error => { throw new SystemError('mongo error') })
                 .then(payments => {
-                    if (payments.length === 0) throw new NotFoundError('payments not found')
-
                     return payments.map(payment => {
                         payment.id = payment._id.toString()
                         delete payment._id
