@@ -99,3 +99,20 @@ groups.patch('/:groupId/players/remove', jsonBodyParser, (req, res, next) => {
         next(error)
     }
 })
+
+groups.put('/:groupId', jsonBodyParser, (req, res, next) => {
+    try {
+        const token = req.headers.authorization.slice(7)
+        const payload = jwt.verify(token, process.env.JWT_SECRET)
+        const { sub: coachId } = payload
+
+        const { groupId } = req.params
+        const { name, day, time, location } = req.body
+
+        logic.updateGroup(coachId, groupId, { name, day, time, location })
+            .then(() => res.status(204).send())
+            .catch(error => next(error))
+    } catch (error) {
+        next(error)
+    }
+})
