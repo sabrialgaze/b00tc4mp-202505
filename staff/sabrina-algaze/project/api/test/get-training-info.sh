@@ -1,0 +1,1 @@
+curl -X GET -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2OTExZWVmZTcwYjFkZDQwMTgyNzIxM2YiLCJyb2xlIjoiY29hY2giLCJpYXQiOjE3NjY0MzMxOTEsImV4cCI6MTc2NjQzNjc5MX0.WLTnNn_fWXGUnYjtk7tKOhGdUr3cqJCNLO5nHHqZ860' http://localhost:9090/trainings/6911eefe70b1dd401827214b -v

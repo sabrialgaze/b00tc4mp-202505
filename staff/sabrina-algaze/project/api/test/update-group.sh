@@ -1,0 +1,1 @@
+curl -X PUT -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2OTExZWVmZTcwYjFkZDQwMTgyNzIxM2YiLCJyb2xlIjoiY29hY2giLCJpYXQiOjE3NjY0MzY4NzIsImV4cCI6MTc2NjQ0MDQ3Mn0.I3kOgJboeeLloGaBHBlCfsN66tV1Wn_kawOnS5WE6KQ' -H 'Content-Type: application/json' -d '{"time":"21:00"}' http://localhost:9090/groups/6911eefe70b1dd4018272149 -v

@@ -2,7 +2,6 @@ import { registerUser } from './registerUser.js'
 import { authenticateUser } from './authenticateUser.js'
 import { createGroup } from './createGroup.js'
 import { updateGroup } from './updateGroup.js'
-import { deleteGroup } from './deleteGroup.js'
 import { addPlayerToGroup } from './addPlayerToGroup.js'
 import { removePlayerFromGroup } from './removePlayerFromGroup.js'
 import { createTraining } from './createTraining.js'
@@ -23,7 +22,6 @@ export const logic = {
     authenticateUser,
     createGroup,
     updateGroup,
-    deleteGroup,
     addPlayerToGroup,
     removePlayerFromGroup,
     createTraining,
