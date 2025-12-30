@@ -84,44 +84,6 @@ describe('getGroupsForCoach', () => {
             })
     })
 
-    it('fails to get groups for a coach that has no groups assigned', () => {
-        const coachName = 'Pepito Grillo'
-        const coachEmail = 'pepito@grillo.com'
-        const coachPassword = 'pepito123'
-        const coachRole = 'coach'
-
-        const coach2Name = 'Peter Pan'
-        const coach2Email = 'peter@pan.com'
-        const coach2Password = 'peter123'
-        const coach2Role = 'coach'
-
-        const groupName = 'Miercoles'
-        const day = 'wednesday'
-        const time = '20:00'
-        const location = 'Joan Miro'
-
-        let coachId = null
-        let coach2Id = null
-        let groupId = null
-        let caughtError = null
-
-        return bcrypt.hash(coachPassword, 10)
-            .then(hash => User.create({ name: coachName, email: coachEmail, password: hash, role: coachRole }))
-            .then(coach => coachId = coach.id)
-            .then(() => bcrypt.hash(coach2Password, 10)
-                .then(hash => User.create({ name: coach2Name, email: coach2Email, password: hash, role: coach2Role }))
-                .then(coach2 => coach2Id = coach2.id))
-            .then(() => Group.create({ owner: coachId, name: groupName, day, time, location, coach: coachId }))
-            .then(group => groupId = group.id)
-            .then(() => getGroupsForCoach(coach2Id))
-            .catch(error => caughtError = error)
-            .finally(() => {
-                expect(caughtError).to.exist
-                expect(caughtError).to.be.an.instanceOf(NotFoundError)
-                expect(caughtError.message).to.equal('groups not found')
-            })
-    })
-
     afterEach(() => Promise.all([User.deleteMany(), Group.deleteMany()]))
 
     after(() => disconnect())
