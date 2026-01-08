@@ -64,11 +64,10 @@ export const validate = {
     updates(updates) {
         if (typeof updates !== 'object') throw new ValidationError('invalid updates type')
         if (!Object.keys(updates).length) throw new ValidationError('invalid updates properties length')
-        if (updates.name && typeof updates.name !== 'string') throw new ValidationError('invalid name type')
-        if (updates.day && typeof updates.day !== 'string') throw new ValidationError('invalid day type')
-        if (updates.time && typeof updates.time !== 'string') throw new ValidationError('invalid time type')
-        if (updates.location && typeof updates.location !== 'string') throw new ValidationError('invalid location type')
-        if (updates.group && typeof updates.group !== 'string') throw new ValidationError('invalid group type')
+        if ('name' in updates && typeof updates.name !== 'string') throw new ValidationError('invalid name type')
+        if ('day' in updates && typeof updates.day !== 'string') throw new ValidationError('invalid day type')
+        if ('time' in updates && typeof updates.time !== 'string') throw new ValidationError('invalid time type')
+        if ('location' in updates && typeof updates.location !== 'string') throw new ValidationError('invalid location type')
     },
 
     service(service) {

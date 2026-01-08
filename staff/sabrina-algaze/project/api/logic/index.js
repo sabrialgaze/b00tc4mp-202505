@@ -35,5 +35,5 @@ export const logic = {
     getGroupInfoForCoach,
     getPaymentsForPlayer,
     getPaymentsForCoach,
-    toggleConfirmPayment,
+    toggleConfirmPayment
 }

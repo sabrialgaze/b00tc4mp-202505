@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { useParams } from 'react-router'
 import { logic } from '../logic'
 import { useNavigate } from 'react-router'
-import { XMarkIcon, PlusIcon } from '@heroicons/react/24/outline'
+import { XMarkIcon, PlusIcon, PencilIcon } from '@heroicons/react/24/outline'
 
 export const GroupDetail = () => {
     const navigate = useNavigate()
@@ -50,6 +50,10 @@ export const GroupDetail = () => {
         }
     }
 
+    const handleEditClick = () => {
+        navigate(`/group/${groupId}/update`)
+    }
+
     console.debug('GroupDetail -> render')
 
     return group ? <div>
@@ -62,10 +66,12 @@ export const GroupDetail = () => {
                     {group.location}
                 </h2>
             </div>
+            <button onClick={handleEditClick} className="border-1 rounded-xl border-black-600 px-1 py-1 hover:bg-gray-100 font-bold"><PencilIcon className="w-4 h-4" />
+            </button>
         </div>
         <div className="flex">
             <h1 className="text-xl font-normal text-left pr-2">Players</h1>
-            <button onClick={handleAddPlayerClick} className="border-2 rounded-xl border-black-600 px-1 py-1 hover:bg-gray-100 font-bold"><PlusIcon className="w-4 h-4" /></button>
+            <button onClick={handleAddPlayerClick} className="border-1 rounded-xl border-black-600 px-1 py-1 hover:bg-gray-100 font-bold"><PlusIcon className="w-4 h-4" /></button>
         </div>
         <div>
             {group.players.length === 0 ? (

@@ -13,6 +13,7 @@ import { GroupDetail } from './GroupDetail'
 import { AddPlayer } from './AddPlayer'
 import { NewGroup } from './NewGroup'
 import { NewTraining } from './NewTraining'
+import { UpdateGroup } from './UpdateGroup'
 
 export const Home = ({ onUserLoggedOut }) => {
     const navigate = useNavigate()
@@ -70,6 +71,7 @@ export const Home = ({ onUserLoggedOut }) => {
                         <Route path="/new-group" element={<NewGroup />} />
                         <Route path="/new-training" element={<NewTraining />} />
                         <Route path="/payments" element={<Payments />} />
+                        <Route path="/group/:groupId/update" element={<UpdateGroup />} />
                     </>
                 )}
             </Routes>
