@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react'
 import { logic } from '../logic'
 import { helper } from './helper'
 import { useRole } from '../hooks'
-import { PlusCircleIcon, CheckCircleIcon } from '@heroicons/react/24/outline'
+import { PlusCircleIcon, CheckCircleIcon, PlusIcon } from '@heroicons/react/24/outline'
 
 export const Payments = () => {
     const [payments, setPayments] = useState([])
@@ -65,7 +65,7 @@ export const Payments = () => {
     return <div>
         <div className="flex">
             <h1 className="text-xl font-normal text-left pr-2">Payments</h1>
-            {role === 'player' && <button onClick={handleNewPaymentClick} className="border-2 rounded-xl border-black-600 px-2 py-0.5 hover:bg-gray-100 font-bold">+</button>}
+            {role === 'player' && <button onClick={handleNewPaymentClick} className="border-1 rounded-xl border-black-600 px-1 py-1 hover:bg-gray-100 font-bold"><PlusIcon className="w-4 h-4" /></button>}
         </div>
         <div>
             {payments.map(payment => {
