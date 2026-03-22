@@ -1,8 +1,8 @@
 # Count.in
 
-This app was born from a real need identified by a football coach: managing player attendance and payments for training sessions in an efficient and centralized way. Keeping track of who is attending, who has paid, and who is active can quickly become overwhelming with manual methods.
+This app was born from a real need identified by a football coach: managing player attendance and payments for training sessions in an efficient and centralized way. When handled manually, keeping track of who is attending, who has paid, and who is active can quickly become overwhelming.
 
-The app allows players to view upcoming sessions and confirm their attendance. For the coach, it provides a clear overview of who’s attending each session, tracks attendance history, manages payments by month and group, and offers the ability to update or deactivate player records as needed.
+The app allows players to view upcoming sessions and confirm their attendance, declare payments for monthly or daily training, and view their attendance and payment history. For the coach, it provides a clear overview of who’s attending each session, manages groups and training sessions, confirms player payments, and offers the ability to add or remove players from groups as needed.
 
 Built with real users in mind, the app aims to streamline everyday team management tasks, reduce admin work for the coach, and offer a better experience for the players.
 
@@ -18,7 +18,6 @@ Player
 - view confirmed payments (current and past)
 - view upcoming trainings (by group)
 - confirm attendance to a training (only if month/ day payment is up to date)
-- confirm attendance to a training outside their main group (as guest) 
 - view list of players' attendance to a training
 - view attendance history
 
@@ -33,8 +32,10 @@ Coach
 ### Future Features
 
 Coach
-- mark player as "paid" or "unpaid" for a given month 
+- change training status to cancelled
+- confirm attendance to a training outside their main group (as guest) 
 - view attendance history per player 
+- view payment history per player
 - attendance statistics dashboard (per player / group / month)
 
 
@@ -69,6 +70,7 @@ User
 
 Group
 - id (UUID, required)
+- owner (UUID, User.id, required)
 - name (string, required)
 - players (UUID, [User.id])
 - day (string, required, enum monday|tuesday|wednesday|thursday|friday|saturday|sunday)
@@ -83,12 +85,16 @@ Training
 - coach (UUID, User.id, required)
 - joined (UUID, [User.id])
 - invited (UUID, [User.id]) 
+- status (string, required, enum confirmed|cancelled)
 
 Payment
 - id (UUID, required)
 - player (UUID, User.id, required)
 - service (string, required, enum month|day)
 - date (Date, required)
+- trainingDate (Date, required)
+- group (UUID, Group.id, required)
+- confirmed (boolean, required)
 
 ### Technologies
 
